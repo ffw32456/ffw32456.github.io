@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元八 課題一：辛亥革命與民初政局 互動筆記</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pur: #5a2d82;
+    --pur-dark: #3d1f5c;
+    --pur-mid: #7b4ba8;
+    --pur-light: #c9a8e0;
+    --pur-bg: #f5f0fc;
+    --pur-bg2: #ede5f8;
+    --ink: #1a1a1a;
+    --ink2: #3a3a3a;
+    --paper: #fdfbff;
+    --border: #d0bfe8;
+    --gold: #8a6500;
+    --red-flag: #b01c1c;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans HK', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: var(--pur-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem;
+    color: #e8d8f8;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .btn-toggle-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pur-mid);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 16px;
+    cursor: pointer;
+    font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background .2s;
+    white-space: nowrap;
+  }
+  .btn-toggle-all:hover { background: #9b63cc; }
+  .btn-toggle-all .pill {
+    background: rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 1px 10px;
+    font-size: 12px;
+  }
+  .toc-row {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 12px 8px;
+    scrollbar-width: none;
+  }
+  .toc-row::-webkit-scrollbar { display: none; }
+  .toc-row a {
+    color: #d8c0f0;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+    transition: background .18s, color .18s;
+  }
+  .toc-row a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* ── SECTIONS ── */
+  .section { scroll-margin-top: 130px; margin-bottom: 40px; }
+  .section-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.35rem;
+    color: var(--pur-dark);
+    border-left: 5px solid var(--pur);
+    padding-left: 12px;
+    margin-bottom: 18px;
+    font-weight: 700;
+  }
+  .subsection-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.05rem;
+    color: var(--pur);
+    margin: 18px 0 10px;
+    font-weight: 700;
+  }
+
+  /* ── KEYWORDS ── */
+  .kw {
+    border-bottom: 2.5px solid var(--pur);
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+  .kw.hidden {
+    background: var(--ink);
+    color: var(--ink);
+    border-bottom: none;
+    border-radius: 3px;
+    padding: 0 3px;
+  }
+  .kw:not(.hidden):hover { background: var(--pur-bg2); }
+
+  /* ── PERSON CARDS ── */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .person-card {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-top: 4px solid var(--pur);
+  }
+  .person-name {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--pur-dark);
+    margin-bottom: 3px;
+  }
+  .person-role {
+    display: inline-block;
+    background: var(--pur-mid);
+    color: #fff;
+    font-size: 11px;
+    border-radius: 10px;
+    padding: 1px 10px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .person-desc { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── VOCAB TABLE ── */
+  .vocab-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .vocab-table th {
+    background: var(--pur-dark);
+    color: #e8d8f8;
+    padding: 9px 14px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .vocab-table td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); }
+  .vocab-table tr:nth-child(even) td { background: var(--pur-bg); }
+  .vocab-table tr:last-child td { border-bottom: none; }
+  .vocab-term { font-weight: 700; color: var(--pur-dark); white-space: nowrap; }
+
+  /* ── STEP ITEMS ── */
+  .step-list { display: flex; flex-direction: column; gap: 10px; }
+  .step-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--pur-bg);
+    border-radius: 10px;
+    padding: 13px 16px;
+    border-left: 4px solid var(--pur);
+  }
+  .step-num {
+    background: var(--pur);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-body { flex: 1; font-size: 14px; line-height: 1.65; }
+  .step-body strong { color: var(--pur-dark); }
+
+  /* ── SIGNIFICANCE CARDS ── */
+  .sig-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .sig-card {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .sig-card h4 {
+    color: var(--pur-dark);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    border-bottom: 2px solid var(--pur-light);
+    padding-bottom: 4px;
+  }
+  .sig-card p { font-size: 13.5px; color: var(--ink2); line-height: 1.6; }
+
+  /* ── HK GRID ── */
+  .hk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .hk-box {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-top: 4px solid var(--pur-mid);
+  }
+  .hk-box h4 { color: var(--pur-dark); font-size: 13.5px; font-weight: 700; margin-bottom: 7px; }
+  .hk-box ul { padding-left: 18px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .hk-box li { margin-bottom: 4px; }
+
+  /* ── EVENT BOX (袁世凱/軍閥) ── */
+  .event-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .event-box h4 {
+    font-family: 'Noto Serif HK', serif;
+    color: var(--pur-dark);
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed var(--pur-light);
+    padding-bottom: 6px;
+  }
+  .event-box ul { padding-left: 18px; font-size: 14px; color: var(--ink2); line-height: 1.75; }
+  .event-box li { margin-bottom: 4px; }
+
+  /* ── WARLORD GRID ── */
+  .wl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .wl-card {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 15px;
+    border-left: 4px solid var(--pur-mid);
+  }
+  .wl-card h5 { color: var(--pur-dark); font-weight: 700; font-size: 13.5px; margin-bottom: 6px; }
+  .wl-card p { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+
+  /* ── MAY FOURTH TIMELINE ── */
+  .may4-timeline {
+    position: relative;
+    padding-left: 28px;
+    border-left: 3px solid var(--pur-light);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .may4-item { position: relative; }
+  .may4-item::before {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--pur);
+    border: 2px solid var(--pur-bg);
+  }
+  .may4-date { font-size: 12px; font-weight: 700; color: var(--pur-mid); margin-bottom: 2px; }
+  .may4-desc { font-size: 14px; color: var(--ink2); line-height: 1.6; }
+
+  /* ── IMPACT GRID ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .impact-card {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 15px;
+    border-top: 3px solid var(--pur);
+  }
+  .impact-card h5 { color: var(--pur-dark); font-weight: 700; font-size: 13.5px; margin-bottom: 6px; }
+  .impact-card p { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+
+  /* ── SOCIAL CARDS ── */
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .social-card {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px 17px;
+    border-top: 4px solid var(--pur-mid);
+  }
+  .social-card h4 { color: var(--pur-dark); font-weight: 700; font-size: 14.5px; margin-bottom: 8px; }
+  .social-card ul { padding-left: 18px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .social-card li { margin-bottom: 4px; }
+
+  /* ── TIMELINE TABLE ── */
+  .timeline-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .timeline-table th {
+    background: var(--pur-dark);
+    color: #e8d8f8;
+    padding: 8px 14px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .timeline-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    text-align: center;
+  }
+  .timeline-table tr:nth-child(even) td { background: var(--pur-bg); }
+  .timeline-table tr:last-child td { border-bottom: none; }
+  .timeline-table .yr { font-weight: 700; color: var(--pur-dark); white-space: nowrap; }
+  .timeline-table .ev { text-align: left; }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--pur-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px 18px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink2);
+    margin-bottom: 14px;
+  }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .info-box ul { padding-left: 20px; }
+  .info-box li { margin-bottom: 4px; }
+
+  /* ── HEADER STRIP ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--pur-dark) 0%, var(--pur-mid) 100%);
+    color: #fff;
+    padding: 28px 20px 22px;
+    margin-bottom: 32px;
+    border-radius: 12px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .page-header p { font-size: 13.5px; color: #d8c0f0; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── TAG ── */
+  .tag {
+    display: inline-block;
+    background: var(--pur-mid);
+    color: #fff;
+    font-size: 11px;
+    border-radius: 8px;
+    padding: 1px 9px;
+    margin-right: 4px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-top">
+    <div class="header-title">🟣 單元八 課題一：辛亥革命與民初政局</div>
+    <button class="btn-toggle-all" onclick="toggleAll()" id="toggleBtn">
+      🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>
+    </button>
+  </div>
+  <div class="toc-row">
+    <a href="#persons">👤 人物檔案</a>
+    <a href="#vocab">📖 重要詞彙</a>
+    <a href="#sun">☀️ 孫中山推動革命</a>
+    <a href="#xinhai">⚡ 辛亥革命</a>
+    <a href="#hk">🏙️ 香港的角色</a>
+    <a href="#yuan">👑 袁世凱專制</a>
+    <a href="#warlords">⚔️ 軍閥混戰</a>
+    <a href="#may4">✊ 五四運動</a>
+    <a href="#social">🎭 民國社會</a>
+    <a href="#timeline">📅 事件時序</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>單元八 課題一<br>辛亥革命與民初政局</h1>
+    <p>中二歷史 互動溫習筆記 ‧ 點擊紫色關鍵詞可隱藏/顯示答案</p>
+  </div>
+
+  <!-- 1. 人物檔案 -->
+  <div class="section" id="persons">
+    <div class="section-title">👤 人物檔案</div>
+    <div class="person-grid">
+
+      <div class="person-card">
+        <div class="person-name">孫中山</div>
+        <div class="person-role">革命領袖</div>
+        <div class="person-desc">
+          早年在檀香山和粵港接受西式教育，甲午戰爭後倡導革命救國。創立<span class="kw" onclick="toggleKw(this)">興中會</span>，後組成<span class="kw" onclick="toggleKw(this)">中國同盟會</span>，提出<span class="kw" onclick="toggleKw(this)">三民主義</span>。武昌起義後獲推舉為<span class="kw" onclick="toggleKw(this)">臨時大總統</span>，旋即讓位袁世凱。後為維護《臨時約法》出任護法軍政府大元帥。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">黎元洪</div>
+        <div class="person-role">軍人</div>
+        <div class="person-desc">
+          清末為湖北新軍協統，負責訓練新軍。武昌起義後獲推舉為都督，領導湖北軍政府。民國成立後領導共和黨參與國會選舉。袁世凱死後繼任總統，因<span class="kw" onclick="toggleKw(this)">府院之爭</span>召張勳入京，結果在張勳復辟後引咎辭職。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">溥儀</div>
+        <div class="person-role">君主</div>
+        <div class="person-desc">
+          即清朝的宣統帝，繼位時年僅三歲。辛亥革命爆發後，溥儀於1912年2月退位，清朝至此滅亡。仍居於紫禁城，1917年獲張勳擁護<span class="kw" onclick="toggleKw(this)">復辟</span>，不過十二日便再次被推翻。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">袁世凱</div>
+        <div class="person-role">軍人</div>
+        <div class="person-desc">
+          清末掌握北京及周邊兵權。武昌起義後受命鎮壓革命軍，乘機與革命軍談判，以贊成共和、使清帝退位等條件接任臨時大總統。後鎮壓<span class="kw" onclick="toggleKw(this)">二次革命</span>，擴大總統權力，於1915年底接受帝位，改國號為<span class="kw" onclick="toggleKw(this)">中華帝國</span>，但帝制僅維持八十三日便撤銷，不久病逝。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">宋教仁</div>
+        <div class="person-role">革命領袖</div>
+        <div class="person-desc">
+          華興會副會長、同盟會主要成員。袁世凱就任總統後，改組同盟會為<span class="kw" onclick="toggleKw(this)">國民黨</span>，並在首次國會選舉取得優勢，計劃籌組責任內閣以限制袁世凱的權力，但在國會召開前夕被<span class="kw" onclick="toggleKw(this)">暗殺</span>，袁世凱親信被發現牽涉其中。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">段祺瑞</div>
+        <div class="person-role">軍人</div>
+        <div class="person-desc">
+          袁世凱的親信，北洋軍皖系的領袖。袁世凱死後成為國務總理，與總統黎元洪發生<span class="kw" onclick="toggleKw(this)">府院之爭</span>。在驅逐張勳後獨攬大權，並為取得日本貸款祕密簽訂《山東問題換文》，導致中國在巴黎和會上無法收回山東權益。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">張勳</div>
+        <div class="person-role">軍人</div>
+        <div class="person-desc">
+          民國初年的安徽督軍，清帝溥儀退位後仍忠於清室。1917年受黎元洪召入京調停府院之爭，結果乘機擁立溥儀復位，不過僅十二日便被段祺瑞驅逐，史稱「<span class="kw" onclick="toggleKw(this)">張勳復辟</span>」。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">曹汝霖</div>
+        <div class="person-role">官員</div>
+        <div class="person-desc">
+          袁世凱政府的外交次長，參與簽訂《中日民四條約》。在<span class="kw" onclick="toggleKw(this)">五四運動</span>期間與章宗祥、陸宗輿一同被示威學生列為要求罷免的親日官員，最後北洋政府迫於輿論壓力，罷免了三人的職務。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">胡適</div>
+        <div class="person-role">知識分子</div>
+        <div class="person-desc">
+          推動「<span class="kw" onclick="toggleKw(this)">新文化運動</span>」，批判傳統文化，提倡民主、科學等新思想，又透過《新青年》提倡使用<span class="kw" onclick="toggleKw(this)">白話文</span>寫作，並提出名為「<span class="kw" onclick="toggleKw(this)">八不主義</span>」的文學主張。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">陳獨秀</div>
+        <div class="person-role">知識分子</div>
+        <div class="person-desc">
+          創辦《青年雜誌》（《新青年》前身）。與胡適一同推動「新文化運動」，提倡新思想和白話文，又提出「<span class="kw" onclick="toggleKw(this)">文學革命</span>」，主張改革中國文學。
+        </div>
+      </div>
+
+      <div class="person-card">
+        <div class="person-name">魯迅</div>
+        <div class="person-role">作家</div>
+        <div class="person-desc">
+          早年在日本習醫，後來有感於改變中國人的精神更為重要，決定棄醫從文。在《新青年》發表了諷刺中國傳統禮教和陋俗的連載小說〈<span class="kw" onclick="toggleKw(this)">狂人日記</span>〉，深受歡迎。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. 重要詞彙 -->
+  <div class="section" id="vocab">
+    <div class="section-title">📖 重要詞彙</div>
+    <table class="vocab-table">
+      <thead>
+        <tr><th style="width:120px">詞彙</th><th>解釋</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">興中會</span></td>
+          <td>由孫中山於1894年在檀香山創立，是中國近代史上第一個革命組織，綱領為「驅除韃虜，恢復中華，創立合眾政府」，並以推翻清廷為首要目標。曾於1895和1900年發動廣州和惠州起義，但均以失敗告終。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">中國同盟會</span></td>
+          <td>簡稱「同盟會」，為孫中山於1905年在日本東京聯合興中會、華興會和光復會而成的革命組織，初時以「驅除韃虜，恢復中華，創立民國，平均地權」為綱領，後來闡釋為「三民主義」。民國成立後改組為國民黨。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">三民主義</span></td>
+          <td>「民族」、「民權」和「民生」主義的合稱，由孫中山提出。民族主義指推翻滿族統治，追求自由平等；民權主義主張廢除君主專制，建立共和政體；民生主義則指平均地權，改善人民生活。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">保路同志會</span></td>
+          <td>清廷宣布鐵路國有政策，收回四省集資自辦的川漢、粵漢鐵路，激起各省民眾強烈反對。各地紛紛成立保路同志會，進行連串罷課罷市行動。清廷從鄰省調兵入川鎮壓，致使湖北防務空虛，讓革命黨人有機可乘，間接導致武昌起義成功。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">辛亥革命</span></td>
+          <td>指湖北新軍在1911年10月10日在武昌發動的起義。當晚革命黨人在奪取當地軍火庫後進攻總督衙門，次日成功控制武昌並成立湖北軍政府，宣布脫離清廷獨立，改國號為中華民國。起義成功後各省紛紛響應宣布獨立，次年中華民國正式成立。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">五族共和</span></td>
+          <td>由於中國幅員遼闊，境內有不同民族及文化，中華民國成立初期希望維護國家統一，避免陷入分裂的局面，提倡「五族共和」，強調由漢、滿、蒙、回、藏五大民族平等共存。中華民國初年的五色旗（紅、黃、藍、白、黑）五條橫線，亦分別象徵五大民族。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">《臨時約法》</span></td>
+          <td>是民國成立後由中華民國臨時參議院頒布的憲法，也是中華民國的第一部憲法，內容以內閣為權力核心。袁世凱鎮壓二次革命後被《中華民國約法》取代。袁世凱死後雖短暫恢復，但在段祺瑞執政後再次被廢棄，引發護法之役。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">北洋軍閥</span></td>
+          <td>指由袁世凱及其親信以北洋軍為基礎組成的軍閥集團。民國初年，北洋軍閥實力佔優，幾乎控制全國，但隨着護國運動的發展和袁世凱去世，南方軍閥興起，北洋軍閥亦分裂成皖、直、奉三系，互相爭奪北京政府的控制權，各地亦陷入軍閥割據混戰的局面。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">「二十一條」</span></td>
+          <td>為日本於1915年向袁世凱提出的條約，共分第一至第五號。內容不但要求中國承認日本在山東的權益，更涉及日本在南滿、東蒙、長江流域等地和在國內採礦的特權，以及聘用日人為顧問等項目，目的是把中國置於日本控制之下。袁世凱認為條款苛刻，以拖延手法盡量減少損失，但為取得日方支持，最後仍接受其中一至四號條款。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">五四運動</span></td>
+          <td>指1919年5月4日北京學生舉行的集會和示威活動。此前中國代表在巴黎和會上提出的要求遭列強拒絕，引起國人激憤，提出「外爭國權，內除國賊」、「取消二十一條」等口號，要求北京政府罷免曹汝霖、章宗祥、陸宗輿三名親日官員。北京政府逮捕大批學生，激起國人罷工、罷市，抵制日貨，最終迫使政府釋放被捕學生、罷免章、曹、陸三人職務，並授意出席巴黎和會的代表拒絕在對德和約上簽字。</td>
+        </tr>
+        <tr>
+          <td><span class="vocab-term kw" onclick="toggleKw(this)">新文化運動</span></td>
+          <td>是自1915年起由胡適、陳獨秀、蔡元培等知識分子推動的思想文化運動。當時中國學界有感於單憑改變政體不足以解決國家的內憂外患，因此主張重整文化，打破舊文化束縛，同時透過辦雜誌、講學等方式提倡民主科學等新思想。新文化運動不但使青年學生更關心國事，為五四運動提供思想文化基礎，更有助推廣白話文的應用。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. 孫中山推動革命 -->
+  <div class="section" id="sun">
+    <div class="section-title">☀️ 孫中山推動革命（課本頁4-6）</div>
+
+    <div class="subsection-title">早年的經歷</div>
+    <div class="info-box">
+      <p>• 孫中山原名<span class="kw" onclick="toggleKw(this)">孫文</span>，年輕時曾在廣州、檀香山、香港等地求學。</p>
+      <p>• 曾上書<span class="kw" onclick="toggleKw(this)">李鴻章</span>提出改革，但未獲採納。</p>
+      <p>• 不再寄望清廷，決定推動<span class="kw" onclick="toggleKw(this)">反清革命</span>。</p>
+    </div>
+
+    <div class="subsection-title">創立興中會 → 成立同盟會 → 武裝起義</div>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>創立興中會（1894）</strong><br>
+          孫中山創立<span class="kw" onclick="toggleKw(this)">興中會</span>，提出「驅除韃虜，恢復中華，<span class="kw" onclick="toggleKw(this)">創立合眾政府</span>」。次年在香港成立總部，後來策劃<span class="kw" onclick="toggleKw(this)">廣州起義</span>，但事洩失敗。<span class="kw" onclick="toggleKw(this)">華興會</span>、<span class="kw" onclick="toggleKw(this)">光復會</span>等革命組織相繼成立，革命運動日趨蓬勃。
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>成立中國同盟會（1905）</strong><br>
+          聯合其他革命組織，組成<span class="kw" onclick="toggleKw(this)">中國同盟會</span>。提出綱領「驅除韃虜，恢復中華，<span class="kw" onclick="toggleKw(this)">創立民國</span>，<span class="kw" onclick="toggleKw(this)">平均地權</span>」。「三民主義」為「<span class="kw" onclick="toggleKw(this)">民族</span>」、「<span class="kw" onclick="toggleKw(this)">民權</span>」、「<span class="kw" onclick="toggleKw(this)">民生</span>」，成為革命運動指導思想。
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>武裝起義</strong><br>
+          組織多次武裝起義失敗，徐錫麟、<span class="kw" onclick="toggleKw(this)">秋瑾</span>於安慶起義中不幸殉難。1911年，<span class="kw" onclick="toggleKw(this)">黃興</span>率領革命黨人在廣州起義失敗，傷亡者眾，死難者稱為「<span class="kw" onclick="toggleKw(this)">黃花崗七十二烈士</span>」。革命黨人的精神喚醒民眾推翻清廷的決心。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 辛亥革命 -->
+  <div class="section" id="xinhai">
+    <div class="section-title">⚡ 辛亥革命的經過及歷史意義（課本頁8-11）</div>
+
+    <div class="subsection-title">經過</div>
+
+    <div class="event-box">
+      <h4>🚂 保路風潮</h4>
+      <ul>
+        <li>清廷把民辦的川漢、粵漢鐵路<span class="kw" onclick="toggleKw(this)">收歸國有</span>，並將修築權轉讓給列強以取得貸款。</li>
+        <li>多地民眾激烈反對，湖南、廣州、<span class="kw" onclick="toggleKw(this)">四川</span>紳商更成立「<span class="kw" onclick="toggleKw(this)">保路同志會</span>」抗議。</li>
+        <li>清廷急調<span class="kw" onclick="toggleKw(this)">湖北新軍</span>入川鎮壓，導致當地守備空虛，革命黨人趁機起事。</li>
+      </ul>
+    </div>
+
+    <div class="event-box">
+      <h4>🔫 武昌起義（1911年10月10日）</h4>
+      <ul>
+        <li>起義計劃不慎曝光，革命黨人提前起義，攻下武昌城。</li>
+        <li>推舉<span class="kw" onclick="toggleKw(this)">黎元洪</span>為都督，成立<span class="kw" onclick="toggleKw(this)">湖北軍政府</span>，史稱「<span class="kw" onclick="toggleKw(this)">辛亥革命</span>」。</li>
+      </ul>
+    </div>
+
+    <div class="event-box">
+      <h4>🇨🇳 創立民國</h4>
+      <ul>
+        <li>起義成功後，各省紛紛響應獨立。清廷只能控制北方和西北地區。</li>
+        <li>各省代表籌組<span class="kw" onclick="toggleKw(this)">中華民國臨時政府</span>。</li>
+        <li>孫中山獲推選為<span class="kw" onclick="toggleKw(this)">臨時大總統</span>，在<span class="kw" onclick="toggleKw(this)">南京</span>宣誓就職，<span class="kw" onclick="toggleKw(this)">中華民國</span>成立。</li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">歷史意義</div>
+    <div class="sig-grid">
+      <div class="sig-card">
+        <h4>結束君主專制</h4>
+        <p>不但推翻清廷，更結束中國二千多年的帝制統治。提倡漢、滿、蒙、回、藏「<span class="kw" onclick="toggleKw(this)">共和制度</span>」。</p>
+      </div>
+      <div class="sig-card">
+        <h4>開創民主共和</h4>
+        <p>中華民國實行<span class="kw" onclick="toggleKw(this)">共和制度</span>，人民有權選舉代表、組織議會、參與治理國家，推動政治<span class="kw" onclick="toggleKw(this)">現代化</span>。</p>
+      </div>
+      <div class="sig-card">
+        <h4>革新文化思想</h4>
+        <p>推翻帝制，儒家君臣人倫思想受到衝擊，有利<span class="kw" onclick="toggleKw(this)">思想解放</span>。知識分子引入民主、科學等新思潮。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 香港的角色 -->
+  <div class="section" id="hk">
+    <div class="section-title">🏙️ 香港在革命運動中的角色（課本頁12-13）</div>
+    <div class="hk-grid">
+      <div class="hk-box">
+        <h4>🧠 革命思想發源地</h4>
+        <ul>
+          <li>孫中山年青時在香港讀書，接觸<span class="kw" onclick="toggleKw(this)">西方文化思想</span>，更建立了<span class="kw" onclick="toggleKw(this)">人際網絡</span>。</li>
+          <li>萌生革命想法，有助日後推動革命。</li>
+        </ul>
+      </div>
+      <div class="hk-box">
+        <h4>📋 革命運動策劃地</h4>
+        <ul>
+          <li>香港受英國管治，革命黨人活動較安全。</li>
+          <li>香港是轉口港，<span class="kw" onclick="toggleKw(this)">交通便捷</span>，即使失敗，黨人亦可到香港<span class="kw" onclick="toggleKw(this)">匿藏</span>，或<span class="kw" onclick="toggleKw(this)">乘船逃往國外</span>。</li>
+          <li>十次起義中，有<span class="kw" onclick="toggleKw(this)">六次</span>是以香港為策劃基地。</li>
+        </ul>
+      </div>
+      <div class="hk-box">
+        <h4>💰 革命經費來源地</h4>
+        <ul>
+          <li>香港是<span class="kw" onclick="toggleKw(this)">募集</span>和<span class="kw" onclick="toggleKw(this)">轉匯革命經費</span>的重要地方。</li>
+          <li>當時港商<span class="kw" onclick="toggleKw(this)">黃詠商</span>、<span class="kw" onclick="toggleKw(this)">李紀堂</span>等不但捐助起義軍餉，還提供革命報刊出版經費。</li>
+        </ul>
+      </div>
+      <div class="hk-box">
+        <h4>📰 革命宣傳基地</h4>
+        <ul>
+          <li>香港言論相對<span class="kw" onclick="toggleKw(this)">自由</span>，適合<span class="kw" onclick="toggleKw(this)">辦報</span>。</li>
+          <li><span class="kw" onclick="toggleKw(this)">陳少白</span>在香港創辦《<span class="kw" onclick="toggleKw(this)">中國日報</span>》，介紹西方政治學說和革命黨人主張，宣傳革命思想。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 袁世凱專制 -->
+  <div class="section" id="yuan">
+    <div class="section-title">👑 袁世凱的專制統治（課本頁16-22）</div>
+    <div class="info-box">
+      <p>民國初年，以<span class="kw" onclick="toggleKw(this)">袁世凱</span>為首、出身<span class="kw" onclick="toggleKw(this)">北洋</span>新軍的軍人主導政局，形成<span class="kw" onclick="toggleKw(this)">軍閥政治</span>。破壞共和體制，出現軍閥割據。</p>
+    </div>
+
+    <div class="event-box">
+      <h4>宋教仁被刺</h4>
+      <ul>
+        <li>同盟會改組為<span class="kw" onclick="toggleKw(this)">國民黨</span>，由宋教仁主持。</li>
+        <li>在國會選舉中取得最多議席。籌組<span class="kw" onclick="toggleKw(this)">責任內閣</span>約束總統權力。</li>
+        <li>其間遭人<span class="kw" onclick="toggleKw(this)">暗殺</span>，袁世凱親信被發現牽涉其中。</li>
+      </ul>
+    </div>
+
+    <div class="event-box">
+      <h4>向外國借貸</h4>
+      <ul>
+        <li>袁世凱未經國會同意，向<span class="kw" onclick="toggleKw(this)">外國銀行</span>借款以擴充<span class="kw" onclick="toggleKw(this)">私人軍備</span>。</li>
+        <li>多省拒絕承認該款項，袁世凱藉機罷免三名國民黨籍都督。</li>
+      </ul>
+    </div>
+
+    <div class="event-box">
+      <h4>二次革命</h4>
+      <ul>
+        <li>被罷都督組織「<span class="kw" onclick="toggleKw(this)">討袁軍</span>」反抗。</li>
+        <li>南方多個省份響應，史稱「<span class="kw" onclick="toggleKw(this)">二次革命</span>」。</li>
+        <li>但實力不及袁軍，僅兩個月便被擊敗。孫中山、黃興等被迫<span class="kw" onclick="toggleKw(this)">流亡海外</span>。</li>
+      </ul>
+    </div>
+
+    <div class="event-box">
+      <h4>洪憲帝制</h4>
+      <ul>
+        <li>袁世凱接受日本提出的「<span class="kw" onclick="toggleKw(this)">二十一條</span>」，換取日本支持帝制。</li>
+        <li>於1915年底接受帝位，改國號為「<span class="kw" onclick="toggleKw(this)">中華帝國</span>」，年號「<span class="kw" onclick="toggleKw(this)">洪憲</span>」。</li>
+        <li>但在護國運動、親信和外國反對下，帝制僅維持<span class="kw" onclick="toggleKw(this)">八十三日</span>便撤銷，袁世凱不久病逝。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. 軍閥混戰 -->
+  <div class="section" id="warlords">
+    <div class="section-title">⚔️ 軍閥混戰（課本頁24-26）</div>
+    <div class="info-box">
+      <p>袁世凱死後，北洋軍閥分裂成<span class="kw" onclick="toggleKw(this)">皖</span>、<span class="kw" onclick="toggleKw(this)">直</span>、<span class="kw" onclick="toggleKw(this)">奉</span>三系，互相爭奪北京政府的控制權，各地亦陷入軍閥割據混戰的局面。</p>
+    </div>
+    <div class="wl-grid">
+      <div class="wl-card">
+        <h5>府院之爭</h5>
+        <p>袁世凱死後，<span class="kw" onclick="toggleKw(this)">黎元洪</span>繼任總統，<span class="kw" onclick="toggleKw(this)">段祺瑞</span>任國務總理。兩人就中國是否參加第一次世界大戰等問題<span class="kw" onclick="toggleKw(this)">不合</span>，形成「府院之爭」，兩人皆無法有效施政。</p>
+      </div>
+      <div class="wl-card">
+        <h5>張勳復辟（1917）</h5>
+        <p>黎元洪召請張勳入京調停，張勳乘機擁立<span class="kw" onclick="toggleKw(this)">溥儀</span>復位，但僅<span class="kw" onclick="toggleKw(this)">十二日</span>便被段祺瑞率軍驅逐。史稱「<span class="kw" onclick="toggleKw(this)">張勳復辟</span>」，黎元洪引咎辭職。</p>
+      </div>
+      <div class="wl-card">
+        <h5>護法運動</h5>
+        <p>段祺瑞執政後廢棄《<span class="kw" onclick="toggleKw(this)">臨時約法</span>》。孫中山南下廣州，組織<span class="kw" onclick="toggleKw(this)">護法軍政府</span>，以「維護約法」為名，發動<span class="kw" onclick="toggleKw(this)">護法運動</span>，但因西南軍閥消極應付而失敗。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. 五四運動 -->
+  <div class="section" id="may4">
+    <div class="section-title">✊ 五四運動（課本頁30-34）</div>
+
+    <div class="subsection-title">外交挫折——巴黎和會（1919）</div>
+    <div class="may4-timeline">
+      <div class="may4-item">
+        <div class="may4-date">1915</div>
+        <div class="may4-desc">日本向袁世凱提出「<span class="kw" onclick="toggleKw(this)">二十一條</span>」，要求中國承認日本在山東等地的特權。</div>
+      </div>
+      <div class="may4-item">
+        <div class="may4-date">1918</div>
+        <div class="may4-desc">段祺瑞執政期間，祕密與日本簽訂《<span class="kw" onclick="toggleKw(this)">山東問題換文</span>》，將山東和東北地區的鐵路、礦產和森林抵押。</div>
+      </div>
+      <div class="may4-item">
+        <div class="may4-date">1919年初</div>
+        <div class="may4-desc">第一次世界大戰結束，在<span class="kw" onclick="toggleKw(this)">巴黎和會</span>上，中國代表提出收回德國在山東的權益，但列強拒絕，決定把山東權益轉讓給<span class="kw" onclick="toggleKw(this)">日本</span>。</div>
+      </div>
+      <div class="may4-item">
+        <div class="may4-date">1919年5月4日</div>
+        <div class="may4-desc">北京學生在天安門廣場集會，提出「<span class="kw" onclick="toggleKw(this)">外爭國權，內除國賊</span>」、「<span class="kw" onclick="toggleKw(this)">取消二十一條</span>」等口號，要求罷免親日官員<span class="kw" onclick="toggleKw(this)">曹汝霖</span>、章宗祥、陸宗輿。五四運動正式爆發。</div>
+      </div>
+    </div>
+
+    <div class="subsection-title">五四運動的背景、經過與結果</div>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <h5>背景</h5>
+        <p>新文化運動喚醒青年學生關心國事；巴黎和會外交失敗激發民族情緒；《山東問題換文》令國人憤慨。</p>
+      </div>
+      <div class="impact-card">
+        <h5>經過</h5>
+        <p>北京學生集會示威；北洋政府逮捕學生；各地工人罷工、商人罷市，抵制<span class="kw" onclick="toggleKw(this)">日貨</span>；運動蔓延全國。</p>
+      </div>
+      <div class="impact-card">
+        <h5>結果</h5>
+        <p>北洋政府釋放被捕學生；罷免<span class="kw" onclick="toggleKw(this)">章宗祥</span>、<span class="kw" onclick="toggleKw(this)">曹汝霖</span>、<span class="kw" onclick="toggleKw(this)">陸宗輿</span>三人；中國代表拒絕在《凡爾賽和約》上簽字。</p>
+      </div>
+      <div class="impact-card">
+        <h5>影響</h5>
+        <p>推動白話文普及；<span class="kw" onclick="toggleKw(this)">馬克思主義</span>在中國傳播；催生中國共產黨的成立（1921年）。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 民國社會發展 -->
+  <div class="section" id="social">
+    <div class="section-title">🎭 民國初年的社會文化發展（課本頁36-40）</div>
+    <div class="social-grid">
+      <div class="social-card">
+        <h4>📝 白話文運動</h4>
+        <ul>
+          <li>胡適、陳獨秀等倡導以<span class="kw" onclick="toggleKw(this)">白話文</span>取代文言文。</li>
+          <li>1920年教育部<span class="kw" onclick="toggleKw(this)">規定白話文授課</span>，普及教育。</li>
+          <li>魯迅以白話文撰寫《<span class="kw" onclick="toggleKw(this)">狂人日記</span>》等，深受歡迎。</li>
+          <li>有助普通民眾接受教育，推動文化普及。</li>
+        </ul>
+      </div>
+      <div class="social-card">
+        <h4>👩 女性地位提升</h4>
+        <ul>
+          <li>辛亥革命後，女性參與社會事務漸受重視。</li>
+          <li>部分省份出現<span class="kw" onclick="toggleKw(this)">女性省議員</span>，如「中國出現首位女性省議員」。</li>
+          <li>女性受教育的機會增加，<span class="kw" onclick="toggleKw(this)">纏足</span>陋習逐漸廢除。</li>
+          <li>女性開始參與社會工作，地位逐步提升。</li>
+        </ul>
+      </div>
+      <div class="social-card">
+        <h4>🎬 消閒娛樂</h4>
+        <ul>
+          <li>西方消閒文化傳入，電影院、舞廳等娛樂場所在城市興起。</li>
+          <li>報章、雜誌數量大增，閱讀成為普遍消閒活動。</li>
+          <li>咖啡館、茶樓成為市民社交場所。</li>
+          <li>體育運動普及，現代<span class="kw" onclick="toggleKw(this)">體育文化</span>逐步發展。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 事件時序 -->
+  <div class="section" id="timeline">
+    <div class="section-title">📅 事件總時序（1894–1922）</div>
+    <table class="timeline-table">
+      <thead>
+        <tr><th style="width:80px">年份</th><th>事件</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="yr">1894</td><td class="ev"><span class="kw" onclick="toggleKw(this)">興中會</span>成立（檀香山）</td></tr>
+        <tr><td class="yr">1895</td><td class="ev">廣州起義失敗</td></tr>
+        <tr><td class="yr">1900</td><td class="ev">惠州起義失敗</td></tr>
+        <tr><td class="yr">1905</td><td class="ev"><span class="kw" onclick="toggleKw(this)">中國同盟會</span>成立（東京）；三民主義提出</td></tr>
+        <tr><td class="yr">1910</td><td class="ev">廣州起義（黃花崗之役）失敗</td></tr>
+        <tr><td class="yr">1911年<br>10月10日</td><td class="ev"><span class="kw" onclick="toggleKw(this)">武昌起義</span>（辛亥革命）爆發；各省紛紛響應</td></tr>
+        <tr><td class="yr">1912</td><td class="ev">中華民國成立；溥儀退位，清朝滅亡；孫中山讓位袁世凱</td></tr>
+        <tr><td class="yr">1913</td><td class="ev"><span class="kw" onclick="toggleKw(this)">宋教仁被暗殺</span>；二次革命爆發及失敗</td></tr>
+        <tr><td class="yr">1915</td><td class="ev">日本提出「<span class="kw" onclick="toggleKw(this)">二十一條</span>」；袁世凱稱帝（洪憲帝制）</td></tr>
+        <tr><td class="yr">1916</td><td class="ev">袁世凱撤銷帝制，不久病逝；護國運動成功</td></tr>
+        <tr><td class="yr">1917</td><td class="ev">府院之爭；<span class="kw" onclick="toggleKw(this)">張勳復辟</span>（十二日後失敗）；孫中山發動護法運動</td></tr>
+        <tr><td class="yr">1919</td><td class="ev"><span class="kw" onclick="toggleKw(this)">五四運動</span>爆發（5月4日）；中國拒簽《凡爾賽和約》</td></tr>
+        <tr><td class="yr">1920</td><td class="ev">教育部<span class="kw" onclick="toggleKw(this)">規定白話文授課</span>；中國出現首位女性省議員</td></tr>
+        <tr><td class="yr">1921</td><td class="ev">中國共產黨成立</td></tr>
+        <tr><td class="yr">1922</td><td class="ev">護法運動失敗，孫中山離開廣州</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+let allRevealed = false;
+
+function toggleAll() {
+  allRevealed = !allRevealed;
+  document.querySelectorAll('.kw').forEach(el => {
+    el.classList.toggle('hidden', !allRevealed);
+  });
+  const btn = document.getElementById('toggleBtn');
+  const pill = document.getElementById('togglePill');
+  if (allRevealed) {
+    btn.innerHTML = '🔓 顯示關鍵詞 <span class="pill" id="togglePill">隱藏中</span>';
+  } else {
+    btn.innerHTML = '🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>';
+  }
+}
+
+function toggleKw(el) {
+  el.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
