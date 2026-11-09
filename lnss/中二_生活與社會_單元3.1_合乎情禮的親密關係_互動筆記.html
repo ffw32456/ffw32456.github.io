@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>單元3.1 合乎情禮的親密關係 互動筆記</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #b5295a;
+    --rose-dark: #7d1a3c;
+    --rose-mid: #d94a76;
+    --rose-light: #f0a0bc;
+    --rose-bg: #fdf3f7;
+    --rose-bg2: #fce0ec;
+    --ink: #1a1a1a;
+    --ink2: #3a3a3a;
+    --paper: #fffbfd;
+    --border: #f0bcd0;
+    --green: #2a6e3a;
+    --red: #b01c1c;
+    --amber: #c07010;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans HK', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: var(--rose-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem;
+    color: #ffd0e0;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .btn-toggle-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--rose-mid);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 16px;
+    cursor: pointer;
+    font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background .2s;
+    white-space: nowrap;
+  }
+  .btn-toggle-all:hover { background: #e8608a; }
+  .btn-toggle-all .pill {
+    background: rgba(255,255,255,0.25);
+    border-radius: 12px;
+    padding: 1px 10px;
+    font-size: 12px;
+  }
+  .toc-row {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 12px 8px;
+    scrollbar-width: none;
+  }
+  .toc-row::-webkit-scrollbar { display: none; }
+  .toc-row a {
+    color: #ffb8d0;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+    transition: background .18s, color .18s;
+  }
+  .toc-row a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── PAGE WRAP ── */
+  .page-wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* ── SECTIONS ── */
+  .section { scroll-margin-top: 130px; margin-bottom: 44px; }
+  .part-badge {
+    display: inline-block;
+    background: var(--rose-mid);
+    color: #fff;
+    font-family: 'Noto Serif HK', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 2px 10px;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.3rem;
+    color: var(--rose-dark);
+    border-left: 5px solid var(--rose);
+    padding-left: 12px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .subsection-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem;
+    color: var(--rose);
+    margin: 20px 0 10px;
+    font-weight: 700;
+  }
+  .sub2-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--rose-dark);
+    margin: 14px 0 8px;
+  }
+
+  /* ── KEYWORDS ── */
+  .kw {
+    border-bottom: 2.5px solid var(--rose);
+    cursor: pointer;
+    transition: background .15s, color .15s;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+  .kw.hidden {
+    background: var(--ink);
+    color: var(--ink);
+    border-bottom: none;
+    border-radius: 3px;
+    padding: 0 3px;
+  }
+  .kw:not(.hidden):hover { background: var(--rose-bg2); }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--rose-dark) 0%, var(--rose-mid) 100%);
+    color: #fff;
+    padding: 28px 20px 22px;
+    margin-bottom: 32px;
+    border-radius: 12px;
+  }
+  .page-header h1 {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .page-header p { font-size: 13.5px; color: #ffd0e0; }
+
+  /* ── COMPARE TABLE ── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 14px; }
+  .cmp-table th {
+    background: var(--rose-dark);
+    color: #ffd0e0;
+    padding: 9px 14px;
+    text-align: center;
+    font-weight: 700;
+  }
+  .cmp-table th.row-head { text-align: left; }
+  .cmp-table td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+  .cmp-table tr:nth-child(even) td { background: var(--rose-bg); }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .row-label { font-weight: 700; color: var(--rose-dark); background: var(--rose-bg2) !important; white-space: nowrap; }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .card {
+    background: var(--rose-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    border-top: 4px solid var(--rose-mid);
+  }
+  .card h4 { color: var(--rose-dark); font-weight: 700; font-size: 14px; margin-bottom: 7px; }
+  .card ul { padding-left: 18px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .card li { margin-bottom: 4px; }
+  .card p { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--rose-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px 18px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink2);
+    margin-bottom: 14px;
+  }
+  .info-box p { margin-bottom: 5px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .info-box ul { padding-left: 20px; }
+  .info-box li { margin-bottom: 4px; }
+
+  /* ── TRIANGLE DIAGRAM ── */
+  .triangle-wrap {
+    background: var(--rose-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .triangle-title { text-align: center; font-family: 'Noto Serif HK', serif; font-weight: 700; color: var(--rose-dark); font-size: 1rem; margin-bottom: 14px; }
+  .triangle-nodes {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tri-node {
+    flex: 1;
+    min-width: 160px;
+    background: #fff;
+    border: 2px solid var(--rose-light);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .tri-node .node-name { font-family: 'Noto Serif HK', serif; font-size: 1.1rem; color: var(--rose-dark); font-weight: 700; margin-bottom: 8px; }
+  .tri-node ul { text-align: left; padding-left: 16px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .tri-center { text-align: center; font-size: 13.5px; color: var(--rose); font-weight: 700; padding: 8px 0; }
+
+  /* ── NOTE CARDS ── */
+  .note-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .note-card {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    position: relative;
+    border-top: 4px solid var(--rose-mid);
+  }
+  .note-card .nc-label {
+    display: inline-block;
+    background: var(--rose-mid);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 1px 10px;
+    margin-bottom: 8px;
+  }
+  .note-card h4 { font-weight: 700; color: var(--rose-dark); font-size: 14px; margin-bottom: 6px; }
+  .note-card ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .note-card li { margin-bottom: 4px; }
+  .note-card p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .tick { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); font-weight: 700; }
+
+  /* ── STOP BOXES ── */
+  .stop-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .stop-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 0;
+    background: var(--rose-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  .stop-letter {
+    background: var(--rose-dark);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .stop-body { padding: 12px 16px; }
+  .stop-en { font-weight: 700; color: var(--rose); font-size: 13.5px; }
+  .stop-zh { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── CONSEQUENCE TABLE ── */
+  .con-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 14px; }
+  .con-table th { background: var(--rose-dark); color: #ffd0e0; padding: 8px 14px; text-align: left; font-weight: 700; }
+  .con-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 13.5px; }
+  .con-table tr:nth-child(even) td { background: var(--rose-bg); }
+  .con-table tr:last-child td { border-bottom: none; }
+  .con-table .cl { font-weight: 700; color: var(--rose-dark); white-space: nowrap; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── HIGHLIGHT ── */
+  .hl-green { color: var(--green); font-weight: 700; }
+  .hl-red { color: var(--red); font-weight: 700; }
+  .hl-amber { color: var(--amber); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-top">
+    <div class="header-title">💕 單元3.1 合乎情禮的親密關係 互動筆記</div>
+    <button class="btn-toggle-all" onclick="toggleAll()" id="toggleBtn">
+      🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>
+    </button>
+  </div>
+  <div class="toc-row">
+    <a href="#s1">一 青少年對戀愛的認知</a>
+    <a href="#s1-2">友誼vs戀愛</a>
+    <a href="#s1-3">戀愛元素</a>
+    <a href="#s1-4">戀愛態度</a>
+    <a href="#s1-5">關係結束</a>
+    <a href="#s2">二 青少年與親密關係</a>
+    <a href="#s2-1">戀愛與性</a>
+    <a href="#s2-2">訂定界限</a>
+    <a href="#s2-3">STOP策略</a>
+    <a href="#s2-4">性幻想與性衝動</a>
+    <a href="#s3">三 不恰當處理後果</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>單元3.1 合乎情禮的親密關係</h1>
+    <p>生活與社會互動溫習筆記 ‧ 點擊粉紅關鍵詞可隱藏/顯示答案</p>
+  </div>
+
+  <!-- ══════════════ 部分一 ══════════════ -->
+  <div class="section" id="s1">
+    <div class="part-badge">第一部分</div>
+    <div class="section-title">青少年對戀愛的正確認知</div>
+
+    <!-- 1. 友誼和戀愛的異同 -->
+    <div class="subsection-title" id="s1-2">1 友誼和戀愛的異同</div>
+    <div class="info-box">
+      <p>戀愛建基於友誼之上，情侶之間會有強烈的愛意，渴望有<span class="kw" onclick="toggleKw(this)">親密</span>的接觸，並對彼此的親密關係有所<span class="kw" onclick="toggleKw(this)">承擔</span>。</p>
+    </div>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="row-head" colspan="2">比較項目</th>
+          <th>🤝 友誼</th>
+          <th>💑 戀愛</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label" rowspan="1">相同<br>之處</td>
+          <td class="row-label">感情基礎</td>
+          <td colspan="2">友誼和戀愛須建基於雙方的了解、<span class="kw" onclick="toggleKw(this)">信任</span>和<span class="kw" onclick="toggleKw(this)">包容</span></td>
+        </tr>
+        <tr>
+          <td class="row-label" rowspan="6">相異<br>之處</td>
+          <td class="row-label">對象的數量</td>
+          <td>對象較<span class="kw" onclick="toggleKw(this)">廣</span>；數量沒有限制，可接納他人加入</td>
+          <td>對象只有一個，不容許<span class="kw" onclick="toggleKw(this)">第三者</span>介入</td>
+        </tr>
+        <tr>
+          <td class="row-label">付出程度</td>
+          <td>朋友願意為彼此<span class="kw" onclick="toggleKw(this)">付出</span></td>
+          <td>雙方願意為對方付出，且付出程度較友誼<span class="kw" onclick="toggleKw(this)">高</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">安全感</td>
+          <td>朋友之間所需的安全感程度較為<span class="kw" onclick="toggleKw(this)">低</span></td>
+          <td>雙方需要較<span class="kw" onclick="toggleKw(this)">高</span>的安全感</td>
+        </tr>
+        <tr>
+          <td class="row-label">相處方式</td>
+          <td>接納單獨或<span class="kw" onclick="toggleKw(this)">集體</span>活動</td>
+          <td>戀愛活動多屬<span class="kw" onclick="toggleKw(this)">單獨約會</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">目標和持久性</td>
+          <td>友誼通常講求<span class="kw" onclick="toggleKw(this)">投契</span>和合拍；一般能接受友誼因環境改變而<span class="kw" onclick="toggleKw(this)">轉淡</span></td>
+          <td>雙方常以<span class="kw" onclick="toggleKw(this)">婚姻</span>作為目標；一般期望戀愛關係不因環境改變而<span class="kw" onclick="toggleKw(this)">變遷</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">選擇和取捨態度</td>
+          <td>較容易以理智選擇和取捨<span class="kw" onclick="toggleKw(this)">朋友</span></td>
+          <td>較難以<span class="kw" onclick="toggleKw(this)">理智</span>選擇和取捨感情</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 2. 什麼是戀愛 -->
+    <div class="subsection-title" id="s1-3">2 甚麼是戀愛？——「愛情三角」理論</div>
+    <div class="triangle-wrap">
+      <div class="triangle-title">「<span class="kw" onclick="toggleKw(this)">愛情三角</span>」理論：健康戀愛關係應具備親密、激情和承諾三個元素</div>
+      <p style="text-align:center;font-size:13.5px;color:var(--ink2);margin-bottom:14px">在戀愛的不同階段，三個元素的<span class="kw" onclick="toggleKw(this)">分量比重</span>會出現變化；只有三個元素達到<span class="kw" onclick="toggleKw(this)">平衡</span>，才能發展出穩定而長久的愛情關係。</p>
+      <div class="triangle-nodes">
+        <div class="tri-node">
+          <div class="node-name">親密</div>
+          <ul>
+            <li>是愛情中的<span class="kw" onclick="toggleKw(this)">情感</span>部分</li>
+            <li>雙方互相信賴和<span class="kw" onclick="toggleKw(this)">補諒</span>，尋求<span class="kw" onclick="toggleKw(this)">親密</span>的感覺</li>
+          </ul>
+        </div>
+        <div class="tri-node">
+          <div class="node-name">激情</div>
+          <ul>
+            <li>愛情中的<span class="kw" onclick="toggleKw(this)">動機</span>部分</li>
+            <li>雙方會產生<span class="kw" onclick="toggleKw(this)">浪漫</span>的感覺和<span class="kw" onclick="toggleKw(this)">情慾</span>的追求</li>
+          </ul>
+        </div>
+        <div class="tri-node">
+          <div class="node-name">承諾</div>
+          <ul>
+            <li>是愛情中的<span class="kw" onclick="toggleKw(this)">理性</span>部分</li>
+            <li>專一向對方付出感情，與對方維持<span class="kw" onclick="toggleKw(this)">長久</span>的關係</li>
+            <li>願意<span class="kw" onclick="toggleKw(this)">承擔</span>愛的責任</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.2 戀愛應抱持的態度（目的） -->
+    <div class="subsection-title" id="s1-4">2.2 戀愛應抱持的態度——戀愛的目的</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">A</div>
+        <h4>滿足情感所需</h4>
+        <p>青春期的<span class="kw" onclick="toggleKw(this)">生理</span>改變促使青少年容易受到異性吸引，友誼已不能滿足在<span class="kw" onclick="toggleKw(this)">愛與被愛</span>的情感需要，於是懂憬愛情，希望尋求更親密的關係。</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">B</div>
+        <h4>分享人生</h4>
+        <p>在戀愛中，雙方可以互相傾訴、分享自己的經歷和<span class="kw" onclick="toggleKw(this)">感受</span>，共同度過生活中的喜與憂，在心靈上得到滿足和<span class="kw" onclick="toggleKw(this)">煎熬</span>。</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">C</div>
+        <h4>互相扶持</h4>
+        <p>戀愛雙方能互相<span class="kw" onclick="toggleKw(this)">鼓勵</span>、互相扶持；令彼此更有勇氣與力量面對人生中的各種困難和<span class="kw" onclick="toggleKw(this)">挑戰</span>。當遇上問題時，伴侶可以共同商議和<span class="kw" onclick="toggleKw(this)">解決</span>，一起成長。</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">D</div>
+        <h4>建立家庭</h4>
+        <p>戀愛是<span class="kw" onclick="toggleKw(this)">婚姻</span>的起點，是兩個人互相了解、互相<span class="kw" onclick="toggleKw(this)">吸引</span>的過程。當戀愛<span class="kw" onclick="toggleKw(this)">昇華</span>後，兩人便希望締結婚姻，建立<span class="kw" onclick="toggleKw(this)">家庭</span>，進入共同的人生旅程。</p>
+      </div>
+    </div>
+
+    <!-- 2.3 戀愛應抱持的態度 -->
+    <div class="subsection-title">2.3 戀愛應抱持的態度——應有態度</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">A</div>
+        <h4>注重心靈交流</h4>
+        <ul>
+          <li><span class="cross">✗</span> 不應只注重<span class="kw" onclick="toggleKw(this)">外貌</span></li>
+          <li><span class="tick">✓</span> 應着重內涵、<span class="kw" onclick="toggleKw(this)">修養</span>、<span class="kw" onclick="toggleKw(this)">價值觀</span>等</li>
+          <li><span class="tick">✓</span> 應了解對方的<span class="kw" onclick="toggleKw(this)">內心世界</span>，真誠分享彼此的<span class="kw" onclick="toggleKw(this)">想法</span>和感受</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">B</div>
+        <h4>互相支持</h4>
+        <ul>
+          <li><span class="tick">✓</span> 應多了解對方的需要和<span class="kw" onclick="toggleKw(this)">感受</span>，主動關心和幫助對方</li>
+          <li><span class="tick">✓</span> 應在<span class="kw" onclick="toggleKw(this)">順境</span>時一起分享，在逆境時一起<span class="kw" onclick="toggleKw(this)">面對</span>，共同學習和成長</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">C</div>
+        <h4>平等尊重</h4>
+        <ul>
+          <li><span class="tick">✓</span> 應該容許彼此有各自的生活空間和<span class="kw" onclick="toggleKw(this)">自由</span></li>
+          <li><span class="tick">✓</span> 應重視平等，<span class="kw" onclick="toggleKw(this)">尊重</span>對方的想法和感受</li>
+          <li><span class="cross">✗</span> 不要盲目<span class="kw" onclick="toggleKw(this)">遷就</span>對方而失去自己的原則和個性</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">D</div>
+        <h4>愛護珍惜</h4>
+        <ul>
+          <li><span class="tick">✓</span> 珍惜對方，多接納和<span class="kw" onclick="toggleKw(this)">包容</span>，經常心存<span class="kw" onclick="toggleKw(this)">感恩</span>，用心培養感情</li>
+          <li><span class="tick">✓</span> 愛護對方：坦白、真誠地交往；處處顧及對方的<span class="kw" onclick="toggleKw(this)">感受</span></li>
+          <li><span class="cross">✗</span> 不做<span class="kw" onclick="toggleKw(this)">傷害</span>對方的事情</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">E</div>
+        <h4>理性</h4>
+        <ul>
+          <li><span class="tick">✓</span> 先了解自己對戀愛的<span class="kw" onclick="toggleKw(this)">需要</span>，思考對方是否合適的對象，理性地作出選擇</li>
+          <li><span class="cross">✗</span> 不要將所有<span class="kw" onclick="toggleKw(this)">時間</span>和心力都投放到戀愛之中，要兼顧生活的不同範疇，如<span class="kw" onclick="toggleKw(this)">學業</span>、家人關係、正常社交活動等</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">F</div>
+        <h4>負責任</h4>
+        <ul>
+          <li><span class="tick">✓</span> 建立戀愛關係時要認真和<span class="kw" onclick="toggleKw(this)">投入</span></li>
+          <li><span class="cross">✗</span> 不應抱人有我有的<span class="kw" onclick="toggleKw(this)">從眾</span>心態</li>
+          <li><span class="tick">✓</span> 雙方應彼此付出，向對方作出<span class="kw" onclick="toggleKw(this)">承諾</span>，誠實、專一，承擔作為戀人的責任</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. 戀愛關係結束 -->
+    <div class="subsection-title" id="s1-5">3 戀愛關係結束的因素與處理方法</div>
+    <div class="sub2-title">3.1 導致戀愛關係結束的因素</div>
+    <div class="card-grid">
+      <div class="card" style="border-top-color:var(--rose)">
+        <h4>A 個人因素</h4>
+        <ul>
+          <li><strong>性格和<span class="kw" onclick="toggleKw(this)">價值觀</span>不合</strong>：雙方可能發現彼此在個性、興趣、價值觀上有很大差異，因而容易產生衝突，甚至分手</li>
+          <li><strong>感情<span class="kw" onclick="toggleKw(this)">轉淡</span></strong>：戀愛初期充滿激情，但<span class="kw" onclick="toggleKw(this)">新鮮感</span>退減，感情由熱情逐漸轉為<span class="kw" onclick="toggleKw(this)">平淡</span>；若雙方無意<span class="kw" onclick="toggleKw(this)">維繫</span>感情，最終便會分手</li>
+          <li><strong><span class="kw" onclick="toggleKw(this)">第三者</span>介入</strong>：若其中一方<span class="kw" onclick="toggleKw(this)">移情別戀</span>，雙方之間的互信和<span class="kw" onclick="toggleKw(this)">尊重</span>會被破壞，戀愛關係亦難以維持</li>
+          <li><strong>學業或工作壓力</strong>：缺乏<span class="kw" onclick="toggleKw(this)">時間</span>跟對方<span class="kw" onclick="toggleKw(this)">見面</span>和維繫感情，致使感情終結</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--rose)">
+        <h4>B 家庭因素</h4>
+        <p>青少年處於求學階段，<span class="kw" onclick="toggleKw(this)">心智</span>或尚未成熟，父母可能擔心子女過分投入戀愛關係，為其學業和<span class="kw" onclick="toggleKw(this)">身心</span>帶來負面影響，因而干預甚至阻止，以致戀愛關係終結。</p>
+      </div>
+      <div class="card" style="border-top-color:var(--rose)">
+        <h4>C 經濟因素</h4>
+        <p>談戀愛難免涉及<span class="kw" onclick="toggleKw(this)">消費支出</span>。大部分青少年在經濟上仍然依賴父母，若一方未能滿足對方的<span class="kw" onclick="toggleKw(this)">物質需求</span>時，二人會產生摩擦和爭執，影響感情。</p>
+      </div>
+    </div>
+
+    <div class="sub2-title" style="margin-top:16px">3.2 戀愛關係結束的處理方法</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">A</div>
+        <h4>坦誠交代原因</h4>
+        <ul>
+          <li><span class="tick">✓</span> 以認真、坦誠的態度向對方清楚交代分手原因，期望對方能夠<span class="kw" onclick="toggleKw(this)">接納</span>，和平分手</li>
+          <li><span class="cross">✗</span> 避免指責、<span class="kw" onclick="toggleKw(this)">抨擊</span>、侮辱，或將責任推予對方，要顧及對方的感受</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">B</div>
+        <h4>選擇合適日子</h4>
+        <ul>
+          <li><span class="tick">✓</span> 提出分手前，應預先給予對方<span class="kw" onclick="toggleKw(this)">暗示</span>或信號，讓對方有心理準備</li>
+          <li><span class="cross">✗</span> 不應在<span class="kw" onclick="toggleKw(this)">情人節</span>、<span class="kw" onclick="toggleKw(this)">相識紀念日</span>等特別日子提出分手</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">C</div>
+        <h4>注意分手方式</h4>
+        <ul>
+          <li><span class="tick">✓</span> 應抱持明確、<span class="kw" onclick="toggleKw(this)">堅定</span>的態度，避免免棄棋不定或<span class="kw" onclick="toggleKw(this)">拖泥帶水</span></li>
+          <li>假若對方的情緒較易波動，我們可用<span class="kw" onclick="toggleKw(this)">書信</span>或電話等通訊形式提出分手，減低對對方的刺激</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">D</div>
+        <h4>選擇安全場合</h4>
+        <ul>
+          <li><span class="tick">✓</span> 應選擇安全的分手地點，例如熟悉和<span class="kw" onclick="toggleKw(this)">開揚</span>的公共場所</li>
+          <li><span class="cross">✗</span> 不要在<span class="kw" onclick="toggleKw(this)">幽靜</span>或二人獨處的場所提出分手，以免對方在情緒波動下，作出<span class="kw" onclick="toggleKw(this)">傷害</span>自己或他人的行為</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 部分二 ══════════════ -->
+  <div class="section" id="s2">
+    <div class="part-badge">第二部分</div>
+    <div class="section-title">青少年與親密關係</div>
+
+    <!-- 1. 戀愛與性 -->
+    <div class="subsection-title" id="s2-1">1 戀愛與性</div>
+    <div class="sub2-title">1.1 性與感情基礎</div>
+    <div class="triangle-wrap">
+      <div class="triangle-title">愛、性與婚姻——三者的關係是<span class="kw" onclick="toggleKw(this)">密不可分</span>的</div>
+      <div class="triangle-nodes">
+        <div class="tri-node">
+          <div class="node-name">愛</div>
+          <ul>
+            <li>是建立一段感情關係的元素，透過與喜歡的人建立<span class="kw" onclick="toggleKw(this)">親密</span>關係，追求<span class="kw" onclick="toggleKw(this)">心靈</span>上的親愛</li>
+          </ul>
+        </div>
+        <div class="tri-node">
+          <div class="node-name">性</div>
+          <ul>
+            <li>必須建基於有<span class="kw" onclick="toggleKw(this)">堅實</span>基礎和<span class="kw" onclick="toggleKw(this)">承諾</span>的愛，才能保障雙方的幸福</li>
+          </ul>
+        </div>
+        <div class="tri-node">
+          <div class="node-name">婚姻</div>
+          <ul>
+            <li>是對<span class="kw" onclick="toggleKw(this)">戀人</span>的承諾，向對方表示要維持穩定、<span class="kw" onclick="toggleKw(this)">長久</span>的愛的決心</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub2-title">1.2 拒絕婚前性行為</div>
+    <div class="info-box">
+      <ul>
+        <li>忠誠和保持<span class="kw" onclick="toggleKw(this)">貞潔</span>，是對戀人的<span class="kw" onclick="toggleKw(this)">尊重</span></li>
+        <li><span class="kw" onclick="toggleKw(this)">輕率</span>地發生性關係會削弱彼此的<span class="kw" onclick="toggleKw(this)">信任</span>，影響未來的婚姻生活</li>
+        <li>性行為應緊扣<span class="kw" onclick="toggleKw(this)">婚姻承諾</span>，在婚前保持貞潔，這有助建立健康、<span class="kw" onclick="toggleKw(this)">長久</span>的感情關係</li>
+      </ul>
+    </div>
+
+    <div class="sub2-title">1.3 愛的表達方式</div>
+    <div class="info-box">
+      <p>表達愛意的方式有很多，例如：</p>
+      <ul>
+        <li>① 向對方說<span class="kw" onclick="toggleKw(this)">欣賞</span>及<span class="kw" onclick="toggleKw(this)">讚美</span>的話</li>
+        <li>② 投入<span class="kw" onclick="toggleKw(this)">時間</span>讓雙方培養感情，如逛街、<span class="kw" onclick="toggleKw(this)">看電影</span>等</li>
+        <li>③ 付出時間<span class="kw" onclick="toggleKw(this)">服務</span>對方，如做家務、帶寵物散步等；身體接觸，如<span class="kw" onclick="toggleKw(this)">牽手</span>、擁抱等</li>
+      </ul>
+      <p style="margin-top:8px">→ <span class="kw" onclick="toggleKw(this)">性</span>只是其中一種表達愛意的方式。</p>
+    </div>
+
+    <!-- 2. 訂定親密界限 -->
+    <div class="subsection-title" id="s2-2">2 訂定親密界限的重要性及方法</div>
+    <div class="sub2-title">2.1 訂定親密界限的重要性</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">A</div>
+        <h4>維繫戀愛關係</h4>
+        <p>在戀愛關係中，假如其中一方做出過分的親密行為，可能會令對方受驚、<span class="kw" onclick="toggleKw(this)">反感</span>，或感到不受<span class="kw" onclick="toggleKw(this)">尊重</span>，破壞戀愛關係。→ 戀愛雙方應訂定親密界限，加強彼此的<span class="kw" onclick="toggleKw(this)">溝通</span>和了解，有助維繫雙方的戀愛關係。</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">B</div>
+        <h4>保障身心健康</h4>
+        <ul>
+          <li>性應在<span class="kw" onclick="toggleKw(this)">婚姻</span>內，向最親密和最信任的人展現，否則戀愛關係一旦破裂，會對<span class="kw" onclick="toggleKw(this)">心靈</span>造成很大的傷害和遺憾</li>
+          <li>與患有性病的人進行<span class="kw" onclick="toggleKw(this)">性接觸</span>，有機會感染性病，損害身體健康</li>
+          <li>→ 訂定親密界限可避免<span class="kw" onclick="toggleKw(this)">輕率</span>的性接觸，有助保障身心健康</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">C</div>
+        <h4>避免意外懷孕</h4>
+        <p>青少年因一時衝動而發生<span class="kw" onclick="toggleKw(this)">性行為</span>，可能會引致意外懷孕。→ 訂定親密界限，有助避免意外懷孕。</p>
+      </div>
+    </div>
+
+    <div class="sub2-title">2.2 訂定親密界限的原則和方法</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">A</div>
+        <h4>注重感情基礎</h4>
+        <ul>
+          <li>應了解親密關係必須建基於深厚和<span class="kw" onclick="toggleKw(this)">穩定</span>的感情基礎上，以性來維繫感情而忽略<span class="kw" onclick="toggleKw(this)">心靈</span>的溝通，關係難以持久</li>
+          <li>→ 戀愛雙方應多了解對方的感受和<span class="kw" onclick="toggleKw(this)">需要</span></li>
+          <li>→ 以互相尊重和<span class="kw" onclick="toggleKw(this)">平等對待</span>的態度去處理親密關係</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">B</div>
+        <h4>展開坦誠溝通</h4>
+        <ul>
+          <li>應坦誠、認真地展開對話：</li>
+          <li>① 明確表達自己的<span class="kw" onclick="toggleKw(this)">意願</span></li>
+          <li>② 說明自己的<span class="kw" onclick="toggleKw(this)">想法</span>和理由</li>
+          <li>③ 細心聆聽對方的<span class="kw" onclick="toggleKw(this)">觀點</span></li>
+          <li>→ 為親密行為訂定雙方認同的界線和<span class="kw" onclick="toggleKw(this)">規則</span>，確保雙方都能夠理解和<span class="kw" onclick="toggleKw(this)">遵守</span></li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">C</div>
+        <h4>符合家庭與社會期望</h4>
+        <ul>
+          <li>社會普遍認為婚前性行為是<span class="kw" onclick="toggleKw(this)">越軌</span>的行為，青少年不應<span class="kw" onclick="toggleKw(this)">隨意</span>與異性發生性行為</li>
+          <li>青少年訂定親密界限時應考慮<span class="kw" onclick="toggleKw(this)">父母</span>的期望，以維護家庭的<span class="kw" onclick="toggleKw(this)">和諧</span></li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">D</div>
+        <h4>遵守法律規範</h4>
+        <p>香港法例規定，任何人與<span class="kw" onclick="toggleKw(this)">16</span>歲以下女童發生性行為，即使對方自願，亦屬違法，一經定罪，可被判處<span class="kw" onclick="toggleKw(this)">監禁</span>。→ 青少年不應因<span class="kw" onclick="toggleKw(this)">一時衝動</span>而胡亂發生性行為。</p>
+      </div>
+    </div>
+
+    <!-- STOP -->
+    <div class="subsection-title" id="s2-3">2.3 STOP 拒絕策略</div>
+    <div class="stop-grid">
+      <div class="stop-item">
+        <div class="stop-letter">S</div>
+        <div class="stop-body">
+          <div class="stop-en">Say no</div>
+          <div class="stop-zh">堅決<span class="kw" onclick="toggleKw(this)">拒絕</span>——直接、清晰地說「不好！你別碰我！」</div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-letter">T</div>
+        <div class="stop-body">
+          <div class="stop-en">Tell why not</div>
+          <div class="stop-zh">以<span class="kw" onclick="toggleKw(this)">理由</span>堅決拒絕——說明原因，如「請你尊重我！我不想這麼快當媽媽。」</div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-letter">O</div>
+        <div class="stop-body">
+          <div class="stop-en">Offer another idea</div>
+          <div class="stop-zh">提出其他<span class="kw" onclick="toggleKw(this)">主意</span>——轉移活動，如「不要看電影了，我們外出吃晚飯吧。」</div>
+        </div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-letter">P</div>
+        <div class="stop-body">
+          <div class="stop-en">Promptly leave</div>
+          <div class="stop-zh">離開<span class="kw" onclick="toggleKw(this)">現場</span>——果斷離去，如「時間不早，我要回家了。」</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 性幻想與性衝動 -->
+    <div class="subsection-title" id="s2-4">3 性幻想和性衝動的處理方法</div>
+    <div class="two-col" style="margin-bottom:14px">
+      <div class="card">
+        <h4>3.1 甚麼是性幻想？</h4>
+        <ul>
+          <li>性幻想是指腦海中浮現與性有關的情境和事物</li>
+          <li>可在一定程度上滿足個人的<span class="kw" onclick="toggleKw(this)">性慾望</span>，有助青少年舒緩<span class="kw" onclick="toggleKw(this)">性成熟</span>所帶來的壓力</li>
+          <li>性幻想本身是沒有<span class="kw" onclick="toggleKw(this)">危害</span>的，但過度沉溺會令青少年<span class="kw" onclick="toggleKw(this)">脫離現實</span>，妨礙正常社交和損害精神健康</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>3.2 甚麼是性衝動？</h4>
+        <ul>
+          <li>性衝動是指因身體受到觸覺、視覺、聽覺和<span class="kw" onclick="toggleKw(this)">心理</span>因素等刺激而產生對性行為的<span class="kw" onclick="toggleKw(this)">渴求</span>和需要</li>
+          <li>性衝動是<span class="kw" onclick="toggleKw(this)">青春期</span>常見和正常的生理反應，青少年不必為此感到焦慮或<span class="kw" onclick="toggleKw(this)">內疚</span></li>
+          <li>青少年應保持理性、<span class="kw" onclick="toggleKw(this)">克制</span>，學習控制和處理性衝動</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub2-title">3.3 處理性幻想和性衝動的方法</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">A</div>
+        <h4>避免親密接觸</h4>
+        <ul>
+          <li><span class="kw" onclick="toggleKw(this)">身體</span>上的接觸，如接吻、<span class="kw" onclick="toggleKw(this)">擁抱</span>等，均容易引起性幻想和性衝動</li>
+          <li>→ 與戀人訂立親密界限，避免有過分親密的身體接觸</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">B</div>
+        <h4>減少獨處機會</h4>
+        <ul>
+          <li>二人<span class="kw" onclick="toggleKw(this)">獨處</span>的環境較容易誘發性幻想和性衝動</li>
+          <li>→ 避免在家中、渡假屋、<span class="kw" onclick="toggleKw(this)">幽靜僻靜</span>的公園等較易降低<span class="kw" onclick="toggleKw(this)">個人防線</span>的地方與戀人單獨共處</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">C</div>
+        <h4>遠離色情媒體</h4>
+        <ul>
+          <li><span class="kw" onclick="toggleKw(this)">感官</span>上的刺激容易令青少年產生性幻想和性衝動</li>
+          <li>→ 謝絕各類<span class="kw" onclick="toggleKw(this)">色情資訊</span>，例如色情電影和色情刊物；也不應透過<span class="kw" onclick="toggleKw(this)">互聯網</span>接觸或搜尋色情資訊</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">D</div>
+        <h4>參與羣體活動</h4>
+        <ul>
+          <li>可相約朋友做運動，透過<span class="kw" onclick="toggleKw(this)">消耗體力</span>來緩解性慾</li>
+          <li>可參與義務工作、羣體聚會等，把<span class="kw" onclick="toggleKw(this)">注意力</span>轉移到其他事情上</li>
+          <li>→ 減少性幻想和性衝動</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 部分三 ══════════════ -->
+  <div class="section" id="s3">
+    <div class="part-badge">第三部分</div>
+    <div class="section-title">不恰當處理親密關係的後果</div>
+
+    <!-- 4.1 不恰當處理 -->
+    <div class="subsection-title">4.1 不恰當處理親密關係的情況</div>
+    <div class="two-col" style="margin-bottom:14px">
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>A 情緒勒索</h4>
+        <ul>
+          <li>情緒勒索是一種<span class="kw" onclick="toggleKw(this)">情感操控</span>行為</li>
+          <li>→ 勒索者企圖以<span class="kw" onclick="toggleKw(this)">愛</span>之名來威脅、控制他人接受自己的想法和<span class="kw" onclick="toggleKw(this)">觀點</span>，或迫對方做出不願意的事情</li>
+          <li>→ 被勒索者重視彼此的關係，關心對方的<span class="kw" onclick="toggleKw(this)">感受</span>，或感到恐懼、<span class="kw" onclick="toggleKw(this)">內疚</span>而屈服去滿足對方的要求和作出退讓</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>B 戀愛暴力</h4>
+        <ul>
+          <li>戀愛暴力是指在戀愛關係中，一方針對另一方的任何蓄意的言語、身體、精神或性的過度<span class="kw" onclick="toggleKw(this)">控制</span>、傷害和<span class="kw" onclick="toggleKw(this)">攻擊</span></li>
+          <li>部分青少年情侶在戀愛期望、親密關係<span class="kw" onclick="toggleKw(this)">界線</span>等方面出現分歧，或缺乏有效<span class="kw" onclick="toggleKw(this)">溝通</span>，而與戀人發生衝突，容易導致戀愛暴力</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub2-title">戀愛暴力的類型</div>
+    <table class="con-table">
+      <thead>
+        <tr><th style="width:20%">類型</th><th>描述</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cl">言語暴力</td>
+          <td>持續<span class="kw" onclick="toggleKw(this)">謾罵</span>、以粗言侮辱伴侶、重複<span class="kw" onclick="toggleKw(this)">否定</span>對方等</td>
+        </tr>
+        <tr>
+          <td class="cl">肢體暴力</td>
+          <td><span class="kw" onclick="toggleKw(this)">拳打腳踢</span>、掌摑、推撞、用武器攻擊等</td>
+        </tr>
+        <tr>
+          <td class="cl">精神暴力</td>
+          <td>控制戀人的<span class="kw" onclick="toggleKw(this)">社交</span>自由、偷看其網上聊天記錄、阻礙追求<span class="kw" onclick="toggleKw(this)">個人興趣</span>等</td>
+        </tr>
+        <tr>
+          <td class="cl">性暴力</td>
+          <td>以各種方式威脅戀人發生<span class="kw" onclick="toggleKw(this)">性行為</span>、以暴力要脅對方答應自己的<span class="kw" onclick="toggleKw(this)">性要求</span>等</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 4.2 後果 -->
+    <div class="subsection-title">4.2 不恰當處理親密關係的後果</div>
+    <div class="card-grid">
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>A 損害身心健康</h4>
+        <ul>
+          <li><span class="kw" onclick="toggleKw(this)">戀愛暴力</span>會對受害者造成身心傷害</li>
+          <li>在戀愛中若出現情緒勒索，被勒索者為滿足勒索者的要求，往往會<span class="kw" onclick="toggleKw(this)">壓抑</span>自己的需求和情感，容易產生沮喪、<span class="kw" onclick="toggleKw(this)">焦慮</span>、不安等情緒，造成情緒困擾</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>B 可能感染性病</h4>
+        <ul>
+          <li>與患有性病的伴侶進行親密性接觸會感染性病，包括淋病、<span class="kw" onclick="toggleKw(this)">梅毒</span>、<span class="kw" onclick="toggleKw(this)">愛滋病</span>等</li>
+          <li>即使在性接觸的過程中使用<span class="kw" onclick="toggleKw(this)">安全套</span>，也未必可以完全排除感染性病的可能性</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>C 導致未婚懷孕</h4>
+        <ul>
+          <li>婚前性行為可能引致<span class="kw" onclick="toggleKw(this)">意外懷孕</span>，令未婚少女要休學產子，影響學業</li>
+          <li>倘若選擇<span class="kw" onclick="toggleKw(this)">墮胎</span>，不但會對未婚少女造成<span class="kw" onclick="toggleKw(this)">心理</span>創傷，相關手術也可能對身體造成重大傷害</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>D 造成家庭問題</h4>
+        <ul>
+          <li>未婚懷孕容易引起雙方<span class="kw" onclick="toggleKw(this)">家人</span>的反感和責備，<span class="kw" onclick="toggleKw(this)">社會</span>和親友的非議→ 造成更大的家庭矛盾和衝突</li>
+          <li>一些年青情侶因意外懷孕而<span class="kw" onclick="toggleKw(this)">奉子成婚</span>，但他們缺乏<span class="kw" onclick="toggleKw(this)">經濟基礎</span>及做父母的心理準備，容易導致更多家庭問題，以致婚姻破裂</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--red)">
+        <h4>E 負上法律責任</h4>
+        <ul>
+          <li>青少年如果因<span class="kw" onclick="toggleKw(this)">一時衝動</span>發生性行為，男方可能觸犯相關法例，須負上<span class="kw" onclick="toggleKw(this)">刑事責任</span></li>
+          <li>若出現<span class="kw" onclick="toggleKw(this)">戀愛暴力</span>，施虐者或會觸犯襲擊、<span class="kw" onclick="toggleKw(this)">性侵犯</span>或非法禁錮等罪行，也須接受法律制裁，前途盡毀</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top-color:var(--amber)">
+        <h4>F 輕率和不恰當的親密關係（網絡時代）</h4>
+        <ul>
+          <li>隨着資訊科技發達，青少年在<span class="kw" onclick="toggleKw(this)">網上</span>結識朋友的情況普遍</li>
+          <li>有些青少年可能會與素未謀面的<span class="kw" onclick="toggleKw(this)">網友</span>輕率地展開戀情，或透過視像通話與陌生人<span class="kw" onclick="toggleKw(this)">裸聊</span></li>
+          <li>有些青少年則對<span class="kw" onclick="toggleKw(this)">親密關係</span>缺乏正確的觀念，隨便與陌生人約會，甚至為滿足物質需求而參與<span class="kw" onclick="toggleKw(this)">援交</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+let allRevealed = false;
+
+function toggleAll() {
+  allRevealed = !allRevealed;
+  document.querySelectorAll('.kw').forEach(el => {
+    el.classList.toggle('hidden', !allRevealed);
+  });
+  const btn = document.getElementById('toggleBtn');
+  if (allRevealed) {
+    btn.innerHTML = '🔓 顯示關鍵詞 <span class="pill" id="togglePill">隱藏中</span>';
+  } else {
+    btn.innerHTML = '🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>';
+  }
+}
+
+function toggleKw(el) {
+  el.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
