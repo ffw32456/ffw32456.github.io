@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第6單元 製造業全球轉移 互動筆記</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a5c2a;
+    --green-dark: #0f3d1a;
+    --green-mid: #2e7d46;
+    --green-light: #6aab7e;
+    --green-pale: #c8e6d0;
+    --green-bg: #f4faf6;
+    --green-bg2: #d8f0e0;
+    --ink: #1a1a1a;
+    --ink2: #3a3a3a;
+    --paper: #fbfdf9;
+    --border: #b8d9c0;
+    --amber: #8b6000;
+    --gold: #c89a0a;
+    --blue: #1a3a6e;
+    --red: #8b1a1a;
+    --purple: #5a1a7a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans HK', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--green-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px; gap: 12px; flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem; color: #b8e8c8; font-weight: 700; white-space: nowrap;
+  }
+  .btn-toggle-all {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--green-mid); color: #fff;
+    border: none; border-radius: 20px; padding: 6px 16px;
+    cursor: pointer; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; font-weight: 700; transition: background .2s; white-space: nowrap;
+  }
+  .btn-toggle-all:hover { background: #3d9158; }
+  .btn-toggle-all .pill {
+    background: rgba(255,255,255,0.25); border-radius: 12px;
+    padding: 1px 10px; font-size: 12px;
+  }
+  .toc-row {
+    display: flex; gap: 0; overflow-x: auto; padding: 0 12px 8px; scrollbar-width: none;
+  }
+  .toc-row::-webkit-scrollbar { display: none; }
+  .toc-row a {
+    color: #b8e8c8; text-decoration: none; font-size: 12px;
+    padding: 3px 10px; border-radius: 12px; white-space: nowrap;
+    transition: background .18s, color .18s;
+  }
+  .toc-row a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── LAYOUT ── */
+  .page-wrap { max-width: 940px; margin: 0 auto; padding: 32px 20px 60px; }
+  .section { scroll-margin-top: 130px; margin-bottom: 52px; }
+
+  /* ── BADGES & TITLES ── */
+  .part-badge {
+    display: inline-block; background: var(--green-mid); color: #fff;
+    font-family: 'Noto Serif HK', serif; font-size: 0.75rem; font-weight: 700;
+    border-radius: 6px; padding: 2px 10px; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1.3rem; color: var(--green-dark);
+    border-left: 5px solid var(--green-mid); padding-left: 12px; margin-bottom: 16px; font-weight: 700;
+  }
+  .subsection-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1rem; color: var(--green);
+    margin: 20px 0 10px; font-weight: 700;
+  }
+  .sub2-title {
+    font-size: 14px; font-weight: 700; color: var(--green-dark); margin: 14px 0 8px;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+    color: #fff; padding: 28px 20px 22px; margin-bottom: 32px; border-radius: 12px;
+  }
+  .page-header h1 { font-family: 'Noto Serif HK', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 13.5px; color: #b8e8c8; }
+
+  /* ── KEYWORDS ── */
+  .kw {
+    border-bottom: 2.5px solid var(--green-mid); cursor: pointer;
+    border-radius: 2px; padding: 0 1px; transition: background .15s;
+  }
+  .kw.hidden {
+    background: var(--ink); color: var(--ink);
+    border-bottom: none; border-radius: 3px; padding: 0 3px;
+  }
+  .kw:not(.hidden):hover { background: var(--green-bg2); }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--green-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 15px 18px;
+    font-size: 14px; line-height: 1.75; color: var(--ink2); margin-bottom: 14px;
+  }
+  .info-box p { margin-bottom: 5px; } .info-box p:last-child { margin-bottom: 0; }
+  .info-box ul { padding-left: 20px; } .info-box li { margin-bottom: 5px; }
+
+  /* ── CARD GRID ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+  .card {
+    background: var(--green-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; border-top: 4px solid var(--green-mid);
+  }
+  .card h4 { color: var(--green-dark); font-weight: 700; font-size: 14px; margin-bottom: 7px; }
+  .card ul { padding-left: 18px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .card li { margin-bottom: 4px; }
+  .card p { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── INDUSTRY TYPE BOXES ── */
+  .industry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 10px 0; }
+  .industry-box {
+    border-radius: 10px; padding: 12px 14px; text-align: center;
+  }
+  .industry-box.p1 { background: #fff8e8; border: 2px solid #d4aa30; }
+  .industry-box.p2 { background: var(--green-bg); border: 2px solid var(--green-mid); }
+  .industry-box.p3 { background: #e8f0ff; border: 2px solid var(--blue); }
+  .industry-box.p4 { background: #f5e8ff; border: 2px solid var(--purple); }
+  .industry-box .i-num { font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+  .industry-box.p1 .i-num { color: #8b6000; }
+  .industry-box.p2 .i-num { color: var(--green-dark); }
+  .industry-box.p3 .i-num { color: var(--blue); }
+  .industry-box.p4 .i-num { color: var(--purple); }
+  .industry-box .i-name { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .industry-box p { font-size: 12.5px; color: var(--ink2); line-height: 1.6; }
+
+  /* ── SYSTEM FLOW ── */
+  .sys-flow { display: flex; flex-wrap: wrap; gap: 0; align-items: stretch; margin: 12px 0; }
+  .sys-box {
+    flex: 1; min-width: 140px; border-radius: 10px; padding: 14px 16px;
+  }
+  .sys-box.input { background: #fff8e8; border: 2px solid #d4aa30; }
+  .sys-box.process { background: var(--green-bg2); border: 2px solid var(--green-mid); }
+  .sys-box.output { background: #e8f0ff; border: 2px solid var(--blue); }
+  .sys-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .sys-box.input h4 { color: #8b6000; }
+  .sys-box.process h4 { color: var(--green-dark); }
+  .sys-box.output h4 { color: var(--blue); }
+  .sys-box ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .sys-box li { margin-bottom: 3px; }
+  .sys-arr { display: flex; align-items: center; padding: 0 6px; color: var(--green-light); font-size: 24px; font-weight: 700; }
+  @media (max-width: 540px) { .sys-flow { flex-direction: column; } .sys-arr { transform: rotate(90deg); align-self: center; } }
+
+  /* ── LOCATION FACTOR GRID ── */
+  .loc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
+  .loc-card {
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .loc-card .lc-icon { font-size: 24px; margin-bottom: 6px; }
+  .loc-card h4 { color: var(--green-dark); font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .loc-card p, .loc-card ul { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .loc-card ul { padding-left: 18px; }
+  .loc-card li { margin-bottom: 3px; }
+  .loc-card .example { margin-top: 6px; background: var(--green-bg); border-radius: 6px; padding: 6px 10px; font-size: 12.5px; color: var(--ink2); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 32px; margin: 10px 0 14px; }
+  .timeline::before { content:''; position:absolute; left:11px; top:0; bottom:0; width:2px; background: var(--green-pale); }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-item::before {
+    content:''; position:absolute; left:-25px; top:6px;
+    width:10px; height:10px; border-radius:50%;
+    background: var(--green-mid); border: 2px solid #fff;
+  }
+  .tl-year { font-weight: 700; color: var(--green); font-size: 13px; }
+  .tl-body { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── COMPARE TABLE ── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; display: block; overflow-x: auto; }
+  .cmp-table th { background: var(--green-dark); color: #b8e8c8; padding: 9px 14px; text-align: center; font-weight: 700; white-space: nowrap; }
+  .cmp-table td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); }
+  .cmp-table tr:nth-child(even) td { background: var(--green-bg); }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .row-label { font-weight: 700; color: var(--green-dark); background: var(--green-bg2) !important; white-space: nowrap; }
+
+  /* ── NOTE CARDS ── */
+  .note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+  .note-card {
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 12px; padding: 14px 16px; border-top: 4px solid var(--green-mid);
+  }
+  .note-card .nc-label {
+    display: inline-block; background: var(--green-mid); color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 20px; padding: 1px 10px; margin-bottom: 8px;
+  }
+  .note-card h4 { font-weight: 700; color: var(--green-dark); font-size: 14px; margin-bottom: 6px; }
+  .note-card ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .note-card li { margin-bottom: 4px; }
+  .note-card p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── PROS CONS TABLE ── */
+  .pc-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0; }
+  @media (max-width: 560px) { .pc-wrap { grid-template-columns: 1fr; } }
+  .pc-box { border-radius: 10px; padding: 14px 16px; }
+  .pc-box.pros { background: #f0fff4; border: 2px solid var(--green-mid); }
+  .pc-box.cons { background: #fff4f4; border: 2px solid #c05050; }
+  .pc-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .pc-box.pros h4 { color: var(--green-dark); }
+  .pc-box.cons h4 { color: #8b1a1a; }
+  .pc-box ul { padding-left: 18px; font-size: 13px; line-height: 1.65; color: var(--ink2); }
+  .pc-box li { margin-bottom: 4px; }
+
+  /* ── CAUSE CHAIN ── */
+  .cause-wrap { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+  .cause-item {
+    background: var(--green-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px; font-size: 13.5px; color: var(--ink2);
+  }
+  .cause-item strong { color: var(--green-dark); }
+  .cause-arr { text-align: center; color: var(--green-light); font-size: 20px; line-height: 1; }
+
+  /* ── DATA HIGHLIGHT ── */
+  .data-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+  .data-pill {
+    background: var(--green-dark); color: #fff;
+    border-radius: 10px; padding: 10px 18px; text-align: center; flex: 1; min-width: 140px;
+  }
+  .data-pill .dp-label { font-size: 12px; color: #b8e8c8; margin-bottom: 2px; }
+  .data-pill .dp-num { font-family: 'Noto Serif HK', serif; font-size: 1.5rem; font-weight: 700; }
+  .data-pill .dp-unit { font-size: 11px; color: #b8e8c8; }
+
+  /* ── REGION MAP TABLE ── */
+  .region-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; }
+  .region-table th { background: var(--green-dark); color: #b8e8c8; padding: 8px 14px; text-align: left; font-weight: 700; }
+  .region-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .region-table tr:nth-child(even) td { background: var(--green-bg); }
+  .region-table tr:last-child td { border-bottom: none; }
+  .region-table .r-label { font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+
+  /* ── SUSTAIN BOXES ── */
+  .sustain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 10px 0; }
+  .sustain-box { border-radius: 12px; padding: 14px 16px; border: 2px solid; }
+  .sustain-box.eco { background: #fff8e8; border-color: #d4aa30; }
+  .sustain-box.soc { background: #e8f0ff; border-color: var(--blue); }
+  .sustain-box.env { background: #f0fff4; border-color: var(--green-mid); }
+  .sustain-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .sustain-box.eco h4 { color: #8b6000; }
+  .sustain-box.soc h4 { color: var(--blue); }
+  .sustain-box.env h4 { color: var(--green-dark); }
+  .sustain-box ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .sustain-box li { margin-bottom: 4px; }
+
+  /* ── MCQ GRID ── */
+  .mcq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; margin: 10px 0; }
+  .mcq-item {
+    background: var(--green-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px;
+  }
+  .mcq-q { font-size: 13.5px; color: var(--ink2); margin-bottom: 6px; }
+  .mcq-a { font-weight: 700; color: var(--green-dark); font-size: 13.5px; }
+
+  .tick { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); font-weight: 700; }
+
+  /* ── TRANSFER FLOW ── */
+  .transfer-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .tf-box {
+    background: var(--green-bg2); border: 2px solid var(--green-mid);
+    border-radius: 10px; padding: 10px 18px; font-size: 13.5px; font-weight: 700;
+    color: var(--green-dark); text-align: center;
+  }
+  .tf-arr { font-size: 22px; color: var(--green-light); font-weight: 700; }
+
+  /* ── PULL PUSH ── */
+  .pull-push { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0; }
+  @media (max-width: 540px) { .pull-push { grid-template-columns: 1fr; } }
+  .pp-box { border-radius: 10px; padding: 14px 16px; }
+  .pp-box.push { background: #fff4e8; border: 2px solid #c08030; }
+  .pp-box.pull { background: var(--green-bg); border: 2px solid var(--green-mid); }
+  .pp-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .pp-box.push h4 { color: #8b4000; }
+  .pp-box.pull h4 { color: var(--green-dark); }
+  .pp-box ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .pp-box li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-top">
+    <div class="header-title">🏭 第6單元 製造業全球轉移 互動筆記</div>
+    <button class="btn-toggle-all" onclick="toggleAll()" id="toggleBtn">
+      🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>
+    </button>
+  </div>
+  <div class="toc-row">
+    <a href="#s1">6.1 製造業定義</a>
+    <a href="#s2">6.2 香港製造業</a>
+    <a href="#s3">6.3 全球轉移</a>
+    <a href="#s4">6.4 好處與壞處</a>
+    <a href="#s5">6.5 可持續發展</a>
+    <a href="#s6">重點問答</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>第6單元 製造業全球轉移</h1>
+    <p>初中活學地理（第二版）互動溫習筆記 ‧ 點擊綠色關鍵詞可隱藏／顯示答案</p>
+  </div>
+
+  <!-- ══════════════ S1 甚麼是製造業 ══════════════ -->
+  <div class="section" id="s1">
+    <div class="part-badge">6.1</div>
+    <div class="section-title">甚麼是製造業？</div>
+
+    <div class="subsection-title">A 四大產業種類</div>
+    <div class="industry-grid">
+      <div class="industry-box p1">
+        <div class="i-num">第一</div>
+        <div class="i-name"><span class="kw" onclick="toggleKw(this)">初級</span>產業</div>
+        <p>開採和採集<span class="kw" onclick="toggleKw(this)">天然資源</span>作原材料<br>例：農業、採礦、捕魚</p>
+      </div>
+      <div class="industry-box p2">
+        <div class="i-num">第二</div>
+        <div class="i-name"><span class="kw" onclick="toggleKw(this)">製造業</span>（Secondary）</div>
+        <p>把<span class="kw" onclick="toggleKw(this)">原料</span>或<span class="kw" onclick="toggleKw(this)">半製品</span>製成製品<br>例：紡織、汽車廠</p>
+      </div>
+      <div class="industry-box p3">
+        <div class="i-num">第三</div>
+        <div class="i-name"><span class="kw" onclick="toggleKw(this)">服務業</span>（Tertiary）</div>
+        <p>為其他行業或人士提供<span class="kw" onclick="toggleKw(this)">服務</span><br>例：零售、醫療、教育</p>
+      </div>
+      <div class="industry-box p4">
+        <div class="i-num">第四</div>
+        <div class="i-name"><span class="kw" onclick="toggleKw(this)">資訊業</span>（Quaternary）</div>
+        <p>處理<span class="kw" onclick="toggleKw(this)">資訊</span>和進行不同類型的研究工作<br>例：研究、IT、顧問</p>
+      </div>
+    </div>
+
+    <div class="subsection-title">B 製造業系統</div>
+    <div class="sys-flow">
+      <div class="sys-box input">
+        <h4>A 🔶 投入（Inputs）</h4>
+        <ul>
+          <li>原料</li>
+          <li>土地</li>
+          <li>能源</li>
+          <li><span class="kw" onclick="toggleKw(this)">勞工</span></li>
+          <li>機器和科技</li>
+          <li><span class="kw" onclick="toggleKw(this)">研究和發展</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">運輸</span></li>
+          <li>管理</li>
+          <li><span class="kw" onclick="toggleKw(this)">政府政策</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">資本</span></li>
+        </ul>
+      </div>
+      <div class="sys-arr">→</div>
+      <div class="sys-box process">
+        <h4>B 🔵 過程（Process）</h4>
+        <p style="font-size:13px;color:var(--ink2);margin-top:6px;">製造加工<br>（工廠生產）</p>
+        <p style="font-size:12.5px;color:var(--green-dark);margin-top:8px;">投入在製造過程中會<span class="kw" onclick="toggleKw(this)">增值</span>，故最終製品的價值通常<span class="kw" onclick="toggleKw(this)">最高</span></p>
+      </div>
+      <div class="sys-arr">→</div>
+      <div class="sys-box output">
+        <h4>C 🔷 產出（Outputs）</h4>
+        <ul>
+          <li>有用製品 → 市場</li>
+          <li><span class="kw" onclick="toggleKw(this)">廢料</span>（副產品）</li>
+          <li>現金回流 → 資本</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection-title">C 製造業的區位因素</div>
+    <div class="info-box">
+      <p>製造業廠商需要容易取得各種不同的<span class="kw" onclick="toggleKw(this)">投入</span>來生產製品，製品製成後也要尋找<span class="kw" onclick="toggleKw(this)">市場</span>銷售製品。這些影響製造業決定在哪裏生產製品的因素稱為工業<span class="kw" onclick="toggleKw(this)">區位</span>因素。</p>
+    </div>
+    <div class="loc-grid">
+      <div class="loc-card">
+        <div class="lc-icon">👷</div>
+        <h4>勞工</h4>
+        <p>需要大量工人從事裝配工作</p>
+        <div class="example">例：電腦裝配業 → 主要區位因素：<span class="kw" onclick="toggleKw(this)">勞工</span></div>
+      </div>
+      <div class="loc-card">
+        <div class="lc-icon">🌾</div>
+        <h4>原料</h4>
+        <p>原料易腐，工廠必須在原料腐壞前進行加工</p>
+        <div class="example">例：煉糖業（甘蔗<span class="kw" onclick="toggleKw(this)">易腐</span>） → 主要區位因素：<span class="kw" onclick="toggleKw(this)">原料</span></div>
+      </div>
+      <div class="loc-card">
+        <div class="lc-icon">🏪</div>
+        <h4>市場</h4>
+        <p>汽水添加了大量水，產品變得<span class="kw" onclick="toggleKw(this)">重</span>，接近市場可降低成本</p>
+        <div class="example">例：汽水製造業 → 主要區位因素：<span class="kw" onclick="toggleKw(this)">市場</span></div>
+      </div>
+      <div class="loc-card">
+        <div class="lc-icon">🛬</div>
+        <h4>土地</h4>
+        <p>原料、機器和製品均佔用大片土地</p>
+        <div class="example">例：飛機製造業 → 主要區位因素：<span class="kw" onclick="toggleKw(this)">土地</span></div>
+      </div>
+    </div>
+
+    <div class="subsection-title">D 製造業的種類</div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th>分類標準</th><th>種類</th><th>特點</th><th>例子</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label" rowspan="2">按重量</td>
+          <td><span class="kw" onclick="toggleKw(this)">輕</span>工業</td>
+          <td>原料和製品都很<span class="kw" onclick="toggleKw(this)">輕</span></td>
+          <td>海產加工、家具製造</td>
+        </tr>
+        <tr>
+          <td><span class="kw" onclick="toggleKw(this)">重</span>工業</td>
+          <td>原料和製品都很<span class="kw" onclick="toggleKw(this)">重</span></td>
+          <td>飛機製造、造船</td>
+        </tr>
+        <tr>
+          <td class="row-label" rowspan="2">按投入</td>
+          <td><span class="kw" onclick="toggleKw(this)">勞力密集</span>工業</td>
+          <td>生產過程僱用大量<span class="kw" onclick="toggleKw(this)">勞工</span></td>
+          <td>海產加工、家具製造</td>
+        </tr>
+        <tr>
+          <td><span class="kw" onclick="toggleKw(this)">資本密集</span>工業</td>
+          <td>生產過程投入大量<span class="kw" onclick="toggleKw(this)">資本</span></td>
+          <td>飛機製造、數碼相機</td>
+        </tr>
+        <tr>
+          <td class="row-label" rowspan="2">按科技</td>
+          <td><span class="kw" onclick="toggleKw(this)">低科技</span>工業</td>
+          <td>使用傳統的生產方法</td>
+          <td>海產加工、家具製造</td>
+        </tr>
+        <tr>
+          <td><span class="kw" onclick="toggleKw(this)">高科技</span>工業</td>
+          <td>使用先進科技進行生產</td>
+          <td>飛機製造、數碼相機</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sub2-title">製造業分類練習答案</div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th>製造業</th><th>輕工業</th><th>重工業</th><th>勞力密集</th><th>資本密集</th><th>低科技</th><th>高科技</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">海產加工</td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+        </tr>
+        <tr>
+          <td class="row-label">飛機製造</td>
+          <td></td><td><span class="kw" onclick="toggleKw(this)">✓</span></td>
+          <td></td><td><span class="kw" onclick="toggleKw(this)">✓</span></td>
+          <td></td><td><span class="kw" onclick="toggleKw(this)">✓</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">家具製造</td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+        </tr>
+        <tr>
+          <td class="row-label">數碼相機</td>
+          <td><span class="kw" onclick="toggleKw(this)">✓</span></td><td></td>
+          <td></td><td><span class="kw" onclick="toggleKw(this)">✓</span></td>
+          <td></td><td><span class="kw" onclick="toggleKw(this)">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════ S2 香港製造業 ══════════════ -->
+  <div class="section" id="s2">
+    <div class="part-badge">6.2</div>
+    <div class="section-title">我們的工廠都到哪裏去了？——香港製造業</div>
+
+    <div class="subsection-title">A 香港製造業的衰退</div>
+    <div class="data-row">
+      <div class="data-pill">
+        <div class="dp-label">1976年 製造業工人佔總工作人口</div>
+        <div class="dp-num"><span class="kw" onclick="toggleKw(this)">46</span></div>
+        <div class="dp-unit">%</div>
+      </div>
+      <div class="data-pill">
+        <div class="dp-label">2014年 製造業工人佔總工作人口</div>
+        <div class="dp-num"><span class="kw" onclick="toggleKw(this)">7</span></div>
+        <div class="dp-unit">%</div>
+      </div>
+      <div class="data-pill">
+        <div class="dp-label">1976年 製造業佔本地生產總值</div>
+        <div class="dp-num"><span class="kw" onclick="toggleKw(this)">25</span></div>
+        <div class="dp-unit">%</div>
+      </div>
+      <div class="data-pill">
+        <div class="dp-label">2014年 製造業佔本地生產總值</div>
+        <div class="dp-num"><span class="kw" onclick="toggleKw(this)">3</span></div>
+        <div class="dp-unit">%</div>
+      </div>
+    </div>
+    <div class="info-box">
+      <p>結論：香港製造業的重要性逐漸<span class="kw" onclick="toggleKw(this)">下降</span>。</p>
+    </div>
+
+    <div class="subsection-title">B 香港製造業區位轉移的歷程</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1950年代至1970年代中期</div>
+        <div class="tl-body">
+          <strong>影響因素：</strong>內地移民為香港提供技術、<span class="kw" onclick="toggleKw(this)">資金</span>和<span class="kw" onclick="toggleKw(this)">勞工</span>；香港有良好的<span class="kw" onclick="toggleKw(this)">港口</span>和<span class="kw" onclick="toggleKw(this)">自由港</span>政策<br>
+          <strong>分佈：</strong>輕工業和<span class="kw" onclick="toggleKw(this)">勞力</span>密集工業主要在<span class="kw" onclick="toggleKw(this)">維多利亞港</span>兩岸的主要市區發展<br>
+          1960至70年代中期：工廠分佈擴展到鄰近市區的屋邨，以便聘請<span class="kw" onclick="toggleKw(this)">勞工</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1970年代中期</div>
+        <div class="tl-body">
+          <strong>影響因素：</strong>主要市區的<span class="kw" onclick="toggleKw(this)">租金</span>大幅上升<br>
+          <strong>分佈：</strong>工廠遷往<span class="kw" onclick="toggleKw(this)">新市鎮</span>或近郊的工業邨或工業區，因為那裏的租金<span class="kw" onclick="toggleKw(this)">較低</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1980年代至2000年代初期（趨勢1）</div>
+        <div class="tl-body">
+          <strong>在珠江三角洲區域：</strong><span class="kw" onclick="toggleKw(this)">工資</span>和<span class="kw" onclick="toggleKw(this)">租金</span>較低廉；<span class="kw" onclick="toggleKw(this)">污染</span>管制寬鬆；實施<span class="kw" onclick="toggleKw(this)">開放</span>政策<br>
+          <strong>在香港：</strong>效率高；<span class="kw" onclick="toggleKw(this)">海外</span>運輸網絡完善；法制健全；教育水平較<span class="kw" onclick="toggleKw(this)">高</span><br>
+          <strong>結果：</strong>大多數製造業（尤其是<span class="kw" onclick="toggleKw(this)">勞力</span>密集工業）遷移到廣東<span class="kw" onclick="toggleKw(this)">珠江三角洲區域</span>；<span class="kw" onclick="toggleKw(this)">總部</span>留在香港
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1980年代至2000年代初期（趨勢2）</div>
+        <div class="tl-body">
+          <strong>影響因素：</strong>香港政府推動<span class="kw" onclick="toggleKw(this)">高</span>科技工業<br>
+          <strong>結果：</strong>發展<span class="kw" onclick="toggleKw(this)">高增值</span>和<span class="kw" onclick="toggleKw(this)">科技</span>密集工業；設立<span class="kw" onclick="toggleKw(this)">香港科學園</span>和<span class="kw" onclick="toggleKw(this)">數碼港</span>等研究和發展中心
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2000年代初期至今（趨勢1）</div>
+        <div class="tl-body">
+          <strong>影響因素：</strong>珠江三角洲區域的工資、租金和能源價格<span class="kw" onclick="toggleKw(this)">上漲</span>；<span class="kw" onclick="toggleKw(this)">加強</span>污染管制；其他地區廉價勞工和低廉租金具吸引力<br>
+          <strong>結果：</strong>珠江三角洲區域的<span class="kw" onclick="toggleKw(this)">勞力</span>密集工業遷移到廣東<span class="kw" onclick="toggleKw(this)">內陸</span>地區、中國<span class="kw" onclick="toggleKw(this)">內陸</span>省份、<span class="kw" onclick="toggleKw(this)">南亞或東南亞</span>等欠發達國家
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2000年代初期至今（趨勢2）</div>
+        <div class="tl-body">
+          <strong>影響因素：</strong>廣東政府致力提升珠江三角洲區域工業<span class="kw" onclick="toggleKw(this)">結構</span>級數<br>
+          <strong>結果：</strong>生產<span class="kw" onclick="toggleKw(this)">高增值</span>製品；實行<span class="kw" onclick="toggleKw(this)">自動</span>化生產；部分工業仍留在珠江三角洲區域
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-title">C 香港生產模式的改變</div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th>時期</th><th>生產模式</th><th>分工特點</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">1980年代以前</td>
+          <td><span class="kw" onclick="toggleKw(this)">單邊</span>區位生產</td>
+          <td>所有製造業活動在<span class="kw" onclick="toggleKw(this)">同一</span>地點進行</td>
+        </tr>
+        <tr>
+          <td class="row-label">1980年代以後</td>
+          <td><span class="kw" onclick="toggleKw(this)">多邊</span>區位生產</td>
+          <td>製造業活動在<span class="kw" onclick="toggleKw(this)">不同</span>地點進行：<br>
+          • <span class="kw" onclick="toggleKw(this)">工廠</span>在珠江三角洲區域或中國內地（低技術：加工、裝配）<br>
+          • 位於香港的<span class="kw" onclick="toggleKw(this)">總部</span>負責行政管理、設計、研究和發展、市場推廣</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════ S3 全球轉移 ══════════════ -->
+  <div class="section" id="s3">
+    <div class="part-badge">6.3</div>
+    <div class="section-title">其他地方的製造業活動也有區位轉移嗎？</div>
+
+    <div class="subsection-title">A 世界的主要工業區</div>
+    <table class="region-table">
+      <thead>
+        <tr><th>字母</th><th>主要工業區</th><th>有利區位因素</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="r-label">A</td>
+          <td><span class="kw" onclick="toggleKw(this)">西歐</span></td>
+          <td rowspan="4" style="font-size:13px;color:var(--ink2);">
+            • 接近<span class="kw" onclick="toggleKw(this)">原料</span>和能源供應<br>
+            • 良好的<span class="kw" onclick="toggleKw(this)">運輸</span>網絡<br>
+            • 鄰近大<span class="kw" onclick="toggleKw(this)">城市</span>，提供市場、技術、資金和勞工
+          </td>
+        </tr>
+        <tr><td class="r-label">B</td><td><span class="kw" onclick="toggleKw(this)">東歐</span></td></tr>
+        <tr><td class="r-label">C</td><td><span class="kw" onclick="toggleKw(this)">東亞</span></td></tr>
+        <tr><td class="r-label">D</td><td><span class="kw" onclick="toggleKw(this)">北美洲東部</span></td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <ul>
+        <li>主要工業區在世界的分佈：<span class="kw" onclick="toggleKw(this)">不平均</span></li>
+        <li>大部分工業區分散在<span class="kw" onclick="toggleKw(this)">較發達</span>國家</li>
+      </ul>
+    </div>
+
+    <div class="sub2-title">北美洲東部工業區的有利區位因素</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>a 水路運輸</h4>
+        <p><span class="kw" onclick="toggleKw(this)">湖泊</span>、河流和運河為工業製品和原料提供成本低廉的<span class="kw" onclick="toggleKw(this)">水路</span>運輸</p>
+      </div>
+      <div class="card">
+        <h4>b 陸路運輸</h4>
+        <p>密集的<span class="kw" onclick="toggleKw(this)">道路</span>網絡，有利工業製品和原料經陸路運輸</p>
+      </div>
+      <div class="card">
+        <h4>c 市場與勞工</h4>
+        <p>鄰近人口稠密的城市為工業區提供資金、技術、<span class="kw" onclick="toggleKw(this)">市場</span>和<span class="kw" onclick="toggleKw(this)">勞工</span></p>
+      </div>
+      <div class="card">
+        <h4>d 原料與能源</h4>
+        <p>有大量<span class="kw" onclick="toggleKw(this)">原料</span>和能源供應，例如鐵礦和<span class="kw" onclick="toggleKw(this)">煤</span></p>
+      </div>
+    </div>
+
+    <div class="subsection-title">B 製造業活動是否出現全球轉移？</div>
+    <div class="info-box">
+      <p>中國（欠發達國家）佔全球製造業總產值的百分比（<span class="kw" onclick="toggleKw(this)">↑</span>上升），而美國、日本和德國（較發達國家）所佔的百分比（<span class="kw" onclick="toggleKw(this)">↓</span>下降）。</p>
+    </div>
+    <div class="transfer-flow">
+      <div class="tf-box">製造業活動</div>
+      <div class="tf-arr">→</div>
+      <div class="tf-box">由<span class="kw" onclick="toggleKw(this)">較發達</span>國家</div>
+      <div class="tf-arr">→</div>
+      <div class="tf-box">轉移到<span class="kw" onclick="toggleKw(this)">欠發達</span>國家</div>
+    </div>
+
+    <div class="subsection-title">C 甚麼因素導致製造業活動的全球轉移？</div>
+
+    <div class="sub2-title">1 欠發達國家的吸引力</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">a 成本低</div>
+        <p>工資、<span class="kw" onclick="toggleKw(this)">租金</span>和<span class="kw" onclick="toggleKw(this)">營運</span>成本都較低</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">b 政府政策</div>
+        <ul>
+          <li>中國的<span class="kw" onclick="toggleKw(this)">經濟</span>特區</li>
+          <li>墨西哥的<span class="kw" onclick="toggleKw(this)">加工出口</span>工廠</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">c 新興市場</div>
+        <p>部分欠發達國家（如中國）的<span class="kw" onclick="toggleKw(this)">生活</span>水平提高，成為很多製品的新興市場</p>
+      </div>
+    </div>
+
+    <div class="sub2-title">2 促成因素</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">a 運輸設備改進</div>
+        <p>先進的大型<span class="kw" onclick="toggleKw(this)">貨輪</span>和油輪<span class="kw" onclick="toggleKw(this)">節省</span>了運輸成本和時間，製品的成本也因而<span class="kw" onclick="toggleKw(this)">下降</span>→ 製造業活動選址的自由度<span class="kw" onclick="toggleKw(this)">增加</span></p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">b 資訊與通訊科技發展</div>
+        <p>廣泛應用<span class="kw" onclick="toggleKw(this)">互聯網</span>使資訊快速流通 → 更容易管理海外的工廠</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">c 跨國企業</div>
+        <p><span class="kw" onclick="toggleKw(this)">跨國</span>企業採用<span class="kw" onclick="toggleKw(this)">多邊</span>區位生產；遍及全球，可輕易地把製造業活動轉移到<span class="kw" onclick="toggleKw(this)">低</span>成本的區位，以賺取最高<span class="kw" onclick="toggleKw(this)">利潤</span></p>
+      </div>
+    </div>
+
+    <div class="sub2-title">3 跨國廠商有助促進製造業活動的全球轉移</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>a 全球規模的分工</h4>
+        <ul>
+          <li><strong>較發達國家：</strong>總部、高技術製造、<span class="kw" onclick="toggleKw(this)">研究和發展</span>、<span class="kw" onclick="toggleKw(this)">設計</span>、高科技生產</li>
+          <li><strong>欠發達國家：</strong>低技術製造（<span class="kw" onclick="toggleKw(this)">加工</span>和<span class="kw" onclick="toggleKw(this)">裝配</span>）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>b 全球網絡供應商</h4>
+        <ul>
+          <li>大批購入<span class="kw" onclick="toggleKw(this)">原料</span></li>
+          <li>可向供應商爭取較<span class="kw" onclick="toggleKw(this)">低</span>價格</li>
+          <li>可接觸到世界各地收費最廉宜的<span class="kw" onclick="toggleKw(this)">供應商</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ S4 好處壞處 ══════════════ -->
+  <div class="section" id="s4">
+    <div class="part-badge">6.4</div>
+    <div class="section-title">製造業活動的全球轉移帶來甚麼好處和壞處？</div>
+
+    <div class="subsection-title">A 對有工廠遷出的國家（以美國大湖區為例）</div>
+    <div class="pc-wrap">
+      <div class="pc-box pros">
+        <h4>✅ 好處／得益</h4>
+        <ul>
+          <li><strong>製造業廠商：</strong>生產成本<span class="kw" onclick="toggleKw(this)">降低</span>；製品更有<span class="kw" onclick="toggleKw(this)">競爭</span>力</li>
+          <li><strong>消費者：</strong>可以買到<span class="kw" onclick="toggleKw(this)">便宜</span>的貨品</li>
+          <li><strong>社會和民眾：</strong>集中資源發展高增值生產或服務；提高勞工的<span class="kw" onclick="toggleKw(this)">生產</span>力和民眾的<span class="kw" onclick="toggleKw(this)">生活</span>水平</li>
+          <li><strong>環境：</strong>環境變得潔淨，<span class="kw" onclick="toggleKw(this)">污染</span>減少</li>
+        </ul>
+      </div>
+      <div class="pc-box cons">
+        <h4>❌ 壞處／衍生問題</h4>
+        <ul>
+          <li><strong>製造業工人：</strong>就業機會和收入<span class="kw" onclick="toggleKw(this)">減少</span> → 導致家庭和社會問題；社會動盪</li>
+          <li><strong>社會和民眾：</strong>當地民眾在商品和服務上的消費（<span class="kw" onclick="toggleKw(this)">↓</span>）；當地政府稅收（<span class="kw" onclick="toggleKw(this)">↓</span>）</li>
+          <li><strong>衍生問題：</strong>經濟衰退；基礎設施和社會服務質素下降</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub2-title">大湖區製造業職位流失（1990–2015年）</div>
+    <div class="info-box">
+      <ul>
+        <li>大湖區九個州之中，<span class="kw" onclick="toggleKw(this)">六</span>個的製造業職位流失率高於全國平均值</li>
+        <li>製造業活動的全球轉移對大湖區：<span class="kw" onclick="toggleKw(this)">影響嚴重</span></li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">A 對有工廠遷入的國家（以中國珠江三角洲區域為例）</div>
+    <div class="pc-wrap">
+      <div class="pc-box pros">
+        <h4>✅ 好處／得益</h4>
+        <ul>
+          <li><strong>社會和民眾：</strong>提高<span class="kw" onclick="toggleKw(this)">技術</span>水平；就業機會和收入（<span class="kw" onclick="toggleKw(this)">↑</span>）</li>
+          <li><strong>政府稅收（↑）：</strong>帶動當地民眾消費；改善<span class="kw" onclick="toggleKw(this)">基礎設施</span>和社會服務</li>
+        </ul>
+      </div>
+      <div class="pc-box cons">
+        <h4>❌ 壞處／衍生問題</h4>
+        <ul>
+          <li><strong>環境：</strong><span class="kw" onclick="toggleKw(this)">自然</span>環境和農地消失；污染問題</li>
+          <li><strong>社會：</strong>損害當地民眾的<span class="kw" onclick="toggleKw(this)">健康</span></li>
+          <li><strong>經濟：</strong>阻礙經濟<span class="kw" onclick="toggleKw(this)">發展</span>；需要大量金錢淨化<span class="kw" onclick="toggleKw(this)">環境</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ S5 可持續發展 ══════════════ -->
+  <div class="section" id="s5">
+    <div class="part-badge">6.5</div>
+    <div class="section-title">工業發展能夠更加可持續嗎？</div>
+
+    <div class="subsection-title">A 可持續的工業發展原則</div>
+    <div class="sustain-grid">
+      <div class="sustain-box eco">
+        <h4>💰 a 經濟發展</h4>
+        <ul>
+          <li>當地<span class="kw" onclick="toggleKw(this)">經濟</span>穩定發展</li>
+        </ul>
+      </div>
+      <div class="sustain-box soc">
+        <h4>🤝 b 社會發展</h4>
+        <ul>
+          <li>社會每一分子均可參與工業發展，提供<span class="kw" onclick="toggleKw(this)">技術</span>訓練</li>
+          <li>每人均可<span class="kw" onclick="toggleKw(this)">合理地</span>分享到工業發展的成果，透過提供<span class="kw" onclick="toggleKw(this)">社會援助</span></li>
+        </ul>
+      </div>
+      <div class="sustain-box env">
+        <h4>🌿 c 環境保育</h4>
+        <ul>
+          <li>盡量減少製造業的<span class="kw" onclick="toggleKw(this)">環境污染</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection-title">B 怎樣紓緩工業區位轉移帶來的問題？</div>
+
+    <div class="sub2-title">有工廠遷出的國家／地區（美國大湖區）</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>吸引新的投資</h4>
+        <ul>
+          <li>給廠商提供<span class="kw" onclick="toggleKw(this)">稅務</span>優惠</li>
+          <li>把舊工業用地重新發展為<span class="kw" onclick="toggleKw(this)">高</span>科技汽車製造中心</li>
+          <li>改善<span class="kw" onclick="toggleKw(this)">基礎設施</span>，例如改善連接港口和鐵路網絡</li>
+          <li>為製造業吸納<span class="kw" onclick="toggleKw(this)">創科</span>資金</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>增加製造業廠商的競爭力</h4>
+        <ul>
+          <li>再培訓<span class="kw" onclick="toggleKw(this)">工人</span>，讓他們適應科技轉變</li>
+          <li>在<span class="kw" onclick="toggleKw(this)">研究和發展</span>方面增加投資，生產較環保的製品</li>
+          <li>改善基礎設施</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub2-title">有工廠遷入的國家／地區（中國珠江三角洲區域）</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>減輕污染問題</h4>
+        <ul>
+          <li>把污染嚴重的製造業活動遷移到<span class="kw" onclick="toggleKw(this)">內陸</span>沿海省份</li>
+          <li>立例管制工廠須先處理好<span class="kw" onclick="toggleKw(this)">廢氣</span>和<span class="kw" onclick="toggleKw(this)">污水</span>，才能排放</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>鼓勵發展高增值和潔淨工業</h4>
+        <ul>
+          <li>提供誘因鼓勵製造業廠商使用新的<span class="kw" onclick="toggleKw(this)">節能</span>機器</li>
+          <li>為新工業招攬和<span class="kw" onclick="toggleKw(this)">培訓</span>人才</li>
+          <li>發展<span class="kw" onclick="toggleKw(this)">工業園</span>，吸引<span class="kw" onclick="toggleKw(this)">高</span>增值和高科技製造業（即潔淨工業）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ S6 重點問答 ══════════════ -->
+  <div class="section" id="s6">
+    <div class="part-badge">重點</div>
+    <div class="section-title">重點選擇題問答</div>
+
+    <div class="mcq-grid">
+      <div class="mcq-item">
+        <div class="mcq-q">製造業屬於哪一個產業？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">第二產業（B）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">在製造過程中，投入的價值會如何改變？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">增值，最終製品的價值最高（B）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">煉糖業的主要區位因素是甚麼？原因是？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">原料（甘蔗易腐，工廠必須在腐壞前加工）（A）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">汽水製造業的主要區位因素是甚麼？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">市場（汽水添加大量水，產品變重，接近市場可降低成本）（C）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">1976年至2014年，香港製造業工人佔總工作人口的百分比有何變化？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">由46%下降至7%（D）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">1970年代中期，香港工廠為何遷離主要市區？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">主要市區租金大幅上升（B）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">1980年代後，香港採用甚麼新的生產模式？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">多邊區位生產（C）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">在多邊區位生產下，哪些職能留在香港？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">總部負責行政管理、設計、研究和發展、市場推廣（A）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">世界主要工業區的分佈有何特點？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">不平均，大部分在較發達國家（B）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">製造業活動全球轉移的總體方向是？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">由較發達國家轉移到欠發達國家（C）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">運輸設備改進對製造業區位選址有甚麼影響？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">降低運輸成本，製造業活動選址的自由度增加（A）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">製造業遷移對遷出國的環境有甚麼好處？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">環境變得潔淨，污染減少（D）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">可持續工業發展包括哪三大原則？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">經濟發展、社會發展、環境保育（A）</span></div>
+      </div>
+      <div class="mcq-item">
+        <div class="mcq-q">珠江三角洲區域為減輕污染問題，採取了哪些措施？</div>
+        <div class="mcq-a">答：<span class="kw" onclick="toggleKw(this)">把污染嚴重工業遷往內陸、立例管制廢氣和污水排放（B）</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+let allRevealed = false;
+function toggleAll() {
+  allRevealed = !allRevealed;
+  document.querySelectorAll('.kw').forEach(el => el.classList.toggle('hidden', !allRevealed));
+  const btn = document.getElementById('toggleBtn');
+  if (allRevealed) {
+    btn.innerHTML = '🔓 顯示關鍵詞 <span class="pill" id="togglePill">隱藏中</span>';
+  } else {
+    btn.innerHTML = '🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>';
+  }
+}
+function toggleKw(el) { el.classList.toggle('hidden'); }
+</script>
+</body>
+</html>
