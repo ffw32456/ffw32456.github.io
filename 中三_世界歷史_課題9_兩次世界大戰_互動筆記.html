@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>課題9 兩次世界大戰 互動筆記</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #8b1a1a;
+    --red-dark: #5a0f0f;
+    --red-mid: #b22222;
+    --red-light: #d4807a;
+    --red-bg: #fdf5f5;
+    --red-bg2: #f5dada;
+    --ink: #1a1a1a;
+    --ink2: #3a3a3a;
+    --paper: #fdfaf9;
+    --border: #d9b8b8;
+    --green: #1a5c2a;
+    --blue: #1a3a6e;
+    --amber: #8b5e00;
+    --gold: #c8900a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans HK', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--red-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px; gap: 12px; flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem; color: #f5c0b8; font-weight: 700; white-space: nowrap;
+  }
+  .btn-toggle-all {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--red-mid); color: #fff;
+    border: none; border-radius: 20px; padding: 6px 16px;
+    cursor: pointer; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; font-weight: 700; transition: background .2s; white-space: nowrap;
+  }
+  .btn-toggle-all:hover { background: #c03030; }
+  .btn-toggle-all .pill {
+    background: rgba(255,255,255,0.25); border-radius: 12px;
+    padding: 1px 10px; font-size: 12px;
+  }
+  .toc-row {
+    display: flex; gap: 0; overflow-x: auto; padding: 0 12px 8px; scrollbar-width: none;
+  }
+  .toc-row::-webkit-scrollbar { display: none; }
+  .toc-row a {
+    color: #f5c0b8; text-decoration: none; font-size: 12px;
+    padding: 3px 10px; border-radius: 12px; white-space: nowrap;
+    transition: background .18s, color .18s;
+  }
+  .toc-row a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── LAYOUT ── */
+  .page-wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 60px; }
+  .section { scroll-margin-top: 130px; margin-bottom: 48px; }
+
+  /* ── BADGES & TITLES ── */
+  .part-badge {
+    display: inline-block; background: var(--red-mid); color: #fff;
+    font-family: 'Noto Serif HK', serif; font-size: 0.75rem; font-weight: 700;
+    border-radius: 6px; padding: 2px 10px; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1.3rem; color: var(--red-dark);
+    border-left: 5px solid var(--red); padding-left: 12px; margin-bottom: 16px; font-weight: 700;
+  }
+  .subsection-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1rem; color: var(--red);
+    margin: 20px 0 10px; font-weight: 700;
+  }
+  .sub2-title {
+    font-size: 14px; font-weight: 700; color: var(--red-dark); margin: 14px 0 8px;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--red-mid) 100%);
+    color: #fff; padding: 28px 20px 22px; margin-bottom: 32px; border-radius: 12px;
+  }
+  .page-header h1 { font-family: 'Noto Serif HK', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 13.5px; color: #f5c0b8; }
+
+  /* ── KEYWORDS ── */
+  .kw {
+    border-bottom: 2.5px solid var(--red); cursor: pointer;
+    border-radius: 2px; padding: 0 1px; transition: background .15s;
+  }
+  .kw.hidden {
+    background: var(--ink); color: var(--ink);
+    border-bottom: none; border-radius: 3px; padding: 0 3px;
+  }
+  .kw:not(.hidden):hover { background: var(--red-bg2); }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--red-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 15px 18px;
+    font-size: 14px; line-height: 1.75; color: var(--ink2); margin-bottom: 14px;
+  }
+  .info-box p { margin-bottom: 5px; } .info-box p:last-child { margin-bottom: 0; }
+  .info-box ul { padding-left: 20px; } .info-box li { margin-bottom: 4px; }
+
+  /* ── CARD GRID ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+  .card {
+    background: var(--red-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; border-top: 4px solid var(--red-mid);
+  }
+  .card h4 { color: var(--red-dark); font-weight: 700; font-size: 14px; margin-bottom: 7px; }
+  .card ul { padding-left: 18px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .card li { margin-bottom: 4px; }
+  .card p { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 30px; margin: 10px 0 14px; }
+  .timeline::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:2px; background: var(--red-light); }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-item::before {
+    content:''; position:absolute; left:-24px; top:6px;
+    width:10px; height:10px; border-radius:50%;
+    background: var(--red-mid); border: 2px solid #fff;
+  }
+  .tl-year { font-weight: 700; color: var(--red); font-size: 13px; }
+  .tl-body { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── COMPARE TABLE ── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; }
+  .cmp-table th { background: var(--red-dark); color: #f5c0b8; padding: 9px 14px; text-align: center; font-weight: 700; }
+  .cmp-table td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); }
+  .cmp-table tr:nth-child(even) td { background: var(--red-bg); }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .row-label { font-weight: 700; color: var(--red-dark); background: var(--red-bg2) !important; }
+
+  /* ── NOTE CARDS (labelled) ── */
+  .note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+  .note-card {
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 12px; padding: 14px 16px; border-top: 4px solid var(--red-mid);
+  }
+  .note-card .nc-label {
+    display: inline-block; background: var(--red-mid); color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 20px; padding: 1px 10px; margin-bottom: 8px;
+  }
+  .note-card h4 { font-weight: 700; color: var(--red-dark); font-size: 14px; margin-bottom: 6px; }
+  .note-card ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .note-card li { margin-bottom: 4px; }
+  .note-card p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── ALLIANCE BOXES ── */
+  .alliance-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0; }
+  @media (max-width: 540px) { .alliance-wrap { grid-template-columns: 1fr; } }
+  .alliance-box { border-radius: 10px; padding: 14px 16px; }
+  .alliance-box.triple { background: #fff3e0; border: 2px solid #c07000; }
+  .alliance-box.entente { background: #e8f0ff; border: 2px solid #1a3a6e; }
+  .alliance-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .alliance-box.triple h4 { color: #7a4500; }
+  .alliance-box.entente h4 { color: #1a3a6e; }
+  .alliance-box ul { padding-left: 18px; font-size: 13.5px; line-height: 1.65; }
+  .alliance-box.triple ul { color: #7a4500; }
+  .alliance-box.entente ul { color: #1a3a6e; }
+
+  /* ── TREATY BOX ── */
+  .treaty-box {
+    background: #f9f4e8; border: 2px solid var(--gold);
+    border-radius: 12px; padding: 16px 20px; margin-bottom: 14px;
+  }
+  .treaty-box h4 { color: var(--amber); font-family: 'Noto Serif HK', serif; font-weight: 700; font-size: 15px; margin-bottom: 10px; }
+  .treaty-box ul { padding-left: 20px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .treaty-box li { margin-bottom: 5px; }
+
+  /* ── IMPACT TABLE ── */
+  .impact-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; }
+  .impact-table th { background: var(--red-dark); color: #f5c0b8; padding: 8px 12px; text-align: center; font-weight: 700; }
+  .impact-table td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; font-size: 13px; }
+  .impact-table .country { font-weight: 700; color: var(--red-dark); background: var(--red-bg2); }
+  .impact-table tr:nth-child(even) td:not(.country) { background: var(--red-bg); }
+
+  /* ── SEQUENCE ROW ── */
+  .seq-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 10px 0; }
+  .seq-pill {
+    background: var(--red-mid); color: #fff;
+    border-radius: 20px; padding: 4px 14px; font-size: 13px; font-weight: 700;
+  }
+  .seq-arr { color: var(--red-light); font-size: 18px; font-weight: 700; }
+
+  /* ── CAUSE CHAIN (flowchart style) ── */
+  .cause-wrap { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+  .cause-item {
+    background: var(--red-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px; font-size: 13.5px; color: var(--ink2);
+    position: relative;
+  }
+  .cause-item strong { color: var(--red-dark); }
+  .cause-arr { text-align: center; color: var(--red-light); font-size: 20px; line-height: 1; }
+
+  .tick { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); font-weight: 700; }
+  .hl-gold { color: var(--gold); font-weight: 700; }
+  .hl-blue { color: var(--blue); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-top">
+    <div class="header-title">⚔️ 課題9 兩次世界大戰 互動筆記</div>
+    <button class="btn-toggle-all" onclick="toggleAll()" id="toggleBtn">
+      🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>
+    </button>
+  </div>
+  <div class="toc-row">
+    <a href="#s1">一次大戰前因</a>
+    <a href="#s2">一次大戰爆發</a>
+    <a href="#s3">一次大戰結果</a>
+    <a href="#s4">戰間期形勢</a>
+    <a href="#s5">極權主義興起</a>
+    <a href="#s6">二次大戰爆發</a>
+    <a href="#s7">二次大戰結果</a>
+    <a href="#s8">兩次大戰影響</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>課題9 20世紀的國際紛爭及危機（I）——兩次世界大戰</h1>
+    <p>初中世界歷史互動溫習筆記 ‧ 點擊紅色關鍵詞可隱藏／顯示答案</p>
+  </div>
+
+  <!-- ══════════════ I 甲 一次大戰前因 ══════════════ -->
+  <div class="section" id="s1">
+    <div class="part-badge">I 甲</div>
+    <div class="section-title">20世紀初列強的衝突與第一次世界大戰的爆發</div>
+
+    <!-- 19世紀中葉歐洲政治重組 -->
+    <div class="subsection-title">1 19世紀中葉歐洲政治形勢的重組</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>英國</h4>
+        <ul>
+          <li>曾採取「<span class="kw" onclick="toggleKw(this)">光榮孤立</span>」的外交政策</li>
+          <li>受<span class="kw" onclick="toggleKw(this)">德國</span>崛起的影響，改變其原來的外交政策</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>法國</h4>
+        <ul>
+          <li>在<span class="kw" onclick="toggleKw(this)">普法</span>戰爭落敗</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>德國</h4>
+        <ul>
+          <li>在<span class="kw" onclick="toggleKw(this)">普法</span>戰爭後成功統一</li>
+          <li>與法國、英國及俄國<span class="kw" onclick="toggleKw(this)">關係惡劣</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>俄國</h4>
+        <ul>
+          <li>希望爭奪<span class="kw" onclick="toggleKw(this)">巴爾幹半島</span>的控制權</li>
+          <li>欲擴大在<span class="kw" onclick="toggleKw(this)">東歐</span>的影響力</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>奧匈帝國</h4>
+        <ul>
+          <li>希望爭奪<span class="kw" onclick="toggleKw(this)">巴爾幹半島</span>的控制權</li>
+          <li>鎮壓境內<span class="kw" onclick="toggleKw(this)">斯拉夫</span>人的獨立</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>意大利</h4>
+        <ul>
+          <li>在<span class="kw" onclick="toggleKw(this)">普法</span>戰爭後趁機統一</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 第一次世界大戰爆發原因 -->
+    <div class="subsection-title">2 第一次世界大戰爆發的原因</div>
+    <div class="sub2-title">兩大軍事同盟</div>
+    <div class="alliance-wrap">
+      <div class="alliance-box triple">
+        <h4>🔱 三國同盟（同盟國）</h4>
+        <ul>
+          <li><span class="kw" onclick="toggleKw(this)">德國</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">奧匈帝國</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">意大利</span>（後退出）</li>
+        </ul>
+      </div>
+      <div class="alliance-box entente">
+        <h4>🤝 三國協約（協約國）</h4>
+        <ul>
+          <li><span class="kw" onclick="toggleKw(this)">英國</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">法國</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">俄國</span></li>
+          <li>後加入：美國、意大利、日本、塞爾維亞、比利時</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub2-title">其他爆發原因</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">殖民地競爭</div>
+        <p>工業革命後，列強在<span class="kw" onclick="toggleKw(this)">亞洲</span>和<span class="kw" onclick="toggleKw(this)">非洲</span>建立殖民地，引發衝突。19世紀末，<span class="kw" onclick="toggleKw(this)">英國</span>擁有最多殖民地。</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">民族主義</div>
+        <p><span class="kw" onclick="toggleKw(this)">泛斯拉夫主義</span>：主張聯合所有斯拉夫人，置於<span class="kw" onclick="toggleKw(this)">俄國</span>統轄<br><br>
+        <span class="kw" onclick="toggleKw(this)">泛日耳曼主義</span>：德國擴張日耳曼勢力</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">軍備競賽</div>
+        <p>19世紀末，英德爭建<span class="kw" onclick="toggleKw(this)">無畏艦</span>（大型戰艦），使兩國關係緊張</p>
+      </div>
+    </div>
+
+    <!-- 第一次世界大戰爆發前的國際危機 -->
+    <div class="subsection-title">3 第一次世界大戰爆發前的國際危機</div>
+    <div class="info-box">
+      <ul>
+        <li><strong>兩次摩洛哥危機：</strong>德國與法國爭奪<span class="kw" onclick="toggleKw(this)">北非</span>（摩洛哥）的控制權，最後由<span class="kw" onclick="toggleKw(this)">德國</span>讓步</li>
+        <li><strong>意土戰爭（1911-1912）：</strong>意大利與<span class="kw" onclick="toggleKw(this)">鄂圖曼帝國／土耳其</span>交戰，意大利獲勝</li>
+        <li><strong>兩次巴爾幹戰爭：</strong>「<span class="kw" onclick="toggleKw(this)">歐洲</span>的火藥庫」；1908年奧匈帝國吞併<span class="kw" onclick="toggleKw(this)">波斯尼亞和黑塞哥維那</span>；塞爾維亞的勢力<span class="kw" onclick="toggleKw(this)">坐大</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ I 甲 一次大戰爆發 ══════════════ -->
+  <div class="section" id="s2">
+    <div class="part-badge">I 甲</div>
+    <div class="section-title">第一次世界大戰的爆發及經過</div>
+
+    <div class="subsection-title">4 導火線——塞拉耶佛事件（1914）</div>
+    <div class="info-box">
+      <ul>
+        <li>奧匈帝國皇儲<span class="kw" onclick="toggleKw(this)">斐迪南大公夫婦</span>在塞拉耶佛遇刺，刺客為<span class="kw" onclick="toggleKw(this)">塞爾維亞</span>激進分子</li>
+        <li>奧匈帝國要求塞爾維亞追究責任；塞爾維亞只答應了部分條款（制止反奧宣傳活動、懲辦進行反奧宣傳的官員），拒絕由奧匈派人追捕兇手</li>
+        <li>奧匈帝國向<span class="kw" onclick="toggleKw(this)">塞爾維亞</span>宣戰 → 牽動兩大同盟，一戰正式爆發</li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">5 第一次世界大戰的爆發及經過</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">爆發前 ——施里芬計劃</div>
+        <div class="tl-body">德國計劃先以<span class="kw" onclick="toggleKw(this)">施里芬計劃</span>（穿越<span class="kw" onclick="toggleKw(this)">比利時</span>）快速擊敗法國，再調頭對付俄國 → 引英國參戰</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">戰場形勢</div>
+        <div class="tl-body">
+          <strong>西線：</strong>英、法對<span class="kw" onclick="toggleKw(this)">德國</span>；陷入<span class="kw" onclick="toggleKw(this)">塹壕戰</span>（壕溝戰），雙方膠著<br>
+          <strong>東線：</strong>德國、<span class="kw" onclick="toggleKw(this)">奧匈帝國</span>對俄國
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1917年 ——俄國退出</div>
+        <div class="tl-body">俄國爆發<span class="kw" onclick="toggleKw(this)">十月革命</span>，布爾什維克政府與德國議和，俄國退出戰事</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1917年 ——美國參戰</div>
+        <div class="tl-body">德國採取<span class="kw" onclick="toggleKw(this)">無限制潛艇戰</span>，擊沉包括美國船隻；美國對德宣戰，加入<span class="kw" onclick="toggleKw(this)">協約</span>國</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">新式武器</div>
+        <div class="tl-body">出現<span class="kw" onclick="toggleKw(this)">坦克</span>→ 令塹壕戰的防禦漸失效用；另有戰機、毒氣等</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1918年 ——戰爭結束</div>
+        <div class="tl-body">德國與協約國簽署<span class="kw" onclick="toggleKw(this)">停戰協議</span>，一次大戰結束</div>
+      </div>
+    </div>
+
+    <div class="sub2-title">史事排序（一次大戰）</div>
+    <div class="seq-row">
+      <div class="seq-pill">三國同盟組成</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">第一次摩洛哥危機</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">三國協約組成</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">奧吞波斯尼亞及黑塞哥維那</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">塞拉耶佛事件／奧向塞宣戰</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">美國對德宣戰</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">俄國十月革命</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">《凡爾賽條約》簽訂</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ I 甲 一次大戰結果 ══════════════ -->
+  <div class="section" id="s3">
+    <div class="part-badge">I 甲</div>
+    <div class="section-title">第一次世界大戰的結果——巴黎和會與《凡爾賽條約》</div>
+
+    <div class="sub2-title">巴黎和會</div>
+    <div class="info-box">
+      <ul>
+        <li>舉行年份：<span class="kw" onclick="toggleKw(this)">1919</span> 年；舉行地點：<span class="kw" onclick="toggleKw(this)">巴黎</span></li>
+        <li>參與國：英國✓ 法國✓ 美國✓ 意大利✓ 日本✓（<span class="kw" onclick="toggleKw(this)">德國</span>、俄國不獲邀）</li>
+      </ul>
+    </div>
+
+    <div class="treaty-box">
+      <h4>《凡爾賽條約》對德國的懲罰</h4>
+      <ul>
+        <li>承擔戰爭<span class="kw" onclick="toggleKw(this)">全部責任</span>（戰爭罪責條款）</li>
+        <li>支付高達<span class="kw" onclick="toggleKw(this)">六十六</span>億英鎊的<span class="kw" onclick="toggleKw(this)">賠款</span></li>
+        <li>割讓領土（包括<span class="kw" onclick="toggleKw(this)">亞爾薩斯—洛林</span>還給法國）及所有海外殖民地</li>
+        <li>軍備限制：陸軍削減至<span class="kw" onclick="toggleKw(this)">十萬</span>人，不得擁有<span class="kw" onclick="toggleKw(this)">空軍</span>、潛艇等</li>
+        <li>萊茵河左岸由協約國<span class="kw" onclick="toggleKw(this)">佔領</span>，右岸劃為<span class="kw" onclick="toggleKw(this)">非軍事</span>區</li>
+      </ul>
+    </div>
+
+    <div class="sub2-title">一次大戰後世界政治版圖的改變</div>
+    <div class="info-box">
+      <ul>
+        <li>政權倒台：<span class="kw" onclick="toggleKw(this)">鄂圖曼帝國</span>、奧匈帝國、俄國、德國帝制垮台</li>
+        <li>新成立的民族國家：<span class="kw" onclick="toggleKw(this)">南斯拉夫</span>、波蘭、捷克、匈牙利、芬蘭、愛沙尼亞、拉脫維亞等</li>
+        <li>影響力大增：<span class="kw" onclick="toggleKw(this)">美國</span>、日本</li>
+        <li>失去世界強國地位：英國、法國、奧匈帝國、德國</li>
+        <li>首個實行<span class="kw" onclick="toggleKw(this)">共產主義</span>的國家：蘇聯</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ I 乙 戰間期 ══════════════ -->
+  <div class="section" id="s4">
+    <div class="part-badge">I 乙</div>
+    <div class="section-title">兩次世界大戰期間的世界形勢</div>
+
+    <div class="subsection-title">1 一次大戰後的世界經濟局勢</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>歐洲經濟衰落</h4>
+        <p>一次大戰後，歐洲普遍出現<span class="kw" onclick="toggleKw(this)">物資短缺</span>、<span class="kw" onclick="toggleKw(this)">通貨膨脹</span>的現象</p>
+      </div>
+      <div class="card">
+        <h4>美國發生經濟大衰退</h4>
+        <p>1929年，紐約<span class="kw" onclick="toggleKw(this)">華爾街</span>股票市場<span class="kw" onclick="toggleKw(this)">崩潰</span>，令美國經濟步入衰竭</p>
+      </div>
+      <div class="card">
+        <h4>大衰退對世界的影響①</h4>
+        <p><span class="kw" onclick="toggleKw(this)">歐洲</span>各國在經濟重建上依賴<span class="kw" onclick="toggleKw(this)">美國</span>的援助及投資，當美國經濟崩潰時，它們的經濟也被牽連</p>
+      </div>
+      <div class="card">
+        <h4>大衰退對世界的影響②</h4>
+        <p><span class="kw" onclick="toggleKw(this)">德國</span>和日本政府無力解決國內經濟困境，促使<span class="kw" onclick="toggleKw(this)">極權主義</span>在兩國的興起</p>
+      </div>
+      <div class="card">
+        <h4>大衰退對世界的影響③</h4>
+        <p>英、法忙於解決國內的經濟問題，只能對極權國家日後的侵略行動採取<span class="kw" onclick="toggleKw(this)">綏靖政策</span></p>
+      </div>
+    </div>
+
+    <div class="subsection-title">2 一次大戰後的世界政治局勢</div>
+    <div class="info-box">
+      <ul>
+        <li>《凡爾賽條約》後德國的<span class="kw" onclick="toggleKw(this)">失業</span>問題及<span class="kw" onclick="toggleKw(this)">通貨膨脹</span>嚴重，人民不滿</li>
+        <li>德國被迫承擔戰爭責任及支付大量<span class="kw" onclick="toggleKw(this)">賠款</span>，引起德國人的強烈<span class="kw" onclick="toggleKw(this)">不滿</span>（國家恥辱感）</li>
+        <li><span class="kw" onclick="toggleKw(this)">民族自決</span>原則（美國總統威爾遜提倡）→ 未能保障德意志人和日耳曼人的利益，引起不滿</li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">3 《凡爾賽條約》的後遺症（德國的不滿）</div>
+    <div class="cause-wrap">
+      <div class="cause-item"><strong>《凡爾賽條約》的嚴苛懲罰</strong>→ 德國物資短缺、通脹高漲、賠款沉重、國家恥辱</div>
+      <div class="cause-arr">↓</div>
+      <div class="cause-item"><strong>人民支持獨裁者（希特拉）</strong></div>
+      <div class="cause-arr">↓</div>
+      <div class="cause-item"><strong>希特拉採取對外擴張政策</strong>→ 第二次世界大戰爆發</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ I 乙 極權主義 ══════════════ -->
+  <div class="section" id="s5">
+    <div class="part-badge">I 乙</div>
+    <div class="section-title">極權主義的興起</div>
+
+    <div class="subsection-title">4 極權主義的特徵</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>政治上</h4>
+        <ul>
+          <li>政權由<span class="kw" onclick="toggleKw(this)">一個政黨</span>或其元首控制</li>
+          <li>對人民生活進行<span class="kw" onclick="toggleKw(this)">嚴格監控</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>思想上</h4>
+        <ul>
+          <li>提倡<span class="kw" onclick="toggleKw(this)">政黨利益至上</span>的思想</li>
+          <li>積極對外<span class="kw" onclick="toggleKw(this)">侵略擴張</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection-title">5 意大利——法西斯主義</div>
+    <div class="info-box">
+      <ul>
+        <li>墨索里尼掌權後，在意大利推行<span class="kw" onclick="toggleKw(this)">法西斯</span>極權統治</li>
+        <li>設立<span class="kw" onclick="toggleKw(this)">秘密警察</span>；由法西斯黨控制<span class="kw" onclick="toggleKw(this)">國會</span>；嚴格限制<span class="kw" onclick="toggleKw(this)">新聞</span>自由；強制所有意大利人加入法西斯組織</li>
+        <li>採取對外<span class="kw" onclick="toggleKw(this)">擴張</span>政策：入侵<span class="kw" onclick="toggleKw(this)">阿比西尼亞</span>（衣索比亞）</li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">6 德國——納粹主義</div>
+    <div class="info-box">
+      <ul>
+        <li>希特拉領導<span class="kw" onclick="toggleKw(this)">納粹黨</span>掌權，實行極權統治</li>
+        <li>以日耳曼民族<span class="kw" onclick="toggleKw(this)">優越</span>為口號，對<span class="kw" onclick="toggleKw(this)">猶太人</span>實施種族滅絕（大屠殺）</li>
+        <li>積極重整<span class="kw" onclick="toggleKw(this)">軍備</span>，退出<span class="kw" onclick="toggleKw(this)">國際聯盟</span></li>
+        <li>採取對外<span class="kw" onclick="toggleKw(this)">擴張</span>政策：吞併奧地利、捷克斯洛伐克等</li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">7 日本——軍國主義</div>
+    <div class="info-box">
+      <ul>
+        <li>1930年代，日本國內興起<span class="kw" onclick="toggleKw(this)">軍國主義</span>極權統治</li>
+        <li>以<span class="kw" onclick="toggleKw(this)">向外擴張</span>為國策：在中國發動「<span class="kw" onclick="toggleKw(this)">九一八事變</span>」（1931年），侵佔東北；後全面侵華</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ I 乙 二次大戰爆發 ══════════════ -->
+  <div class="section" id="s6">
+    <div class="part-badge">I 乙</div>
+    <div class="section-title">第二次世界大戰的爆發及經過</div>
+
+    <div class="subsection-title">5 第二次世界大戰爆發的原因</div>
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">《凡爾賽條約》後遺</div>
+        <p>德國不滿條約的嚴苛懲罰，支持<span class="kw" onclick="toggleKw(this)">希特拉</span>上台，採取對外擴張政策</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">全球經濟大衰退</div>
+        <p>1929年<span class="kw" onclick="toggleKw(this)">華爾街</span>股市崩潰，德國、日本爆發<span class="kw" onclick="toggleKw(this)">政治危機</span>，促使極權主義興起</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">英法的綏靖政策</div>
+        <p>英法不希望<span class="kw" onclick="toggleKw(this)">爆發戰爭</span>，希望利用德國對付蘇聯，以及避免與德國直接衝突，因此採取<span class="kw" onclick="toggleKw(this)">綏靖政策</span>，助長德國的野心</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">《慕尼黑協定》（1938）</div>
+        <p>英法同意將捷克斯洛伐克的<span class="kw" onclick="toggleKw(this)">蘇台德區</span>割讓給德國 → 希特拉得寸進尺，繼續擴張</p>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">《德蘇互不侵犯條約》（1939）</div>
+        <p>德蘇協議十年內互不進攻 → 德國放心<span class="kw" onclick="toggleKw(this)">侵略波蘭</span>，不怕蘇聯阻止</p>
+      </div>
+    </div>
+
+    <div class="sub2-title">史事排序（二次大戰前）</div>
+    <div class="seq-row">
+      <div class="seq-pill">各國簽訂《羅加諾公約》</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">全球經濟大衰退</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">九一八事變</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">日內瓦會議</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">德國退出國際聯盟</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">《慕尼黑協定》</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">《德蘇互不侵犯條約》</div>
+      <div class="seq-arr">→</div>
+      <div class="seq-pill">軸心國組成</div>
+    </div>
+
+    <div class="subsection-title">6 第二次世界大戰的爆發及經過</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1939年9月 ——導火線</div>
+        <div class="tl-body">德國入侵<span class="kw" onclick="toggleKw(this)">波蘭</span> → 英法對德宣戰，二次大戰正式爆發</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">軸心國</div>
+        <div class="tl-body"><span class="kw" onclick="toggleKw(this)">德國</span>、<span class="kw" onclick="toggleKw(this)">意大利</span>、<span class="kw" onclick="toggleKw(this)">日本</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">盟軍（同盟國）</div>
+        <div class="tl-body"><span class="kw" onclick="toggleKw(this)">英國</span>、<span class="kw" onclick="toggleKw(this)">法國</span>、後加入：蘇聯（1941年）、美國（1941年）</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">美國的孤立主義</div>
+        <div class="tl-body">美國起初奉行<span class="kw" onclick="toggleKw(this)">孤立主義</span>，不介入歐洲事務（漫畫：婦人餵鱷魚）</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1941年 ——美國參戰</div>
+        <div class="tl-body">日本偷襲美國<span class="kw" onclick="toggleKw(this)">珍珠港</span>→ 美國對日宣戰，加入盟軍；同年德國入侵<span class="kw" onclick="toggleKw(this)">蘇聯</span>，蘇聯加入盟軍</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1945年——戰爭結束（歐洲）</div>
+        <div class="tl-body">盟軍在美國支持下扭轉局勢，德國和意大利相繼<span class="kw" onclick="toggleKw(this)">投降</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1945年——戰爭結束（太平洋）</div>
+        <div class="tl-body">美國向日本廣島、<span class="kw" onclick="toggleKw(this)">長崎</span>投擲<span class="kw" onclick="toggleKw(this)">原子彈</span> → 日本無條件<span class="kw" onclick="toggleKw(this)">投降</span>，二次大戰終結</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ I 乙 二次大戰結果 ══════════════ -->
+  <div class="section" id="s7">
+    <div class="part-badge">I 乙</div>
+    <div class="section-title">第二次世界大戰的結果</div>
+
+    <div class="sub2-title">史事辨識（更正以下錯誤）</div>
+    <div class="info-box">
+      <ul>
+        <li>二次大戰的戰後安排，由美國、英國和<span class="kw" onclick="toggleKw(this)">蘇聯</span>在戰爭期間商定</li>
+        <li>1947年，各國在巴黎簽訂對<span class="kw" onclick="toggleKw(this)">意大利</span>的戰後和約</li>
+        <li>二次大戰後，東柏林由<span class="kw" onclick="toggleKw(this)">蘇聯</span>管轄；<span class="kw" onclick="toggleKw(this)">西</span>柏林由美國、英國和法國共管</li>
+        <li>日本在二次大戰後由<span class="kw" onclick="toggleKw(this)">美國</span>佔領</li>
+        <li>1951年，各國在<span class="kw" onclick="toggleKw(this)">三藩市</span>簽訂對日本的戰後和約</li>
+      </ul>
+    </div>
+
+    <div class="treaty-box">
+      <h4>二次大戰後德國的戰後安排</h4>
+      <ul>
+        <li>德國被分成<span class="kw" onclick="toggleKw(this)">西德</span>（由美英法管轄）和<span class="kw" onclick="toggleKw(this)">東德</span>（由蘇聯管轄）</li>
+        <li>首都柏林：<span class="kw" onclick="toggleKw(this)">東柏林</span>歸蘇聯；<span class="kw" onclick="toggleKw(this)">西柏林</span>歸美英法共管</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ II 兩次大戰的影響 ══════════════ -->
+  <div class="section" id="s8">
+    <div class="part-badge">II</div>
+    <div class="section-title">兩次世界大戰的影響——列強的轉變</div>
+
+    <table class="impact-table">
+      <thead>
+        <tr>
+          <th style="width:10%">國家</th>
+          <th style="width:40%">1920–1930年代</th>
+          <th style="width:40%">二次大戰後</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="country">德國</td>
+          <td><span class="kw" onclick="toggleKw(this)">希特拉</span>上台，實行<span class="kw" onclick="toggleKw(this)">納粹主義</span>極權統治；採取對外<span class="kw" onclick="toggleKw(this)">擴張</span>政策</td>
+          <td>軍事實力大<span class="kw" onclick="toggleKw(this)">減</span>；經濟遭受破壞；被分成<span class="kw" onclick="toggleKw(this)">西德</span>與<span class="kw" onclick="toggleKw(this)">東德</span></td>
+        </tr>
+        <tr>
+          <td class="country">意大利</td>
+          <td><span class="kw" onclick="toggleKw(this)">墨索里尼</span>上台，實行<span class="kw" onclick="toggleKw(this)">法西斯主義</span>極權統治；採取對外<span class="kw" onclick="toggleKw(this)">擴張</span>政策</td>
+          <td>實力大<span class="kw" onclick="toggleKw(this)">減</span>；經濟遭受破壞</td>
+        </tr>
+        <tr>
+          <td class="country">日本</td>
+          <td>實行<span class="kw" onclick="toggleKw(this)">軍國主義</span>極權統治；以<span class="kw" onclick="toggleKw(this)">向外擴張</span>為國策</td>
+          <td>實力大<span class="kw" onclick="toggleKw(this)">減</span>；由<span class="kw" onclick="toggleKw(this)">美國</span>佔領</td>
+        </tr>
+        <tr>
+          <td class="country">英國</td>
+          <td>經濟發展<span class="kw" onclick="toggleKw(this)">疲弱</span>；採取<span class="kw" onclick="toggleKw(this)">綏靖</span>政策</td>
+          <td>經濟進一步<span class="kw" onclick="toggleKw(this)">衰退</span>；國力<span class="kw" onclick="toggleKw(this)">減退</span>，殖民地紛紛<span class="kw" onclick="toggleKw(this)">獨立</span></td>
+        </tr>
+        <tr>
+          <td class="country">法國</td>
+          <td>採取<span class="kw" onclick="toggleKw(this)">綏靖</span>政策；忙於解決國內經濟問題</td>
+          <td>失去世界強國地位；殖民地紛紛<span class="kw" onclick="toggleKw(this)">獨立</span></td>
+        </tr>
+        <tr>
+          <td class="country">美國</td>
+          <td>全球最大的生產國和債權國；奉行<span class="kw" onclick="toggleKw(this)">孤立主義</span>的外交政策</td>
+          <td>經濟大幅<span class="kw" onclick="toggleKw(this)">增長</span>，成為<span class="kw" onclick="toggleKw(this)">超級大國</span>；<span class="kw" onclick="toggleKw(this)">資本主義</span>陣營的首領，與蘇聯抗衡</td>
+        </tr>
+        <tr>
+          <td class="country">蘇聯</td>
+          <td>社會主義國家，實行極權主義；受<span class="kw" onclick="toggleKw(this)">資本主義</span>國家孤立</td>
+          <td>經濟大幅<span class="kw" onclick="toggleKw(this)">增長</span>，成為<span class="kw" onclick="toggleKw(this)">超級大國</span>；<span class="kw" onclick="toggleKw(this)">共產主義</span>陣營的首領，與美國抗衡</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="subsection-title">戰後國際秩序——聯合國的成立</div>
+    <div class="info-box">
+      <ul>
+        <li>二次大戰結束後，各國吸取教訓，成立<span class="kw" onclick="toggleKw(this)">聯合國</span>，取代失效的<span class="kw" onclick="toggleKw(this)">國際聯盟</span></li>
+        <li>目的：維護國際<span class="kw" onclick="toggleKw(this)">和平與安全</span>，促進各國合作</li>
+        <li>冷戰格局：美國領導<span class="kw" onclick="toggleKw(this)">資本主義</span>陣營，蘇聯領導<span class="kw" onclick="toggleKw(this)">共產主義</span>陣營，形成兩極對立</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+let allRevealed = false;
+function toggleAll() {
+  allRevealed = !allRevealed;
+  document.querySelectorAll('.kw').forEach(el => el.classList.toggle('hidden', !allRevealed));
+  const btn = document.getElementById('toggleBtn');
+  if (allRevealed) {
+    btn.innerHTML = '🔓 顯示關鍵詞 <span class="pill" id="togglePill">隱藏中</span>';
+  } else {
+    btn.innerHTML = '🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>';
+  }
+}
+function toggleKw(el) { el.classList.toggle('hidden'); }
+</script>
+</body>
+</html>
