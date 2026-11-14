@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第12章 健康的身體｜互動温習筆記</title>
+<style>
+:root{
+  --ink:#1f2933; --muted:#5f6b76; --line:#dde3e8; --bg:#f6f4ef; --card:#fff;
+  --accent:#2f6f5e; --accent-soft:#e3f0eb; --hide:#f3e6c4; --hide-line:#c99a2e;
+  --shown:#dff0e2; --shown-line:#3f9a58; --ext:#c0392b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Heiti TC",sans-serif;
+  font-size:17px;line-height:1.85}
+header.top{position:sticky;top:0;z-index:20;background:rgba(246,244,239,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line)}
+.bar{max-width:920px;margin:0 auto;padding:10px 18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar h1{font-size:18px;margin:0 12px 0 0;white-space:nowrap}
+.bar h1 span{display:inline-block;background:var(--accent);color:#fff;border-radius:50%;width:28px;height:28px;
+  text-align:center;line-height:28px;font-size:14px;margin-right:6px}
+button{font:inherit;font-size:14px;border:1px solid var(--line);background:#fff;color:var(--ink);
+  border-radius:999px;padding:5px 13px;cursor:pointer;line-height:1.4}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.progress{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap}
+.progress b{color:var(--accent)}
+nav.toc{max-width:920px;margin:0 auto;padding:0 18px 8px;display:flex;gap:6px;flex-wrap:wrap}
+nav.toc a{font-size:13px;color:var(--muted);text-decoration:none;padding:2px 10px;border-radius:999px;background:#ece9e1}
+nav.toc a:hover{color:var(--accent);background:var(--accent-soft)}
+main{max-width:920px;margin:0 auto;padding:18px 18px 80px}
+.intro{font-size:14px;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin-bottom:18px}
+section.sec{background:var(--card);border-radius:16px;padding:6px 26px 18px;margin:0 0 22px;
+  box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 18px rgba(0,0,0,.04)}
+.sec-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--accent-soft);padding:14px 0 8px;margin-bottom:6px}
+.sec-head h2{margin:0;font-size:23px}
+.sec-head h2 em{font-style:normal;color:var(--accent);margin-right:8px}
+.sec-head .ref{font-size:13px;color:var(--muted)}
+.sec-head .sec-tools{margin-left:auto;display:flex;gap:6px}
+.sec-head .sec-tools button{font-size:12.5px;padding:3px 10px}
+ol.pts{list-style:none;margin:0;padding:0}
+ol.pts>li{position:relative;padding:9px 0 9px 46px;border-bottom:1px solid #f0f2f4}
+ol.pts>li:last-child{border-bottom:0}
+ol.pts>li::before{content:attr(data-n);position:absolute;left:4px;top:9px;font-weight:700;color:var(--muted);width:26px;text-align:right}
+ol.pts>li.ext::after{content:"延伸";position:absolute;left:0;top:40px;font-size:10.5px;line-height:1;color:#fff;background:var(--ext);
+  border-radius:4px;padding:3px 4px;letter-spacing:1px}
+body.no-ext ol.pts>li.ext{display:none}
+ul.dot{margin:4px 0 2px;padding-left:1.3em}
+ul.dot li{margin:2px 0}
+ul.sq{margin:2px 0;padding-left:1.4em;list-style:square}
+/* keywords */
+.kw{font-weight:700;border-radius:5px;padding:0 2px;cursor:pointer;transition:background .15s;min-width:1.4em;display:inline-block;text-align:center;
+  -webkit-tap-highlight-color:transparent;outline-offset:2px}
+.kw:hover{background:#f2f7f5}
+.kw.hid{color:transparent;background:var(--hide);box-shadow:inset 0 -2px 0 var(--hide-line);user-select:none}
+.kw.hid:hover{background:#efd99e}
+.kw.got{background:var(--shown);box-shadow:inset 0 -2px 0 var(--shown-line)}
+.kw.hid *{color:transparent}
+/* tables */
+.tw{overflow-x:auto;margin:8px 0 4px}
+table{border-collapse:collapse;width:100%;font-size:15.5px;line-height:1.6}
+th,td{border:1px solid #cfd6dc;padding:6px 10px;vertical-align:top;text-align:left}
+thead th{background:#eef1f3;text-align:center}
+tbody th{background:#f6f7f8;white-space:nowrap}
+th small,td small{font-weight:400;color:var(--muted)}
+/* diagrams */
+.fig{margin:10px 0 4px;padding:14px;border-radius:12px;background:#fafbfa;border:1px solid #eef0ef;font-size:15px}
+.cls{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center}
+.cls .root{grid-column:1/3;justify-self:center;background:var(--accent);color:#fff;border-radius:8px;padding:3px 18px;font-weight:700}
+.cls .col{border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px}
+.cls .col h4{margin:0 0 4px;font-size:14px;color:var(--accent)}
+.lipid{display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap}
+.lipid .gly{width:96px;height:96px;border-radius:50%;background:#f4c6cf;display:flex;align-items:center;justify-content:center;font-weight:700}
+.lipid .fa{display:flex;flex-direction:column;gap:6px}
+.lipid .fa span{background:#fff4c4;border:1px solid #d9c46a;padding:2px 30px;border-radius:4px;text-align:center}
+.flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;justify-content:center}
+.flow>.step{flex:1 1 180px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14.5px;line-height:1.6}
+.flow>.step b.t{display:block;color:var(--accent);font-size:13px}
+.flow>.arr{align-self:center;color:var(--muted);font-size:20px}
+.chain{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.chain span.node{background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 16px}
+.pyr{display:flex;flex-direction:column;align-items:center;gap:4px}
+.pyr div{text-align:center;padding:6px 8px;border-radius:6px;font-size:14px;color:#222}
+.pyr .l1{width:34%;background:#f6c9d0}
+.pyr .l2{width:58%;background:#e7d6f0}
+.pyr .l3{width:80%;background:#d6ecc8}
+.pyr .l4{width:100%;background:#f3dcb4}
+.pyr .l2 i,.pyr .l3 i{font-style:normal;display:inline-block;margin:0 6px}
+.formula{display:flex;align-items:center;gap:10px;justify-content:center;font-size:16px}
+.formula .frac{display:inline-flex;flex-direction:column;text-align:center}
+.formula .frac span:first-child{border-bottom:1.5px solid var(--ink);padding:0 6px}
+.note{font-size:13.5px;color:var(--muted)}
+footer{max-width:920px;margin:0 auto;padding:0 18px 40px;font-size:12.5px;color:var(--muted)}
+@media (max-width:640px){
+  body{font-size:16px}
+  section.sec{padding:4px 14px 14px}
+  ol.pts>li{padding-left:38px}
+  .bar h1{width:100%}
+  .progress{margin-left:0}
+  .sec-head .sec-tools{margin-left:0}
+}
+@media print{
+  header.top,.sec-tools{display:none}
+  body{background:#fff}
+  section.sec{box-shadow:none;border:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="bar">
+    <h1><span>12</span>健康的身體</h1>
+    <button class="primary" id="hideAll">隱藏全部關鍵詞</button>
+    <button id="showAll">顯示全部</button>
+    <button id="randomHide">隨機隱藏一半</button>
+    <button id="extToggle" aria-pressed="true">延伸內容：顯示</button>
+    <div class="progress">已答出 <b id="got">0</b> / <span id="tot">0</span>（隱藏中 <span id="hidN">0</span>）</div>
+  </div>
+  <nav class="toc">
+    <a href="#s1">12.1 保持身體健康</a><a href="#s2">12.2 食物物質</a><a href="#s3">12.3 消化和吸收</a><a href="#s4">12.4 均衡膳食</a><a href="#s5">12.5 健康與疾病</a>
+  </nav>
+</header>
+
+<main class="notes">
+<p class="intro">💡 用法：按「隱藏全部關鍵詞」後，先默想答案，再<strong>點擊黃色空格</strong>揭示（揭示後變綠色，再點一次可重新隱藏）。每一節右上角亦可單獨隱藏／顯示。標有 <span style="background:var(--ext);color:#fff;border-radius:4px;padding:0 4px;font-size:12px">延伸</span> 的是延伸部分，可在上方切換顯示。</p>
+
+<!-- ============ 12.1 ============ -->
+<section class="sec" id="s1">
+<div class="sec-head"><h2><em>12.1</em>保持身體健康</h2><span class="ref">（第 3A 冊，p. 2–4）</span>
+<div class="sec-tools"><button data-sec-hide>本節隱藏</button><button data-sec-show>本節顯示</button></div></div>
+<ol class="pts">
+<li data-n="1">健康的人不但要體格強健，沒有疾病，還要在精神和社交方面都處於良好狀態。</li>
+<li data-n="2">要保持體格強健，我們須建立<b>健康的生活模式</b>。健康的生活模式包括以下幾方面：
+<ul class="dot"><li>進食多類型食物，分量和比例要適當。</li><li>做適量運動。</li><li>有充足的睡眠和休息。</li><li>遠離香煙、酒精、毒品等有害物質。</li></ul></li>
+<li data-n="3"><b>預防疾病</b>也是保持身體健康的要訣。有健康的生活模式和時刻注重個人衞生都是預防疾病的方法。</li>
+</ol>
+</section>
+
+<!-- ============ 12.2 ============ -->
+<section class="sec" id="s2">
+<div class="sec-head"><h2><em>12.2</em>食物物質</h2><span class="ref">（第 3A 冊，p. 5–27）</span>
+<div class="sec-tools"><button data-sec-hide>本節隱藏</button><button data-sec-show>本節顯示</button></div></div>
+<ol class="pts">
+<li data-n="1">食物物質主要有七種，分別是<b>碳水化合物</b>、<b>脂質</b>、<b>蛋白質</b>、<b>礦物質</b>、<b>維生素</b>、<b>食用纖維</b>和<b>水</b>。</li>
+<li data-n="2">食物物質在人體內有以下主要功能：
+<ul class="dot"><li>提供能量，以支持身體活動和保持體温。</li><li>提供生長和修補身體破損組織所需的原料。</li><li>維持身體不同部位的健康和正常運作。</li></ul></li>
+<li data-n="3">根據能否為身體<b>提供能量</b>，食物物質可分為兩大類：
+<div class="fig cls"><div class="root">食物物質</div>
+<div class="col"><h4>能為身體提供能量</h4>碳水化合物<br>脂質<br>蛋白質</div>
+<div class="col"><h4>不能為身體提供能量</h4>礦物質<br>維生素<br>食用纖維<br>水</div></div></li>
+<li data-n="4">碳水化合物可分為兩大類，包括<b>糖</b>和<b>澱粉</b>。
+<div class="tw"><table>
+<thead><tr><th></th><th>糖<br><small>（例子：<b>葡萄糖</b>、<b>果糖</b>、<b>蔗糖</b>和<b>乳糖</b>）</small></th><th>澱粉</th></tr></thead>
+<tbody>
+<tr><th>分子結構</th><td>簡單</td><td>複雜（由多個葡萄糖分子組成）</td></tr>
+<tr><th>味道</th><td>帶甜味</td><td>不帶甜味</td></tr>
+<tr><th>可否溶於水</th><td>可溶於水</td><td>不溶於水</td></tr>
+<tr><th>食物來源例子</th><td>甘蔗、食糖、水果、蜂蜜、牛奶、酸乳酪</td><td>米飯、芋、馬鈴薯、麪包、意粉和麪條</td></tr>
+</tbody></table></div></li>
+<li data-n="5">碳水化合物的主要功能：
+<ul class="dot"><li>碳水化合物是身體活動的主要能量來源。在人體內，澱粉最終會分解為葡萄糖，葡萄糖會用於呼吸作用，釋出能量。</li>
+<li>體內多餘的碳水化合物會轉化成<b>糖原</b>或脂質，並儲存在體內作為<b>能量儲備</b>。糖原主要儲存在肝和肌肉中。</li></ul></li>
+<li data-n="6" class="ext">結構複雜的碳水化合物分子由多個結構簡單的碳水化合物分子組成，例如澱粉分子是由多個葡萄糖分子組成的。換言之，葡萄糖是組成澱粉的構件。
+<div class="fig chain"><span class="node">葡萄糖分子</span><span>×多個 →</span><span class="node">澱粉分子</span></div></li>
+<li data-n="7">脂質不溶於水。在日常膳食中，最常見的脂質有<b>脂肪</b>和<b>油</b>。
+<div class="tw"><table>
+<thead><tr><th></th><th>脂肪<br><small>（例子：牛油和豬油）</small></th><th>油<br><small>（例子：花生油和粟米油）</small></th></tr></thead>
+<tbody>
+<tr><th>在室温下的形態</th><td>固態</td><td>液態</td></tr>
+<tr><th>來源</th><td>主要來自動物</td><td>主要來自植物</td></tr>
+<tr><th>食物來源例子</th><td colspan="2">肥肉、椰子、牛油果、全脂奶、芝士、牛油、雪糕、果仁</td></tr>
+</tbody></table></div></li>
+<li data-n="8">脂質的主要功能：
+<ul class="dot"><li>脂質是身體的能量儲備。當碳水化合物攝取不足，和儲存在體內的糖原耗盡時，身體便會分解脂質以釋出能量。</li>
+<li>體內多餘的脂質會儲存在脂肪組織中。脂肪組織分佈在皮膚下，有助保持體温，因為脂肪是良好的熱絕緣體。</li>
+<li>脂肪組織也分佈在內臟周圍，保護內臟免受震盪。</li>
+<li>脂質是細胞膜的組成部分，也用來製造某些激素。</li>
+<li>脂溶性維生素的儲存和運輸都需要脂質。</li></ul></li>
+<li data-n="9" class="ext">脂質分子由一個<b>甘油</b>分子和三個<b>脂肪酸</b>分子組成，當中的脂肪酸分子可以是同類或是不同類。
+<div class="fig lipid"><div class="gly">甘油</div><div class="fa"><span>脂肪酸</span><span>脂肪酸</span><span>脂肪酸</span></div></div></li>
+<li data-n="10">含有豐富蛋白質的食物，包括來自動物（例如牛奶、芝士、蛋、魚和肉類）和植物的食物（例如豆腐、豆類、蛋、果仁），也有菌類。</li>
+<li data-n="11">蛋白質的主要功能：
+<ul class="dot"><li>蛋白質是生長和修補身體構造和組織必需的原料。</li><li>蛋白質用來製造<b>酶</b>、<b>抗體</b>和某些<b>激素</b>。</li><li>蛋白質也是身體活動的能量來源。</li></ul></li>
+<li data-n="12">如果膳食長期缺乏蛋白質，可能會引致<b>蛋白缺乏病</b>。蛋白缺乏病是一種<b>營養缺乏病</b>，患者肌肉無力，腹部也會因為積聚體液而脹起。</li>
+<li data-n="13">由於兒童生長迅速，需要大量蛋白質來形成身體組織，所以兒童較易患上蛋白缺乏病。</li>
+<li data-n="14" class="ext"><b>氨基酸</b>是組成蛋白質的構件。多個氨基酸可連接成一條長鏈，稱為<b>多肽</b>。蛋白質是由一條或多條按特定方式捲曲的多肽組成的。
+<div class="fig chain"><span class="node">氨基酸</span><span>→</span><span class="node">多肽</span><span>→</span><span class="node">蛋白質</span></div></li>
+<li data-n="15">人體需要少量<b>礦物質</b>和<b>維生素</b>來維持健康。雖然礦物質和維生素並不能為身體提供能量，但它們對調節細胞內的反應和形成身體組織十分重要。</li>
+<li data-n="16">礦物質的功能、食物來源和相關的營養缺乏病：
+<div class="tw"><table>
+<thead><tr><th>礦物質</th><th>功能</th><th>食物來源</th><th>營養缺乏病</th></tr></thead>
+<tbody>
+<tr><td><b>鈣</b></td><td>能鞏固骨骼和牙齒</td><td>牛油果、西蘭花、奶類產品和果仁</td><td><b>軟骨病</b></td></tr>
+<tr><td><b>鐵</b></td><td>可製造<b>血紅蛋白</b>，是紅血細胞內的一種蛋白質，用來運送氧</td><td>蛋、菠菜、葡萄乾、豆類、牛肉和肝</td><td><b>貧血</b></td></tr>
+<tr><td><b>碘</b></td><td>用來製造甲狀腺的激素，這些激素有助調節新陳代謝</td><td>海鮮、海藻和碘鹽</td><td><b>甲狀腺腫</b></td></tr>
+</tbody></table></div></li>
+<li data-n="17">維生素的功能、食物來源和相關的營養缺乏病：
+<div class="tw"><table>
+<thead><tr><th>維生素</th><th>溶解性</th><th>功能</th><th>食物來源</th><th>營養缺乏病</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>脂溶性</td><td>有助維持眼睛內視桿細胞的正常運作</td><td>肝、蛋、燈籠椒、胡蘿蔔、綠色蔬菜、牛油果和杏桃</td><td><b>夜盲症</b></td></tr>
+<tr><td>C</td><td>水溶性</td><td>保持牙齒的齒齦和皮膚的健康，也有助傷口癒合</td><td>新鮮蔬果，尤其西蘭花、燈籠椒和奇異果</td><td><b>壞血病</b></td></tr>
+<tr><td>D</td><td>脂溶性</td><td>有助鞏固骨骼和牙齒</td><td>脂肪含量高的魚、肝、蛋黃和野菌</td><td><b>軟骨病</b></td></tr>
+</tbody></table></div></li>
+<li data-n="18">人體的皮膚在陽光下也會自製維生素 D。</li>
+<li data-n="19">來自植物的食物是<b>食用纖維</b>的主要來源。食用纖維可分為兩類，包括<b>非水溶性纖維</b>和<b>水溶性纖維</b>。</li>
+<li data-n="20">非水溶性纖維主要來自植物細胞壁的<b>纖維素</b>。它不能被消化和吸收，但能促進食物在腸道內移動，也能保存大量水分，使糞便保持質地鬆軟，容易排出體外。攝取足夠的非水溶性纖維有助預防<b>便秘</b>。</li>
+<li data-n="21">水果和燕麥含有水溶性纖維，這種纖維可溶於水，形成啫喱狀的物質。水溶性纖維有助降低血脂水平，以及穩定血糖水平。</li>
+<li data-n="22">水在人體內有很多重要的功能：
+<ul class="dot"><li>作為細胞內進行化學反應的介質；</li><li>作為轉運的介質，例如多種物質能隨血液中的水分在體內運送；</li><li>是某些氣體、營養素和廢物的溶劑；</li><li>作為冷卻劑，汗水蒸發時會帶走身體的熱，有助調節體温。</li></ul></li>
+<li data-n="23">我們可以透過<b>食物試驗</b>找出食物物質是否在某種食物中存在：
+<div class="tw"><table>
+<thead><tr><th>受檢測的食物物質</th><th>食物試驗／測試材料</th><th>陽性結果</th></tr></thead>
+<tbody>
+<tr><td>葡萄糖</td><td><b>葡萄糖試紙</b></td><td rowspan="2">試紙測試端變色，顏色取決於樣本中葡萄糖和蛋白質的濃度</td></tr>
+<tr><td>蛋白質</td><td><b>蛋白質試紙</b></td></tr>
+<tr><td>澱粉</td><td><b>碘液</b></td><td>碘液混合澱粉後，會由棕色變成藍黑色</td></tr>
+<tr><td>脂質</td><td><b>油漬試驗</b></td><td>脂質在濾紙上會留下恆久不褪的<b>半透明</b>點</td></tr>
+<tr><td>維生素 C</td><td><b>DCPIP 溶液</b></td><td>維生素 C 能使 DCPIP 溶液由藍色變成無色</td></tr>
+</tbody></table></div></li>
+</ol>
+</section>
+
+<!-- ============ 12.3 ============ -->
+<section class="sec" id="s3">
+<div class="sec-head"><h2><em>12.3</em>食物的消化和吸收</h2><span class="ref">（第 3A 冊，p. 28–54）</span>
+<div class="sec-tools"><button data-sec-hide>本節隱藏</button><button data-sec-show>本節顯示</button></div></div>
+<ol class="pts">
+<li data-n="1">結構複雜的分子（例如澱粉、脂質和蛋白質）要先經過<b>消化</b>，才能通過小腸壁，<b>吸收</b>入血液內。</li>
+<li data-n="2">體積細小的分子（例如簡單的糖、礦物質、維生素和水）可直接吸收入血液內，無需經過消化。</li>
+<li data-n="3"><b>消化系統</b>由以下部分的組成：
+<ul class="dot"><li><b>消化道</b>是一條很長的管道，食物在這條管道中通過；</li><li><b>腺體</b>負責製造<b>消化液</b>，幫助消化食物。</li></ul></li>
+<li data-n="4">人的消化系統的主要部分：
+<div class="tw"><table>
+<thead><tr><th>消化系統中的腺體</th><th>消化道的部分（食物經過的次序）</th></tr></thead>
+<tbody>
+<tr><td>唾腺</td><td>口腔</td></tr>
+<tr><td>—</td><td>食道</td></tr>
+<tr><td>胃內的胃腺</td><td>胃</td></tr>
+<tr><td>肝、膽囊 <small>（不是腺體）</small>、胰、小腸內的腸腺</td><td>小腸</td></tr>
+<tr><td>—</td><td>大腸</td></tr>
+<tr><td>—</td><td>肛門</td></tr>
+</tbody></table></div>
+<p class="note">（按課本圖示整理：左欄腺體與右欄相關的消化道部分對應排列。）</p></li>
+<li data-n="5">機械消化利用物理動作，把食物變成細小碎塊，從而增加食物與消化液接觸的表面積。</li>
+<li data-n="6">消化液中的<b>酶</b>能加快複雜分子分解成簡單分子的化學反應（化學消化）。不同種類的酶負責加快不同食物物質的分解反應。</li>
+<li data-n="7">口腔內會進行機械消化和化學消化。
+<ul class="dot"><li>機械消化由<b>牙齒</b>進行。食物被牙齒咀嚼成碎塊，這樣可以增加食物與消化液接觸的表面積。</li>
+<li>化學消化由<b>唾液</b>中的<b>澱粉酶</b>進行，唾液由<b>唾腺</b>製造。消化過程中，結構複雜的澱粉分子分解成簡單的糖分子。</li></ul></li>
+<li data-n="8">人的牙齒可分為四種：
+<div class="tw"><table>
+<thead><tr><th>牙齒的種類</th><th>齒冠的形狀</th><th>齒根的數量</th><th>功能</th></tr></thead>
+<tbody>
+<tr><td>門齒</td><td>鑿形，邊緣尖削</td><td>1</td><td>切斷食物</td></tr>
+<tr><td>犬齒</td><td>尖和彎曲</td><td>1</td><td>撕碎肉塊</td></tr>
+<tr><td>前臼齒</td><td>齒面寬闊，有尖突</td><td>1 或 2</td><td>磨碎食物</td></tr>
+<tr><td>臼齒</td><td>齒面更寬闊，有更多尖突</td><td>2 或 3</td><td>磨碎食物</td></tr>
+</tbody></table></div></li>
+<li data-n="9">上下顎的牙齒排列方式相同，而左右顎的牙齒排列方式則是對稱的。
+<div class="fig chain"><span class="note">恆齒（每邊顎骨，由前至後）：</span><span class="node">2 顆門齒</span><span class="node">1 顆犬齒</span><span class="node">2 顆前臼齒</span><span class="node">3 顆臼齒</span></div></li>
+<li data-n="10"><b>乳齒</b>由出生後 6 至 12 個月長出，共有 20 顆，每側顎骨都有兩顆臼齒，但沒有前臼齒。</li>
+<li data-n="11">到了 6 歲左右，乳齒會逐漸脫落，由<b>恆齒</b>取代。恆齒一旦脫落，便不會再長出新牙齒替補。</li>
+<li data-n="12" class="ext">牙齒的結構：
+<div class="fig cls" style="text-align:left"><div class="col"><h4>部位（由上至下）</h4>齒冠 → 齒頸 → 齒根</div>
+<div class="col"><h4>各部分名稱</h4>琺瑯質、牙本質、髓腔、齒齦、牙周膜、牙骨質、顎骨</div></div></li>
+<li data-n="13" class="ext">每顆牙齒有以下三層組織：
+<ul class="dot"><li><b>琺瑯質</b>：沒有生命，是人體最堅硬的物質。在齒根的部位，琺瑯質由<b>牙骨質</b>取代。牙骨質連接<b>牙周膜</b>，把牙齒固定在顎骨內。</li>
+<li><b>牙本質</b>：成分與骨類似的活組織，但硬度不及琺瑯質。</li>
+<li><b>髓腔</b>：含有活細胞、血管和神經。血管內的血液把營養素和氧運往牙齒，神經則負責探測温度、壓力和疼痛。</li></ul></li>
+<li data-n="14" class="ext">牙齒琺瑯質的主要成分是鈣鹽，質地十分堅硬。酸能夠溶解琺瑯質中的鈣鹽，使牙齒變軟和脆弱。</li>
+<li data-n="15" class="ext"><b>牙菌膜</b>內的細菌在食物殘渣上的作用會產生酸，是導致<b>蛀牙</b>和<b>牙周病</b>的主要原因。</li>
+<li data-n="16" class="ext">下列圖片顯示出蛀牙的過程。
+<div class="fig flow">
+<div class="step"><b class="t">①</b>牙菌膜內的細菌把食物殘渣中的碳水化合物分解，產生酸。酸侵蝕琺瑯質，形成小洞。</div><div class="arr">→</div>
+<div class="step"><b class="t">②</b>牙洞愈來愈大。細菌和酸到達牙本質。</div><div class="arr">→</div>
+<div class="step"><b class="t">③</b>細菌和酸到達髓腔。酸刺激神經，引致痛楚；細菌感染引致膿在齒根末端形成。</div></div></li>
+<li data-n="17" class="ext">下列圖片顯示出牙周病的形成過程。
+<div class="fig flow">
+<div class="step"><b class="t">①</b>牙菌膜內的細菌使齒齦發炎，齒齦變得腫脹並開始與牙齒分開，在齒頸周圍漸漸形成牙周袋。</div><div class="arr">→</div>
+<div class="step"><b class="t">②</b>牙菌膜在牙周袋愈積愈多，並向下延伸。</div><div class="arr">→</div>
+<div class="step"><b class="t">③</b>細菌破壞齒齦、牙骨質、牙周膜和顎骨。牙齒開始變鬆，甚至脫落。</div></div></li>
+<li data-n="18" class="ext">要保護牙齒和齒齦健康，我們應該：
+<ul class="dot"><li>每年最少接受一次牙科檢查。</li><li>多吃含豐富維生素 D 和鈣的食物以鞏固牙齒。</li><li>用含有氟化物的牙膏來刷牙。</li><li>適當地使用口腔護理產品，例如漱口水、牙縫刷和牙線。</li></ul></li>
+<li data-n="19">食道是一條長管道，食道壁主要由肌肉層組成，這些肌肉層交替收縮和放鬆，產生波浪式的動作，把食物向下推至胃，這個波浪式的動作稱為<b>蠕動</b>。</li>
+<li data-n="20">胃內會進行機械消化和化學消化：
+<ul class="dot"><li>機械消化透過<b>攪動</b>進行，把固體食物變成糊狀，也有助食物與<b>胃液</b>混和。</li>
+<li>化學消化由胃液中的<b>胃蛋白酶</b>進行。胃蛋白酶能加快蛋白質分子分解成簡單分子。</li></ul></li>
+<li data-n="21">胃液還含有：
+<ul class="dot"><li><b>氫氯酸</b>，以提供酸性環境，讓胃蛋白酶發揮作用和殺死食物中有害的微生物。</li>
+<li><b>黏液</b>，以保護胃壁，免受胃蛋白酶和酸傷害。</li></ul></li>
+<li data-n="22">食物進入小腸後，會與多種消化液混和，這些消化液包括<b>膽汁</b>、<b>胰液</b>和<b>腸液</b>。</li>
+<li data-n="23">肝、膽囊、胰和小腸在消化中的功能：
+<div class="fig flow">
+<div class="step"><b class="t">肝</b>製造膽汁</div>
+<div class="step"><b class="t">膽囊</b>暫時儲存膽汁；膽汁從膽囊經膽管流入小腸</div>
+<div class="step"><b class="t">胰</b>製造胰液；胰液從胰經胰管流入小腸</div>
+<div class="step"><b class="t">小腸</b>製造腸液</div></div></li>
+<li data-n="24">膽汁含有<b>膽鹽</b>，但不含酶。
+<ul class="dot"><li>膽鹽能把脂質分解成微滴，這個過程稱為<b>乳化</b>（機械消化）。</li><li>脂質經乳化後，與消化酶接觸的表面積大大增加。</li></ul></li>
+<li data-n="25">胰液含有多種酶，所含的酶能加快澱粉、脂質和蛋白質的分解（化學消化）。</li>
+<li data-n="26">腸液含有<b>黏液</b>，但不含酶。
+<ul class="dot"><li>小腸壁的細胞膜上某些分子可作為消化酶，加快碳水化合物和蛋白質的分解（化學消化）。</li><li>黏液保護小腸壁，免受酶傷害。</li></ul></li>
+<li data-n="27">膽汁、胰液和腸液呈鹼性，能提供適合的 pH 值，讓小腸內各種消化酶發揮作用。</li>
+<li data-n="28">食物透過蠕動通過整段小腸。</li>
+<li data-n="29">碳水化合物、脂質和蛋白質的消化在小腸內完成。</li>
+<li data-n="30">大部分已消化的食物物質會在小腸吸收，進入<b>轉運系統</b>，然後經轉運系統運送往身體各部分。</li>
+<li data-n="31">小腸內壁有很多皺褶，皺褶上有大量如手指般的凸出物，稱為<b>絨毛</b>。絨毛內有很多<b>微血管</b>和一條<b>乳糜管</b>。</li>
+<li data-n="32">水溶性食物物質（例如簡單的糖、氨基酸、礦物質、維生素 C 和水）會吸收入微血管內的血液。</li>
+<li data-n="33">脂溶性食物物質（例如脂質、維生素 A 和 D）會吸收入乳糜管內的<b>淋巴</b>。</li>
+<li data-n="34">食物物質會隨即經血液和淋巴運送到身體各部分，供細胞使用。</li>
+<li data-n="35">大腸可分為三部分，包括<b>盲腸</b>、<b>結腸</b>和<b>直腸</b>。大腸會吸收食物裏剩餘的大部分水。</li>
+<li data-n="36">剩下的半固體廢物（即<b>糞便</b>）會通過<b>肛門</b>排出體外。由於糞便含有膽汁的色素，所以一般呈棕色。此外，糞便裏的細菌會在不能消化的食物中起作用，釋出臭氣，使糞便帶臭味。</li>
+</ol>
+</section>
+
+<!-- ============ 12.4 ============ -->
+<section class="sec" id="s4">
+<div class="sec-head"><h2><em>12.4</em>均衡膳食</h2><span class="ref">（第 3A 冊，p. 55–69）</span>
+<div class="sec-tools"><button data-sec-hide>本節隱藏</button><button data-sec-show>本節顯示</button></div></div>
+<ol class="pts">
+<li data-n="1"><b>均衡膳食</b>指膳食包含所有種類的食物物質，而且分量和比例適當。</li>
+<li data-n="2"><b>食物金字塔</b>可作為指引，幫助我們設計均衡膳食。</li>
+<li data-n="3">食物金字塔的食物類別：
+<div class="fig pyr">
+<div class="l1">脂肪、油、鹽和糖</div>
+<div class="l2"><i>奶和代替品</i>｜<i>肉類、魚、蛋、豆類和代替品</i></div>
+<div class="l3"><i>蔬菜</i>｜<i>水果</i></div>
+<div class="l4">穀物</div></div>
+<div class="tw"><table>
+<thead><tr><th>食物類別</th><th>均衡膳食中的比例</th><th>原因</th></tr></thead>
+<tbody>
+<tr><td>穀物</td><td>吃最多</td><td>這類食物能為身體迅速提供能量</td></tr>
+<tr><td>蔬菜、水果</td><td>吃多些</td><td>這類食物含有豐富的礦物質、維生素和食用纖維，對維持身體健康十分重要</td></tr>
+<tr><td>肉類、魚、蛋、豆類和代替品；奶和代替品</td><td>吃適量</td><td>這類食物含有豐富的蛋白質，為生長和修補身體組織所需</td></tr>
+<tr><td>脂肪、油、鹽和糖</td><td>吃最少</td><td>攝取過量這類食物可引致健康問題</td></tr>
+</tbody></table></div></li>
+<li data-n="4">不同食物的<b>能量值</b>各有不同。食物的能量值取決於碳水化合物、脂質和蛋白質的含量。</li>
+<li data-n="5">食物的能量值通常以<b>千焦耳</b> (kJ) 或<b>千卡路里</b> (kcal) 為量度單位，1 kcal 等於 4.2 kJ。</li>
+<li data-n="6">預先包裝食品的能量值和<b>營養價值</b>，一般都可在食品包裝上的<b>食物標籤</b>查閱得到。</li>
+<li data-n="7">不同人的能量需求與他們的年齡、性別和活動量有着密切的關係。
+<ul class="dot"><li>兒童和青少年需要較多能量，因為他們正處於迅速生長和發育的階段。青春期後，生長減慢，能量需求隨之下降。</li>
+<li>就相同年齡和活動量而言，男性的能量需求通常較女性高，原因是男性的肌肉一般較發達，需要較多能量來支持肌肉活動。</li>
+<li>體力勞動較多的人需要較多能量來支持肌肉活動。</li></ul></li>
+<li data-n="8">如果我們吃的食物多於身體所需，過多的能量便會以脂肪的形式儲存在體內，導致體重上升。</li>
+<li data-n="9">體重高於正常水平稱為<b>過重</b>，嚴重過重則稱為<b>肥胖症</b>。</li>
+<li data-n="10">過重人士的髖關節、膝關節和踝關節由於要承受過大的壓力，因此較容易受損並出現痛楚。他們的<b>血壓</b>也容易偏高，患上<b>心血管疾病</b>的風險也較高。</li>
+<li data-n="11">如果長期進食不足，身體便會缺乏碳水化合物，並開始耗用儲存的脂肪來釋放能量，供身體活動所需。脂肪一旦耗盡，身體便會耗用肌肉的蛋白質作能源，結果身體變得瘦削虛弱，更可能患上各種營養缺乏病。</li>
+<li data-n="12">食物物質一旦攝取不足可能會引致的健康問題：
+<div class="tw"><table>
+<thead><tr><th>食物物質</th><th>健康問題／營養缺乏病</th><th>食物物質</th><th>健康問題／營養缺乏病</th></tr></thead>
+<tbody>
+<tr><td>蛋白質</td><td>蛋白缺乏病</td><td>食用纖維</td><td>便秘</td></tr>
+<tr><td>鈣</td><td>軟骨病</td><td>維生素 A</td><td>夜盲症</td></tr>
+<tr><td>鐵</td><td>貧血</td><td>維生素 C</td><td>壞血病</td></tr>
+<tr><td>碘</td><td>甲狀腺腫</td><td>維生素 D</td><td>軟骨病</td></tr>
+</tbody></table></div></li>
+<li data-n="13"><b>體重指數</b> (BMI) 可用來評估一個人的體重狀況。
+<div class="fig formula">體重指數 (BMI) = <span class="frac"><span>體重 (kg)</span><span>身高² (m²)</span></span></div></li>
+<li data-n="14">長期進食含有大量脂質、糖、鈉或高能量值的膳食會增加患上某些疾病的風險。
+<ul class="dot"><li><b>心血管疾病</b>與進食過量高脂質食物有關，攝取過量脂質會提高血脂水平，過多血脂可使血管變窄，甚至堵塞血管。</li>
+<li><b>高血壓</b>與進食過量鈉有關，大部分的加工肉類（例如香腸和午餐肉）都含大量鈉。高血壓對腦和腎可造成損害。</li>
+<li>吃太多高能量食物容易導致體重增加，<b>過重</b>或<b>肥胖症</b>的人有較大機會患上<b>糖尿病</b>。</li></ul></li>
+</ol>
+</section>
+
+<!-- ============ 12.5 ============ -->
+<section class="sec" id="s5">
+<div class="sec-head"><h2><em>12.5</em>健康與疾病</h2><span class="ref">（第 3A 冊，p. 70–90）</span>
+<div class="sec-tools"><button data-sec-hide>本節隱藏</button><button data-sec-show>本節顯示</button></div></div>
+<ol class="pts">
+<li data-n="1"><b>傳染病</b>可從一個人傳播給他人。</li>
+<li data-n="2">某些<b>微生物</b>（例如細菌、真菌和原生動物）或<b>病毒</b>能夠進入我們的身體，繼而繁殖並破壞人體的細胞或組織。這些微生物和病毒一般稱為<b>病菌</b>。</li>
+<li data-n="3">香港一些常見的傳染病和它們的傳播途徑：
+<div class="tw"><table>
+<thead><tr><th></th><th>吸入受感染人士咳嗽和打噴嚏時噴出的飛沫</th><th>食用或接觸受污染的食物、泥土或水</th><th>透過皮膚上的傷口</th><th>被受感染的蚊子叮咬</th></tr></thead>
+<tbody>
+<tr><th>由微生物引致</th><td>結核病、白喉、百日咳</td><td>霍亂、角膜炎、李斯特菌病</td><td>耐藥性金黃葡萄球菌感染、破傷風</td><td>瘧疾</td></tr>
+<tr><th>由病毒引致</th><td>流行性感冒、2019 冠狀病毒病、德國麻疹、水痘</td><td>脊髓灰質炎、甲型肝炎</td><td>乙型肝炎</td><td>登革熱、日本腦炎</td></tr>
+</tbody></table></div></li>
+<li data-n="4">我們可因應傳染病的傳播途徑，採取不同的方法來預防傳染病：
+<div class="tw"><table>
+<thead><tr><th style="width:34%">傳播途徑</th><th>預防方法</th></tr></thead>
+<tbody>
+<tr><td>吸入受感染人士咳嗽和打噴嚏時噴出的飛沫</td><td><ul class="dot"><li>保持至少 1 m 的社交距離。</li><li>咳嗽或打噴嚏時掩口。</li><li>咳嗽、打噴嚏和觸摸公共設施後，用肥皂液和水洗手，或用酒精搓手液消毒雙手。</li><li>戴上口罩。</li></ul></td></tr>
+<tr><td>食用或接觸受污染的食物、泥土或水</td><td><ul class="dot"><li>妥善處理污水和糞便。</li><li>確保食水供應清潔。水要煮沸才飲用。</li><li>妥善處理食物。</li></ul></td></tr>
+<tr><td>透過皮膚上的傷口</td><td><ul class="dot"><li>不共用個人物品，例如毛巾。</li><li>妥善包紮傷口。</li><li>處理他人傷口時戴上即棄手套。</li></ul></td></tr>
+<tr><td>被受感染的蚊子叮咬</td><td><ul class="dot"><li>清除積水，避免蚊蟲滋生。</li><li>殺滅蚊子。</li><li>到戶外活動時，塗上驅蚊劑，以及穿上淺色長袖衫和長褲。</li></ul></td></tr>
+</tbody></table></div></li>
+<li data-n="5">接種<b>疫苗</b>有助我們預防某些傳染病。</li>
+<li data-n="6"><b>接種疫苗</b>後，體內的白血細胞會「記住」相關的病菌。日後當同一種病菌再次入侵身體時，白血細胞便會快速有效地抵抗病菌。</li>
+<li data-n="7"><b>非傳染病</b>不會傳播給他人。</li>
+<li data-n="8"><b>風險因素</b>（例如不健康的生活模式、年老和家族病史）會增加患上非傳染病的風險。</li>
+<li data-n="9"><b>心血管疾病</b>泛指涉及心或血管的疾病（例如<b>冠心病</b>和<b>中風</b>）。</li>
+<li data-n="10">當血液含有過多膽固醇時，多餘的膽固醇可能會積聚在動脈的內壁上，使動脈的管腔變窄，甚至堵塞動脈，通往心和腦等器官的血流因而減少。
+<div class="fig flow">
+<div class="step"><b class="t">動脈</b>血流正常</div><div class="arr">→</div>
+<div class="step"><b class="t">部分動脈被堵塞</b>膽固醇積聚，血流減少</div><div class="arr">→</div>
+<div class="step"><b class="t">動脈完全被堵塞</b>血塊形成，血液不能通過</div></div></li>
+<li data-n="11">如果供應氧和營養素到心肌的動脈出現堵塞，便會引致冠心病；如果供應氧和營養素到腦的動脈出現堵塞，則會引致中風。</li>
+<li data-n="12">心血管疾病的風險因素包括肥胖症、高血壓和不健康生活模式。</li>
+<li data-n="13">增加心血管疾病風險的不健康生活模式包括：
+<ul class="dot"><li>進食過量脂質食物</li><li>缺乏運動</li><li>吸煙</li><li>食用纖維攝取不足</li></ul></li>
+<li data-n="14">如果身體內有一些異常細胞不受控制地不斷分裂，便可能會發展成<b>癌</b>。</li>
+<li data-n="15"><b>肺癌</b>與吸煙有密切的關係。香煙煙霧中的<b>焦油</b>會增加異常細胞出現的機會，這些異常細胞日後可能發展成癌。</li>
+<li data-n="16"><b>大腸癌</b>是指發生在結腸和直腸的癌症，肥胖症是風險因素之一。</li>
+<li data-n="17">其他風險因素與膳食和生活模式有關，包括：
+<ul class="dot"><li>進食過量紅肉和加工肉類</li><li>缺乏運動</li><li>吸煙</li><li>喝酒</li><li>食用纖維攝取不足</li></ul></li>
+<li data-n="18">癌症的風險因素：
+<ul class="dot">
+<li>不健康生活模式會增加身體接觸<b>致癌物</b>的機會。例如：
+<ul class="sq"><li>香煙煙霧中的<b>焦油</b>可引致肺癌。</li><li>餐酒和啤酒中的<b>酒精</b>會增加患上口腔癌、咽喉癌、食道癌、乳癌、肝癌和大腸癌的風險。</li><li>加工肉類通常添加了一些化學品，用作防腐劑，這些化學品可引致大腸癌。</li></ul></li>
+<li>某些<b>輻射</b>和<b>病毒</b>都是致癌物。例如：
+<ul class="sq"><li>陽光中的紫外光可引致皮膚癌。</li><li>乙型肝炎病毒可引致肝癌。</li></ul></li>
+<li><b>年老</b>是癌症的風險因素之一，因為：
+<ul class="sq"><li>長者有較長時間給異常細胞發展，並累積至發病水平。</li><li>長者的免疫系統較弱，未能有效地消滅異常細胞或癌細胞。</li></ul></li>
+<li>父母體內有問題的基因可能會遺傳給下一代，使細胞發展異常，引致某些癌症（例如乳癌和大腸癌），因此有相關家族病史的人有較高的患病風險。</li></ul></li>
+<li data-n="19"><b>糖尿病</b>患者的身體無法有效調節血液內的葡萄糖水平，以致<b>血糖水平</b>過高，血液內過多的葡萄糖會經尿排出體外。</li>
+<li data-n="21">血糖水平長期偏高可能會嚴重損害血管、腎、眼睛和神經。</li>
+<li data-n="22">肥胖症、高血壓和缺乏運動都是引致糖尿病的風險因素，而少數糖尿病個案與遺傳因素有關。</li>
+<li data-n="23" class="ext">在健康的人體內，<b>胰</b>會製造一種稱為<b>胰島素</b>的激素，幫助降低血糖水平。</li>
+<li data-n="24" class="ext">糖尿病患者胰無法製造足夠的胰島素，或身體對胰島素沒有反應，以致血糖維持在高水平，特別是在餐後。</li>
+<li data-n="25" class="ext">對於無法製造足夠胰島素的糖尿病患者，定期注射胰島素有助控制血糖水平。</li>
+<li data-n="26">健康的生活模式，包括均衡膳食、經常運動和遠離煙酒有助預防非傳染病。</li>
+<li data-n="27">現代<b>生物工程</b>往往涉及改變生物的遺傳物質。</li>
+<li data-n="28">生物工程可用於製造藥物，<b>人胰島素</b>是利用生物工程製造的藥物之一。用這種方法製造的人胰島素：
+<ul class="dot"><li>不會被人體排斥。</li><li>可以大量生產。</li><li>成本較低。</li></ul></li>
+<li data-n="29">生物工程可用於檢測由染色體或 DNA 的異常變化引致的遺傳病。</li>
+<li data-n="30"><b>聚合酶鏈反應</b> (PCR) 是檢測遺傳病的常用方法。PCR 也適用於早期辨識具傳染性的微生物和病毒，例如引致 2019 冠狀病毒病的病毒。</li>
+</ol>
+</section>
+</main>
+<footer>內容整理自《初中科學 基礎概念與技能》簡易温習筆記 第 12 章（牛津大學出版社），供課堂温習使用。</footer>
+
+<script>
+(function(){
+  var main=document.querySelector('main.notes');
+  var kws=[].slice.call(main.querySelectorAll('b')).filter(function(b){return (!b.closest('th')||b.closest('small'))&&!b.classList.contains('t');});
+  kws.forEach(function(b){
+    b.classList.add('kw');
+    b.setAttribute('tabindex','0');
+    b.setAttribute('role','button');
+    b.title='點擊隱藏／顯示';
+  });
+  function visibleKws(scope){
+    return kws.filter(function(k){return (!scope||scope.contains(k)) && k.offsetParent!==null;});
+  }
+  function update(){
+    var vis=visibleKws();
+    document.getElementById('tot').textContent=vis.length;
+    document.getElementById('got').textContent=vis.filter(function(k){return k.classList.contains('got');}).length;
+    document.getElementById('hidN').textContent=vis.filter(function(k){return k.classList.contains('hid');}).length;
+  }
+  function hide(k){k.classList.add('hid');k.classList.remove('got');k.setAttribute('aria-label','隱藏的關鍵詞');}
+  function reveal(k,mark){k.classList.remove('hid');k.removeAttribute('aria-label');if(mark)k.classList.add('got');else k.classList.remove('got');}
+  function toggle(k){
+    if(k.classList.contains('hid')) reveal(k,true);
+    else if(k.classList.contains('got')) hide(k);
+    else hide(k);
+    update();
+  }
+  main.addEventListener('click',function(e){var k=e.target.closest('.kw');if(k)toggle(k);});
+  main.addEventListener('keydown',function(e){
+    var k=e.target.closest&&e.target.closest('.kw');
+    if(k&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggle(k);}
+  });
+  document.getElementById('hideAll').onclick=function(){kws.forEach(hide);update();};
+  document.getElementById('showAll').onclick=function(){kws.forEach(function(k){reveal(k,false);});update();};
+  document.getElementById('randomHide').onclick=function(){
+    kws.forEach(function(k){Math.random()<0.5?hide(k):reveal(k,false);});update();
+  };
+  var ext=document.getElementById('extToggle');
+  ext.onclick=function(){
+    var off=document.body.classList.toggle('no-ext');
+    ext.setAttribute('aria-pressed',off?'false':'true');
+    ext.textContent='延伸內容：'+(off?'隱藏':'顯示');
+    update();
+  };
+  document.querySelectorAll('section.sec').forEach(function(sec){
+    var own=kws.filter(function(k){return sec.contains(k);});
+    sec.querySelector('[data-sec-hide]').onclick=function(){own.forEach(hide);update();};
+    sec.querySelector('[data-sec-show]').onclick=function(){own.forEach(function(k){reveal(k,false);});update();};
+  });
+  update();
+})();
+</script>
+</body>
+</html>
