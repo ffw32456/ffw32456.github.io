@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中三 普通電腦科 模擬考試練習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan: #0a4a6e;
+    --cyan-dark: #062d45;
+    --cyan-mid: #1272a0;
+    --cyan-light: #5aafd4;
+    --cyan-pale: #b8e0f4;
+    --cyan-bg: #f0f8fd;
+    --cyan-bg2: #d0edf9;
+    --paper: #f7fbfe;
+    --border: #aad4ec;
+    --ink: #1a1a1a;
+    --ink2: #3a3a3a;
+    --correct: #1a5c2a;
+    --correct-bg: #f0fff4;
+    --correct-border: #2e7d46;
+    --wrong: #8b1a1a;
+    --wrong-bg: #fff4f4;
+    --wrong-border: #c05050;
+    --neutral: #3a4a5a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans HK', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--cyan-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px; gap: 12px; flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem; color: var(--cyan-pale); font-weight: 700; white-space: nowrap;
+  }
+  .score-display {
+    background: rgba(255,255,255,0.1); border-radius: 20px;
+    padding: 5px 16px; color: #fff; font-size: 14px; font-weight: 700; white-space: nowrap;
+  }
+  .score-display span { color: var(--cyan-pale); }
+  .toc-row {
+    display: flex; gap: 0; overflow-x: auto; padding: 0 12px 8px; scrollbar-width: none;
+  }
+  .toc-row::-webkit-scrollbar { display: none; }
+  .toc-row a {
+    color: var(--cyan-pale); text-decoration: none; font-size: 12px;
+    padding: 3px 10px; border-radius: 12px; white-space: nowrap;
+    transition: background .18s;
+  }
+  .toc-row a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── LAYOUT ── */
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 32px 20px 60px; }
+  .section { scroll-margin-top: 130px; margin-bottom: 48px; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--cyan-dark) 0%, var(--cyan-mid) 100%);
+    color: #fff; padding: 28px 20px 22px; margin-bottom: 32px; border-radius: 12px;
+  }
+  .page-header h1 { font-family: 'Noto Serif HK', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 13.5px; color: var(--cyan-pale); }
+
+  /* ── PART BADGE ── */
+  .part-badge {
+    display: inline-block; background: var(--cyan-mid); color: #fff;
+    font-family: 'Noto Serif HK', serif; font-size: 0.75rem; font-weight: 700;
+    border-radius: 6px; padding: 2px 10px; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1.3rem; color: var(--cyan-dark);
+    border-left: 5px solid var(--cyan-mid); padding-left: 12px; margin-bottom: 16px; font-weight: 700;
+  }
+
+  /* ── MCQ QUESTION ── */
+  .mcq-block {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+    transition: border-color .2s;
+  }
+  .mcq-block.answered-correct { border-color: var(--correct-border); background: var(--correct-bg); }
+  .mcq-block.answered-wrong { border-color: var(--wrong-border); background: var(--wrong-bg); }
+  .q-num { font-size: 12px; color: var(--cyan-mid); font-weight: 700; margin-bottom: 6px; }
+  .q-text { font-size: 14px; color: var(--ink); line-height: 1.75; margin-bottom: 12px; }
+  .options { display: flex; flex-direction: column; gap: 7px; }
+  .opt-btn {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--cyan-bg); border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 9px 14px; cursor: pointer;
+    text-align: left; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13.5px; color: var(--ink2); line-height: 1.6;
+    transition: background .15s, border-color .15s; width: 100%;
+  }
+  .opt-btn:hover:not(:disabled) { background: var(--cyan-bg2); border-color: var(--cyan-mid); }
+  .opt-btn:disabled { cursor: default; }
+  .opt-btn.correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct); font-weight: 700; }
+  .opt-btn.wrong { background: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong); }
+  .opt-btn.show-correct { background: var(--correct-bg); border-color: var(--correct-border); color: var(--correct); font-weight: 700; opacity: 0.7; }
+  .opt-label { font-weight: 700; min-width: 20px; }
+  .feedback {
+    margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-size: 13.5px; display: none;
+  }
+  .feedback.correct { background: var(--correct-bg); border: 1px solid var(--correct-border); color: var(--correct); display: block; }
+  .feedback.wrong { background: var(--wrong-bg); border: 1px solid var(--wrong-border); color: var(--wrong); display: block; }
+
+  /* ── FILL-IN SECTION ── */
+  .fill-block {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+  }
+  .fill-q { font-size: 14px; color: var(--ink); line-height: 1.75; margin-bottom: 10px; }
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px;
+    background: var(--cyan-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .word-chip {
+    background: var(--cyan-bg2); border: 1.5px solid var(--border);
+    border-radius: 20px; padding: 3px 14px; font-size: 13px; cursor: pointer;
+    color: var(--cyan-dark); font-weight: 700; transition: background .15s, opacity .15s;
+  }
+  .word-chip:hover { background: var(--cyan-pale); }
+  .word-chip.used { opacity: 0.3; cursor: default; text-decoration: line-through; }
+  .fill-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .fill-label { font-weight: 700; color: var(--cyan-dark); font-size: 13.5px; white-space: nowrap; }
+  .fill-box {
+    min-width: 160px; border: 2px dashed var(--border); border-radius: 8px;
+    padding: 7px 14px; font-size: 13.5px; color: var(--ink); background: #fff;
+    cursor: pointer; min-height: 36px; transition: border-color .15s;
+  }
+  .fill-box.filled { border-style: solid; border-color: var(--cyan-mid); background: var(--cyan-bg2); font-weight: 700; color: var(--cyan-dark); }
+  .fill-box.correct { border-color: var(--correct-border); background: var(--correct-bg); color: var(--correct); font-weight: 700; border-style: solid; }
+  .fill-box.wrong { border-color: var(--wrong-border); background: var(--wrong-bg); color: var(--wrong); border-style: solid; }
+  .fill-hint { font-size: 12px; color: var(--ink2); }
+  .btn-check-fill {
+    background: var(--cyan-mid); color: #fff;
+    border: none; border-radius: 20px; padding: 8px 20px;
+    cursor: pointer; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; font-weight: 700; margin-top: 10px; transition: background .2s;
+  }
+  .btn-check-fill:hover { background: #1a8abf; }
+  .btn-check-fill:disabled { background: #aaa; cursor: default; }
+
+  /* ── SHORT ANSWER ── */
+  .sa-block {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+  }
+  .sa-q { font-size: 14px; color: var(--ink); line-height: 1.75; margin-bottom: 10px; }
+  .sa-hint-btn {
+    background: none; border: 1.5px solid var(--border); border-radius: 20px;
+    padding: 5px 14px; color: var(--cyan-mid); font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; cursor: pointer; margin-right: 8px; transition: background .15s;
+  }
+  .sa-hint-btn:hover { background: var(--cyan-bg2); }
+  .sa-answer {
+    display: none; margin-top: 10px;
+    background: var(--correct-bg); border: 1.5px solid var(--correct-border);
+    border-radius: 8px; padding: 12px 16px; font-size: 13.5px; color: var(--correct);
+  }
+  .sa-answer.show { display: block; }
+  .sa-marks {
+    font-weight: 700; font-size: 12px;
+    background: var(--cyan-bg2); color: var(--cyan-dark);
+    border-radius: 20px; padding: 1px 10px; display: inline-block; margin-left: 8px;
+  }
+
+  /* ── SEQUENCE DRAG ── */
+  .seq-block {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+  }
+  .seq-items { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .seq-row { display: flex; align-items: flex-start; gap: 10px; }
+  .seq-num-select {
+    width: 48px; border: 2px solid var(--border); border-radius: 8px;
+    padding: 6px 4px; font-family: 'Noto Sans HK', sans-serif; font-size: 14px;
+    text-align: center; background: var(--cyan-bg); color: var(--ink); cursor: pointer;
+    flex-shrink: 0;
+  }
+  .seq-num-select.correct { border-color: var(--correct-border); background: var(--correct-bg); color: var(--correct); font-weight: 700; }
+  .seq-num-select.wrong { border-color: var(--wrong-border); background: var(--wrong-bg); color: var(--wrong); }
+  .seq-text { font-size: 13.5px; color: var(--ink2); line-height: 1.65; padding-top: 6px; }
+  .btn-check-seq {
+    background: var(--cyan-mid); color: #fff;
+    border: none; border-radius: 20px; padding: 8px 20px;
+    cursor: pointer; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; font-weight: 700; margin-top: 10px; transition: background .2s;
+  }
+  .btn-check-seq:hover { background: #1a8abf; }
+  .btn-check-seq:disabled { background: #aaa; cursor: default; }
+
+  /* ── MATCH ── */
+  .match-block {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 14px;
+  }
+  .match-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .match-label { font-weight: 700; color: var(--cyan-dark); font-size: 13.5px; white-space: nowrap; min-width: 110px; }
+  .match-select {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 6px 10px; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; background: var(--cyan-bg); color: var(--ink); cursor: pointer; flex: 1;
+  }
+  .match-select.correct { border-color: var(--correct-border); background: var(--correct-bg); color: var(--correct); font-weight: 700; }
+  .match-select.wrong { border-color: var(--wrong-border); background: var(--wrong-bg); color: var(--wrong); }
+  .match-desc { font-size: 12.5px; color: var(--ink2); padding-top: 8px; flex: 2; }
+
+  /* ── RESET BTN ── */
+  .btn-reset {
+    background: none; border: 1.5px solid var(--wrong-border); color: var(--wrong);
+    border-radius: 20px; padding: 6px 16px; cursor: pointer;
+    font-family: 'Noto Sans HK', sans-serif; font-size: 12px; margin-top: 8px;
+    transition: background .15s;
+  }
+  .btn-reset:hover { background: var(--wrong-bg); }
+
+  /* ── SCOREBOARD ── */
+  .scoreboard {
+    background: linear-gradient(135deg, var(--cyan-dark) 0%, var(--cyan-mid) 100%);
+    color: #fff; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+  }
+  .score-label { font-size: 13px; color: var(--cyan-pale); margin-bottom: 4px; }
+  .score-big { font-family: 'Noto Serif HK', serif; font-size: 2rem; font-weight: 700; }
+  .score-bar-wrap { flex: 1; min-width: 160px; }
+  .score-bar { height: 10px; background: rgba(255,255,255,0.2); border-radius: 20px; overflow: hidden; }
+  .score-bar-fill { height: 100%; background: #56d364; border-radius: 20px; transition: width .5s; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-row { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+  .prog-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--border);
+  }
+  .prog-dot.correct { background: var(--correct); }
+  .prog-dot.wrong { background: var(--wrong); }
+
+  /* ── INSTRUCTION ── */
+  .instruction {
+    background: var(--cyan-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px; font-size: 13.5px; color: var(--ink2); margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-top">
+    <div class="header-title">📝 中三 普通電腦科 模擬考試練習</div>
+    <div class="score-display">得分：<span id="hdr-score">0</span> / <span id="hdr-total">44</span></div>
+  </div>
+  <div class="toc-row">
+    <a href="#partA">甲部 選擇題</a>
+    <a href="#partB">乙部 填充題</a>
+    <a href="#partC1">丙1 IP位址</a>
+    <a href="#partC2">丙2 配對</a>
+    <a href="#partC3">丙3 URL</a>
+    <a href="#partC4">丙4 陳先生</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>📝 普通電腦科 模擬考試互動練習</h1>
+    <p>嶺南中學 二零二六/二七年度 第一學期 ‧ 全卷共 44 分 ‧ 完成各部分後按「核對答案」即可得知對錯</p>
+  </div>
+
+  <!-- SCOREBOARD -->
+  <div class="scoreboard">
+    <div>
+      <div class="score-label">目前得分</div>
+      <div class="score-big"><span id="cur-score">0</span> / 44</div>
+    </div>
+    <div class="score-bar-wrap">
+      <div class="score-label">完成進度</div>
+      <div class="score-bar"><div class="score-bar-fill" id="prog-bar" style="width:0%"></div></div>
+      <div style="font-size:12px;color:var(--cyan-pale);margin-top:4px;" id="prog-label">尚未作答</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 甲部 選擇題 ══════════════ -->
+  <div class="section" id="partA">
+    <div class="part-badge">甲部</div>
+    <div class="section-title">多項選擇題（12分，每題2分）</div>
+    <div class="instruction">請選出每題最佳答案，選擇後即時顯示對錯及解釋。</div>
+
+    <!-- Q1 -->
+    <div class="mcq-block" id="q1-block">
+      <div class="q-num">第1題（2分）</div>
+      <div class="q-text">電腦主機板上通常內置（或插入擴展槽中）一項硬件組件，主要功能是為電腦提供網絡連接功能。這項設備稱為：</div>
+      <div class="options">
+        <button class="opt-btn" onclick="answerMCQ(1,'A','B')"><span class="opt-label">A)</span> 交換器</button>
+        <button class="opt-btn" onclick="answerMCQ(1,'B','B')"><span class="opt-label">B)</span> 網絡界面卡</button>
+        <button class="opt-btn" onclick="answerMCQ(1,'C','B')"><span class="opt-label">C)</span> 寬頻數據機</button>
+        <button class="opt-btn" onclick="answerMCQ(1,'D','B')"><span class="opt-label">D)</span> 無線網絡接達點</button>
+      </div>
+      <div class="feedback" id="q1-fb"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="mcq-block" id="q2-block">
+      <div class="q-num">第2題（2分）</div>
+      <div class="q-text">在傳輸控制協定（TCP）中，當發送者將一個數據包傳送給接收者後，在預定時間內沒有收到「確認回應」，發送者電腦會怎樣處理？</div>
+      <div class="options">
+        <button class="opt-btn" onclick="answerMCQ(2,'A','B')"><span class="opt-label">A)</span> 立即中斷整個網絡連接並刪除檔案</button>
+        <button class="opt-btn" onclick="answerMCQ(2,'B','B')"><span class="opt-label">B)</span> 自動重新傳送該個未獲確認的數據包</button>
+        <button class="opt-btn" onclick="answerMCQ(2,'C','B')"><span class="opt-label">C)</span> 改由網域名稱系統（DNS）負責傳送數據包</button>
+        <button class="opt-btn" onclick="answerMCQ(2,'D','B')"><span class="opt-label">D)</span> 跳過該數據包，直接將殘缺的檔案組合起來</button>
+      </div>
+      <div class="feedback" id="q2-fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="mcq-block" id="q3-block">
+      <div class="q-num">第3題（2分）</div>
+      <div class="q-text">某跨國銀行利用海底電纜及人造衛星，把位於香港、倫敦和紐約辦公室的局部區域網絡（LAN）連接起來。這種跨越遠距離地理範圍的電腦網絡屬於：</div>
+      <div class="options">
+        <button class="opt-btn" onclick="answerMCQ(3,'A','C')"><span class="opt-label">A)</span> 無線區域網絡（WLAN）</button>
+        <button class="opt-btn" onclick="answerMCQ(3,'B','C')"><span class="opt-label">B)</span> 虛擬私有網絡（VPN）</button>
+        <button class="opt-btn" onclick="answerMCQ(3,'C','C')"><span class="opt-label">C)</span> 寬廣區域網絡（WAN）</button>
+        <button class="opt-btn" onclick="answerMCQ(3,'D','C')"><span class="opt-label">D)</span> 個人區域網絡（PAN）</button>
+      </div>
+      <div class="feedback" id="q3-fb"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="mcq-block" id="q4-block">
+      <div class="q-num">第4題（2分）</div>
+      <div class="q-text">某惡意軟件隱藏在一個看似正常的免費修圖軟件中。當用戶安裝該軟件時，該惡意軟件不會自我複製，但會在背景暗中建立後門，讓黑客遠程控制受害者的電腦及竊取資料。這種惡意軟件屬於：</div>
+      <div class="options">
+        <button class="opt-btn" onclick="answerMCQ(4,'A','C')"><span class="opt-label">A)</span> 電腦蠕蟲</button>
+        <button class="opt-btn" onclick="answerMCQ(4,'B','C')"><span class="opt-label">B)</span> 廣告軟件</button>
+        <button class="opt-btn" onclick="answerMCQ(4,'C','C')"><span class="opt-label">C)</span> 木馬程式</button>
+        <button class="opt-btn" onclick="answerMCQ(4,'D','C')"><span class="opt-label">D)</span> 電腦病毒</button>
+      </div>
+      <div class="feedback" id="q4-fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="mcq-block" id="q5-block">
+      <div class="q-num">第5題（2分）</div>
+      <div class="q-text">在網域名稱 ftp.lingnan.edu.hk 中，.edu 屬於哪一個級別的網域？</div>
+      <div class="options">
+        <button class="opt-btn" onclick="answerMCQ(5,'A','B')"><span class="opt-label">A)</span> 頂級域</button>
+        <button class="opt-btn" onclick="answerMCQ(5,'B','B')"><span class="opt-label">B)</span> 二級域</button>
+        <button class="opt-btn" onclick="answerMCQ(5,'C','B')"><span class="opt-label">C)</span> 三級域</button>
+        <button class="opt-btn" onclick="answerMCQ(5,'D','B')"><span class="opt-label">D)</span> 主機名稱</button>
+      </div>
+      <div class="feedback" id="q5-fb"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="mcq-block" id="q6-block">
+      <div class="q-num">第6題（2分）</div>
+      <div class="q-text">某科技公司研發了一種全新的「快速充電電池」，並希望獲得法律保護，禁止其他公司在未經同意下生產或銷售使用該技術的產品。該公司必須向政府部門申請註冊哪一類知識產權？</div>
+      <div class="options">
+        <button class="opt-btn" onclick="answerMCQ(6,'A','B')"><span class="opt-label">A)</span> 版權</button>
+        <button class="opt-btn" onclick="answerMCQ(6,'B','B')"><span class="opt-label">B)</span> 專利</button>
+        <button class="opt-btn" onclick="answerMCQ(6,'C','B')"><span class="opt-label">C)</span> 商標</button>
+        <button class="opt-btn" onclick="answerMCQ(6,'D','B')"><span class="opt-label">D)</span> 外觀設計</button>
+      </div>
+      <div class="feedback" id="q6-fb"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 乙部 填充題 ══════════════ -->
+  <div class="section" id="partB">
+    <div class="part-badge">乙部</div>
+    <div class="section-title">填充題（10分，每格2分）</div>
+    <div class="instruction">先從詞彙庫點選詞彙，再點擊空格填入。按已填入的空格可清除。完成後按「核對答案」。</div>
+
+    <div class="fill-block">
+      <div class="q-text" style="font-weight:700;margin-bottom:10px;">詞彙庫（每個詞彙只可用一次）：</div>
+      <div class="word-bank" id="word-bank">
+        <div class="word-chip" onclick="selectWord(this,'檔案傳輸協定')">檔案傳輸協定</div>
+        <div class="word-chip" onclick="selectWord(this,'分布式拒絕服務攻擊')">分布式拒絕服務攻擊</div>
+        <div class="word-chip" onclick="selectWord(this,'光纖')">光纖</div>
+        <div class="word-chip" onclick="selectWord(this,'無屏蔽雙扭線')">無屏蔽雙扭線</div>
+        <div class="word-chip" onclick="selectWord(this,'開放源碼軟件')">開放源碼軟件</div>
+        <div class="word-chip" onclick="selectWord(this,'PING')">PING</div>
+        <div class="word-chip" onclick="selectWord(this,'網域名稱系統')">網域名稱系統</div>
+        <div class="word-chip" onclick="selectWord(this,'超文本傳輸協定')">超文本傳輸協定</div>
+        <div class="word-chip" onclick="selectWord(this,'公有領域軟件')">公有領域軟件</div>
+        <div class="word-chip" onclick="selectWord(this,'免費軟件')">免費軟件</div>
+      </div>
+
+      <div class="fill-q">11. 相對於 <span class="fill-box" id="fill-a" onclick="fillBox('fill-a','無屏蔽雙扭線')">&nbsp;</span>（UTP）電纜，<span class="fill-box" id="fill-b" onclick="fillBox('fill-b','光纖')">&nbsp;</span> 具有數據傳輸速度更快、較少受電磁干擾及可作更長距離傳輸的優點。</div>
+      <div class="fill-q">12. 在應用層協定中，瀏覽網頁主要使用 HTTP，而專門用於在互聯網上的電腦與伺服器之間上載及下載檔案的協定則稱為 <span class="fill-box" id="fill-c" onclick="fillBox('fill-c','檔案傳輸協定')">&nbsp;</span>（FTP）。</div>
+      <div class="fill-q">13. 在 Windows 終端機中輸入 PING 指令並加上目標網站的網域名稱，除了可測試兩台電腦能否互相通訊外，還可透過 <span class="fill-box" id="fill-d" onclick="fillBox('fill-d','網域名稱系統')">&nbsp;</span>（DNS）查出該網站對應的 IP 位址。</div>
+      <div class="fill-q">14. <span class="fill-box" id="fill-e" onclick="fillBox('fill-e','開放源碼軟件')">&nbsp;</span>（例如 Linux 作業系統）是指原始碼對公眾開放的軟件，全球各地的程式編寫員都可以協作修改及增強其功能。</div>
+
+      <button class="btn-check-fill" onclick="checkFill()" id="btn-check-fill">核對答案</button>
+      <button class="btn-reset" onclick="resetFill()">重置</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ 丙部 Q1 IP ══════════════ -->
+  <div class="section" id="partC1">
+    <div class="part-badge">丙部 題1</div>
+    <div class="section-title">IPv4 與 IPv6（3分）</div>
+
+    <div class="sa-block">
+      <div class="sa-q"><strong>(a) 請分辨以下哪一組是有效的 IPv4 位址，哪一組是有效的 IPv6 位址：（2分）</strong><br>
+      W. 192.168.320.1 &nbsp;&nbsp; X. fe80:0000:0000:0000:3db4:6713:5361:e334<br>
+      Y. 172.16.254.1 &nbsp;&nbsp; Z. 2001:0db8:85g3:0000:0000:8a2e:0370:7334</div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--cyan-dark);margin-bottom:4px;">(i) 有效的 IPv4 位址：</div>
+          <div style="display:flex;gap:7px;">
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv4(this,'W')">W</button>
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv4(this,'X')">X</button>
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv4(this,'Y')">Y</button>
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv4(this,'Z')">Z</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--cyan-dark);margin-bottom:4px;">(ii) 有效的 IPv6 位址：</div>
+          <div style="display:flex;gap:7px;">
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv6(this,'W')">W</button>
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv6(this,'X')">X</button>
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv6(this,'Y')">Y</button>
+            <button class="opt-btn" style="width:auto;padding:7px 16px;" onclick="answerIPv6(this,'Z')">Z</button>
+          </div>
+        </div>
+      </div>
+      <div class="feedback" id="ipv4-fb"></div>
+      <div class="feedback" id="ipv6-fb" style="margin-top:6px;"></div>
+
+      <div class="sa-q" style="margin-top:16px;"><strong>(b) 為甚麼互聯網需要制定並逐步採用 IPv6 位址？（1分）</strong></div>
+      <button class="sa-hint-btn" onclick="showAnswer('ip-b')">💡 顯示答案</button>
+      <div class="sa-answer" id="ip-b">隨著互聯網迅速發展，大部分 IPv4 位址都已被使用，因此需要制定 IPv6 以提供大量 IP 位址滿足需求。</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 丙部 Q2 配對 ══════════════ -->
+  <div class="section" id="partC2">
+    <div class="part-badge">丙部 題2</div>
+    <div class="section-title">網絡設備或保安技術配對（5分）</div>
+    <div class="instruction">
+      選項說明：<br>
+      A. 把兩個或以上的 LAN 連接起來，使訊息可在不同 LAN 之間傳送。<br>
+      B. 在一個 LAN 內，把多台電腦、打印機及伺服器連接在一起。<br>
+      C. 透過專用伺服器在兩台電腦之間建立加密連線，並屏蔽發送者的真實 IP 位址。<br>
+      D. 根據預設的保安規則限制網絡流量，防止外部網絡未經授權存取內部電腦或封鎖惡意網站。<br>
+      E. 登入帳戶時要求用戶同時提供「密碼」及「手機短訊驗證碼／保安編碼器安全碼」。
+    </div>
+
+    <div class="match-block">
+      <div id="match-rows">
+        <div class="match-row">
+          <div class="match-label">(i) 交換器</div>
+          <select class="match-select" id="m1" onchange="checkMatch()">
+            <option value="">—請選擇—</option>
+            <option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="match-label">(ii) 路由器</div>
+          <select class="match-select" id="m2" onchange="checkMatch()">
+            <option value="">—請選擇—</option>
+            <option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="match-label">(iii) 防火牆</div>
+          <select class="match-select" id="m3" onchange="checkMatch()">
+            <option value="">—請選擇—</option>
+            <option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="match-label">(iv) 虛擬私有網絡</div>
+          <select class="match-select" id="m4" onchange="checkMatch()">
+            <option value="">—請選擇—</option>
+            <option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+          </select>
+        </div>
+        <div class="match-row">
+          <div class="match-label">(v) 雙重認證</div>
+          <select class="match-select" id="m5" onchange="checkMatch()">
+            <option value="">—請選擇—</option>
+            <option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+          </select>
+        </div>
+      </div>
+      <div class="feedback" id="match-fb" style="margin-top:10px;"></div>
+      <button class="btn-reset" onclick="resetMatch()">重置</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ 丙部 Q3 URL ══════════════ -->
+  <div class="section" id="partC3">
+    <div class="part-badge">丙部 題3</div>
+    <div class="section-title">URL 組成（4分）</div>
+
+    <div class="sa-block">
+      <div class="sa-q">小明把一份名為 catalog.pdf 的產品目錄放上公司的檔案伺服器供客戶下載。<br>
+      應用層安全協定：ftps &nbsp;|&nbsp; 伺服器FQDN：files.company.com &nbsp;|&nbsp; 資料夾：download &nbsp;|&nbsp; 檔案：catalog.pdf</div>
+
+      <div class="sa-q" style="margin-top:12px;"><strong>(a) 請組合成完整的 URL：（2分）</strong><span class="sa-marks">2分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('url-a')">💡 顯示答案</button>
+      <div class="sa-answer" id="url-a"><code style="font-size:14px;">ftps://files.company.com/download/catalog.pdf</code></div>
+
+      <div class="sa-q" style="margin-top:12px;"><strong>(b) 在上述網域名稱中，.com 屬於哪一類頂級域？（1分）</strong><span class="sa-marks">1分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('url-b')">💡 顯示答案</button>
+      <div class="sa-answer" id="url-b">通用頂級域（gTLD）</div>
+
+      <div class="sa-q" style="margin-top:12px;"><strong>(c) 設計師使用「AI繪圖工具」生成封面插圖，為甚麼這類 AI 生成作品會引起版權爭議？試寫出一個原因。（1分）</strong><span class="sa-marks">1分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('url-c')">💡 顯示答案</button>
+      <div class="sa-answer" id="url-c">
+        原因一：AI 在生成作品時，可能未經版權擁有人同意下使用了受版權保護的作品作訓練。<br>
+        原因二：作品並非由人類創作，版權誰屬（AI？使用者？開發者？）存在爭議。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 丙部 Q4 陳先生 ══════════════ -->
+  <div class="section" id="partC4">
+    <div class="part-badge">丙部 題4</div>
+    <div class="section-title">陳先生的智能家居網絡（10分）</div>
+
+    <div class="sa-block">
+      <div class="sa-q"><strong>(a)(i) 無線路由器背面的藍色 WAN 埠應該連接至甚麼設備，才能接達 ISP 網絡上網？（1分）</strong><span class="sa-marks">1分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('c4-ai')">💡 顯示答案</button>
+      <div class="sa-answer" id="c4-ai">寬頻數據機（Broadband Modem）</div>
+
+      <div class="sa-q" style="margin-top:16px;"><strong>(a)(ii) 陳先生的睡房與路由器相隔兩道牆壁，距離較遠。智能電視應連接 2.4 GHz 還是 5 GHz 頻道較合適？試說明原因。（2分）</strong><span class="sa-marks">2分</span></div>
+      <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+        <button class="opt-btn" style="width:auto;padding:8px 18px;" onclick="answer24or5(this,'2.4')">2.4 GHz</button>
+        <button class="opt-btn" style="width:auto;padding:8px 18px;" onclick="answer24or5(this,'5')">5 GHz</button>
+      </div>
+      <div class="feedback" id="c4-aii-fb"></div>
+
+      <div class="sa-q" style="margin-top:16px;"><strong>(b)(i) 這種利用虛假網站誘騙受害者透露敏感資訊的詐騙手法稱為甚麼？（1分）</strong><span class="sa-marks">1分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('c4-bi')">💡 顯示答案</button>
+      <div class="sa-answer" id="c4-bi">仿冒詐騙（Phishing）</div>
+
+      <div class="sa-q" style="margin-top:16px;"><strong>(b)(ii) 瀏覽器出現「🔒 鎖頭圖示」及 https://，代表網站使用了甚麼技術？（1分）</strong><span class="sa-marks">1分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('c4-bii')">💡 顯示答案</button>
+      <div class="sa-answer" id="c4-bii">數碼證書 ／ 超文本檔案傳輸安全協定（HTTPS）／ 網絡加密</div>
+
+      <div class="sa-q" style="margin-top:16px;"><strong>(b)(iii) 賣家收款後永遠不發貨，這種互聯網欺詐類型稱為甚麼？（1分）</strong><span class="sa-marks">1分</span></div>
+      <button class="sa-hint-btn" onclick="showAnswer('c4-biii')">💡 顯示答案</button>
+      <div class="sa-answer" id="c4-biii">拒絕交付詐騙</div>
+    </div>
+
+    <!-- DNS Steps Ordering -->
+    <div class="seq-block">
+      <div class="q-num">第(c)題（4分）</div>
+      <div class="sa-q">陳先生在瀏覽器輸入 www.lnssmall.com.hk 後，以下是 4 個運作步驟，請在每個步驟前的下拉選單填入正確順序（1–4）：</div>
+      <div class="seq-items">
+        <div class="seq-row">
+          <select class="seq-num-select" id="seq1" onchange="checkSeq()">
+            <option value="">—</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+          </select>
+          <div class="seq-text">網頁伺服器處理請求後，把所需的網頁內容傳回陳先生的電腦顯示。</div>
+        </div>
+        <div class="seq-row">
+          <select class="seq-num-select" id="seq2" onchange="checkSeq()">
+            <option value="">—</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+          </select>
+          <div class="seq-text">陳先生的電腦向 DNS 伺服器發送查詢，詢問 www.lnssmall.com.hk 的 IP 位址。</div>
+        </div>
+        <div class="seq-row">
+          <select class="seq-num-select" id="seq3" onchange="checkSeq()">
+            <option value="">—</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+          </select>
+          <div class="seq-text">陳先生的電腦根據取得的 IP 位址，向目標網頁伺服器發送 HTTP/HTTPS 網頁請求。</div>
+        </div>
+        <div class="seq-row">
+          <select class="seq-num-select" id="seq4" onchange="checkSeq()">
+            <option value="">—</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+          </select>
+          <div class="seq-text">DNS 伺服器在數據庫中查找紀錄，並把相應的 IP 位址傳回陳先生的電腦。</div>
+        </div>
+      </div>
+      <div class="feedback" id="seq-fb"></div>
+      <button class="btn-reset" onclick="resetSeq()">重置</button>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+// ── SCORE STATE ──
+let totalScore = 0;
+const maxScore = 44;
+let answered = {};
+
+function updateScore(id, pts, correct) {
+  if (answered[id] !== undefined) return;
+  answered[id] = correct ? pts : 0;
+  if (correct) totalScore += pts;
+  document.getElementById('cur-score').textContent = totalScore;
+  document.getElementById('hdr-score').textContent = totalScore;
+  const pct = Object.keys(answered).length / 20 * 100;
+  document.getElementById('prog-bar').style.width = Math.min(pct,100) + '%';
+  document.getElementById('prog-label').textContent = `已作答 ${Object.keys(answered).length} / 20 項`;
+}
+
+// ── MCQ ──
+const mcqExplain = {
+  1: { correct:'B', msg:'✅ 正確！網絡界面卡（NIC）內置於主機板或擴展槽，提供網絡連接功能。', wrong:'❌ 錯誤，正確答案是 B）網絡界面卡（NIC）——它內置於主機板或擴展槽，為電腦提供網絡連接功能。' },
+  2: { correct:'B', msg:'✅ 正確！TCP 在預定時間未收到確認回應，會自動重新傳送該數據包（Retransmission）。', wrong:'❌ 錯誤，正確答案是 B）自動重新傳送該數據包——TCP 利用確認回應機制確保數據包到達。' },
+  3: { correct:'C', msg:'✅ 正確！跨城市、國家的 LAN 連接屬於 WAN（寬廣區域網絡）。', wrong:'❌ 錯誤，正確答案是 C）WAN（寬廣區域網絡）——跨遠距離地理範圍連接多個 LAN。' },
+  4: { correct:'C', msg:'✅ 正確！「偽裝成正常軟件、不自我複製、建立後門」是木馬程式的特徵。', wrong:'❌ 錯誤，正確答案是 C）木馬程式——特徵：偽裝正常、不自我複製、建立後門讓黑客控制。' },
+  5: { correct:'B', msg:'✅ 正確！在 ftp.lingnan.edu.hk 中，.edu 是二級域（位於頂級域 .hk 之下）。', wrong:'❌ 錯誤，正確答案是 B）二級域——.hk 是頂級域，.edu 在其下是二級域，lingnan 是三級域。' },
+  6: { correct:'B', msg:'✅ 正確！保護新發明技術需申請專利（Patent）。', wrong:'❌ 錯誤，正確答案是 B）專利——保護新發明（技術、產品或方法）。版權保護創作；商標保護品牌標誌。' },
+};
+
+function answerMCQ(qn, chosen, correct) {
+  const block = document.getElementById(`q${qn}-block`);
+  const fb = document.getElementById(`q${qn}-fb`);
+  const btns = block.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = chosen === correct;
+  btns.forEach(b => {
+    const label = b.querySelector('.opt-label').textContent.replace(')','');
+    if (label === correct) b.classList.add(isCorrect ? 'correct' : 'show-correct');
+    if (label === chosen && !isCorrect) b.classList.add('wrong');
+  });
+  block.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  fb.textContent = isCorrect ? mcqExplain[qn].msg : mcqExplain[qn].wrong;
+  updateScore(`mcq${qn}`, 2, isCorrect);
+}
+
+// ── FILL IN ──
+let selectedWord = null;
+const fillAnswers = { 'fill-a':'無屏蔽雙扭線','fill-b':'光纖','fill-c':'檔案傳輸協定','fill-d':'網域名稱系統','fill-e':'開放源碼軟件' };
+const fillValues = {};
+
+function selectWord(el, word) {
+  if (el.classList.contains('used')) return;
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline='');
+  if (selectedWord === word) { selectedWord = null; return; }
+  selectedWord = word;
+  el.style.outline = '3px solid var(--cyan-mid)';
+}
+
+function fillBox(id, hint) {
+  const box = document.getElementById(id);
+  if (box.classList.contains('correct') || box.classList.contains('wrong')) return;
+  if (!selectedWord) {
+    // Clear if already filled
+    if (fillValues[id]) {
+      const old = fillValues[id];
+      delete fillValues[id];
+      box.textContent = ' ';
+      box.classList.remove('filled');
+      document.querySelectorAll('.word-chip').forEach(c => {
+        if (c.textContent.trim() === old) c.classList.remove('used');
+      });
+    }
+    return;
+  }
+  // If box already has a word, return it
+  if (fillValues[id]) {
+    const old = fillValues[id];
+    document.querySelectorAll('.word-chip').forEach(c => {
+      if (c.textContent.trim() === old) c.classList.remove('used');
+    });
+  }
+  fillValues[id] = selectedWord;
+  box.textContent = selectedWord;
+  box.classList.add('filled');
+  document.querySelectorAll('.word-chip').forEach(c => {
+    if (c.textContent.trim() === selectedWord) { c.classList.add('used'); c.style.outline=''; }
+  });
+  selectedWord = null;
+  document.querySelectorAll('.word-chip').forEach(c => c.style.outline='');
+}
+
+function checkFill() {
+  let correct = 0;
+  ['fill-a','fill-b','fill-c','fill-d','fill-e'].forEach(id => {
+    const box = document.getElementById(id);
+    const val = fillValues[id] || '';
+    if (val === fillAnswers[id]) { box.classList.remove('filled'); box.classList.add('correct'); correct++; }
+    else { box.classList.remove('filled'); box.classList.add('wrong'); }
+  });
+  document.getElementById('btn-check-fill').disabled = true;
+  document.querySelectorAll('.word-chip').forEach(c => c.style.pointerEvents='none');
+  updateScore('fill', correct*2, correct === 5);
+  ['fill-a','fill-b','fill-c','fill-d','fill-e'].forEach((id,i) => {
+    updateScore('fill'+i, 2, fillValues[id] === fillAnswers[id]);
+  });
+}
+
+function resetFill() {
+  ['fill-a','fill-b','fill-c','fill-d','fill-e'].forEach(id => {
+    const box = document.getElementById(id);
+    box.textContent = ' ';
+    box.className = 'fill-box';
+    delete fillValues[id];
+  });
+  document.querySelectorAll('.word-chip').forEach(c => { c.classList.remove('used'); c.style.outline=''; c.style.pointerEvents=''; });
+  document.getElementById('btn-check-fill').disabled = false;
+  selectedWord = null;
+}
+
+// ── IP ──
+let ipv4Done = false, ipv6Done = false;
+function answerIPv4(btn, chosen) {
+  if (ipv4Done) return;
+  ipv4Done = true;
+  const correct = 'Y';
+  const isC = chosen === correct;
+  btn.parentElement.querySelectorAll('.opt-btn').forEach(b => { b.disabled=true; });
+  btn.classList.add(isC ? 'correct' : 'wrong');
+  if (!isC) {
+    btn.parentElement.querySelectorAll('.opt-btn').forEach(b => { if (b.textContent.trim()===correct) b.classList.add('show-correct'); });
+  }
+  const fb = document.getElementById('ipv4-fb');
+  fb.className = 'feedback ' + (isC?'correct':'wrong');
+  fb.textContent = isC ? '✅ 正確！Y (172.16.254.1) 是有效的 IPv4 位址。W 中 320 超過 255，不合法。' : `❌ 錯誤，正確答案是 Y（172.16.254.1）。W 的 320 超過 IPv4 每組最大值 255。`;
+  updateScore('ipv4', 1, isC);
+}
+
+function answerIPv6(btn, chosen) {
+  if (ipv6Done) return;
+  ipv6Done = true;
+  const correct = 'X';
+  const isC = chosen === correct;
+  btn.parentElement.querySelectorAll('.opt-btn').forEach(b => { b.disabled=true; });
+  btn.classList.add(isC ? 'correct' : 'wrong');
+  if (!isC) {
+    btn.parentElement.querySelectorAll('.opt-btn').forEach(b => { if (b.textContent.trim()===correct) b.classList.add('show-correct'); });
+  }
+  const fb = document.getElementById('ipv6-fb');
+  fb.className = 'feedback ' + (isC?'correct':'wrong');
+  fb.textContent = isC ? '✅ 正確！X (fe80:…:e334) 是有效的 IPv6 位址。Z 含有「g」，不是合法的十六進制字元。' : `❌ 錯誤，正確答案是 X。Z 的「85g3」中「g」不是合法十六進制字元（0-9, a-f）。`;
+  updateScore('ipv6', 1, isC);
+}
+
+// ── MATCH ──
+const matchAnswers = { m1:'B', m2:'A', m3:'D', m4:'C', m5:'E' };
+let matchDone = false;
+
+function checkMatch() {
+  const all = ['m1','m2','m3','m4','m5'];
+  const allFilled = all.every(id => document.getElementById(id).value !== '');
+  if (!allFilled || matchDone) return;
+  matchDone = true;
+  let correct = 0;
+  all.forEach(id => {
+    const sel = document.getElementById(id);
+    sel.disabled = true;
+    if (sel.value === matchAnswers[id]) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('wrong'); }
+  });
+  const fb = document.getElementById('match-fb');
+  fb.className = 'feedback ' + (correct===5?'correct':'wrong');
+  fb.textContent = `${correct===5?'✅':'❌'} 你答對了 ${correct}/5 題。正確答案：交換器B、路由器A、防火牆D、VPN C、雙重認證E。`;
+  all.forEach((id,i) => updateScore('match'+i, 1, document.getElementById(id).value === matchAnswers[id]));
+}
+
+function resetMatch() {
+  if (matchDone) return;
+  ['m1','m2','m3','m4','m5'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('match-fb').className = 'feedback';
+}
+
+// ── 2.4 vs 5 GHz ──
+let ghzDone = false;
+function answer24or5(btn, chosen) {
+  if (ghzDone) return; ghzDone = true;
+  const correct = '2.4'; const isC = chosen === correct;
+  btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.disabled=true);
+  btn.classList.add(isC?'correct':'wrong');
+  if (!isC) btn.parentElement.querySelectorAll('.opt-btn').forEach(b => { if (b.textContent.trim().startsWith('2.4')) b.classList.add('show-correct'); });
+  const fb = document.getElementById('c4-aii-fb');
+  fb.className = 'feedback ' + (isC?'correct':'wrong');
+  fb.innerHTML = isC ? '✅ 正確！<br>答案：應連接 2.4 GHz 頻道。（1分）<br>原因：2.4 GHz 頻道具有較大的網絡覆蓋範圍（5 GHz 頻道的網絡覆蓋範圍較小），穿牆能力較強，更適合隔牆遠距離的裝置使用。（1分）'
+    : '❌ 錯誤。<br>答案：應連接 2.4 GHz 頻道。（1分）<br>原因：2.4 GHz 頻道具有較大的網絡覆蓋範圍，穿牆能力較強，適合隔牆遠距離的裝置使用。（1分）';
+  updateScore('ghz', 2, isC);
+}
+
+// ── SEQ ──
+const seqAnswers = { seq1:'4', seq2:'1', seq3:'3', seq4:'2' };
+let seqDone = false;
+
+function checkSeq() {
+  const all = ['seq1','seq2','seq3','seq4'];
+  const allFilled = all.every(id => document.getElementById(id).value !== '');
+  if (!allFilled || seqDone) return;
+  seqDone = true;
+  let correct = 0;
+  all.forEach(id => {
+    const sel = document.getElementById(id);
+    sel.disabled = true;
+    if (sel.value === seqAnswers[id]) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('wrong'); }
+  });
+  const fb = document.getElementById('seq-fb');
+  fb.className = 'feedback ' + (correct===4?'correct':'wrong');
+  fb.textContent = `${correct===4?'✅':'❌'} 你答對了 ${correct}/4 題。正確順序：網頁伺服器回傳=4、DNS查詢=1、HTTP請求=3、DNS回應=2。`;
+  all.forEach((id,i) => updateScore('seq'+i, 1, document.getElementById(id).value === seqAnswers[id]));
+}
+
+function resetSeq() {
+  if (seqDone) return;
+  ['seq1','seq2','seq3','seq4'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('seq-fb').className='feedback';
+}
+
+// ── SHOW ANSWER ──
+function showAnswer(id) {
+  document.getElementById(id).classList.add('show');
+}
+</script>
+</body>
+</html>

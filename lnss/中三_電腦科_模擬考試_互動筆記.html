@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中三 普通電腦科 互動溫習筆記</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan: #0a4a6e;
+    --cyan-dark: #062d45;
+    --cyan-mid: #1272a0;
+    --cyan-light: #5aafd4;
+    --cyan-pale: #b8e0f4;
+    --cyan-bg: #f0f8fd;
+    --cyan-bg2: #d0edf9;
+    --paper: #f7fbfe;
+    --border: #aad4ec;
+    --ink: #1a1a1a;
+    --ink2: #3a3a3a;
+    --gold: #8b6000;
+    --gold-bg: #fff8e8;
+    --gold-border: #d4aa30;
+    --green: #1a5c2a;
+    --green-bg: #f0fff4;
+    --green-border: #2e7d46;
+    --red: #8b1a1a;
+    --red-bg: #fff4f4;
+    --red-border: #c05050;
+    --purple: #4a1a7a;
+    --purple-bg: #f5eeff;
+    --purple-border: #7a3ab0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans HK', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── STICKY HEADER ── */
+  .sticky-header {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--cyan-dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px; gap: 12px; flex-wrap: wrap;
+  }
+  .header-title {
+    font-family: 'Noto Serif HK', serif;
+    font-size: 1rem; color: var(--cyan-pale); font-weight: 700; white-space: nowrap;
+  }
+  .btn-toggle-all {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--cyan-mid); color: #fff;
+    border: none; border-radius: 20px; padding: 6px 16px;
+    cursor: pointer; font-family: 'Noto Sans HK', sans-serif;
+    font-size: 13px; font-weight: 700; transition: background .2s; white-space: nowrap;
+  }
+  .btn-toggle-all:hover { background: #1a8abf; }
+  .btn-toggle-all .pill {
+    background: rgba(255,255,255,0.25); border-radius: 12px;
+    padding: 1px 10px; font-size: 12px;
+  }
+  .toc-row {
+    display: flex; gap: 0; overflow-x: auto; padding: 0 12px 8px; scrollbar-width: none;
+  }
+  .toc-row::-webkit-scrollbar { display: none; }
+  .toc-row a {
+    color: var(--cyan-pale); text-decoration: none; font-size: 12px;
+    padding: 3px 10px; border-radius: 12px; white-space: nowrap;
+    transition: background .18s;
+  }
+  .toc-row a:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── LAYOUT ── */
+  .page-wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 60px; }
+  .section { scroll-margin-top: 130px; margin-bottom: 52px; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--cyan-dark) 0%, var(--cyan-mid) 100%);
+    color: #fff; padding: 28px 20px 22px; margin-bottom: 32px; border-radius: 12px;
+  }
+  .page-header h1 { font-family: 'Noto Serif HK', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+  .page-header p { font-size: 13.5px; color: var(--cyan-pale); }
+
+  /* ── BADGES & TITLES ── */
+  .part-badge {
+    display: inline-block; background: var(--cyan-mid); color: #fff;
+    font-family: 'Noto Serif HK', serif; font-size: 0.75rem; font-weight: 700;
+    border-radius: 6px; padding: 2px 10px; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1.3rem; color: var(--cyan-dark);
+    border-left: 5px solid var(--cyan-mid); padding-left: 12px; margin-bottom: 16px; font-weight: 700;
+  }
+  .subsection-title {
+    font-family: 'Noto Serif HK', serif; font-size: 1rem; color: var(--cyan);
+    margin: 20px 0 10px; font-weight: 700;
+  }
+  .sub2-title {
+    font-size: 14px; font-weight: 700; color: var(--cyan-dark); margin: 14px 0 8px;
+  }
+
+  /* ── KEYWORDS ── */
+  .kw {
+    border-bottom: 2.5px solid var(--cyan-mid); cursor: pointer;
+    border-radius: 2px; padding: 0 1px; transition: background .15s;
+  }
+  .kw.hidden {
+    background: var(--ink); color: var(--ink);
+    border-bottom: none; border-radius: 3px; padding: 0 3px;
+  }
+  .kw:not(.hidden):hover { background: var(--cyan-bg2); }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--cyan-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 15px 18px;
+    font-size: 14px; line-height: 1.75; color: var(--ink2); margin-bottom: 14px;
+  }
+  .info-box p { margin-bottom: 5px; } .info-box p:last-child { margin-bottom: 0; }
+  .info-box ul { padding-left: 20px; } .info-box li { margin-bottom: 5px; }
+
+  /* ── CARD GRID ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+  .card {
+    background: var(--cyan-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; border-top: 4px solid var(--cyan-mid);
+  }
+  .card h4 { color: var(--cyan-dark); font-weight: 700; font-size: 14px; margin-bottom: 7px; }
+  .card ul { padding-left: 18px; font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+  .card li { margin-bottom: 4px; }
+  .card p { font-size: 13.5px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── DEF TERM ── */
+  .def-term { font-weight: 700; color: var(--cyan-dark); }
+
+  /* ── COMPARE TABLE ── */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; display: block; overflow-x: auto; }
+  .cmp-table th { background: var(--cyan-dark); color: var(--cyan-pale); padding: 9px 14px; text-align: center; font-weight: 700; white-space: nowrap; }
+  .cmp-table td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); }
+  .cmp-table tr:nth-child(even) td { background: var(--cyan-bg); }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .row-label { font-weight: 700; color: var(--cyan-dark); background: var(--cyan-bg2) !important; white-space: nowrap; }
+
+  /* ── NOTE GRID ── */
+  .note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
+  .note-card {
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 12px; padding: 14px 16px; border-top: 4px solid var(--cyan-mid);
+  }
+  .note-card .nc-label {
+    display: inline-block; background: var(--cyan-mid); color: #fff;
+    font-size: 11px; font-weight: 700; border-radius: 20px; padding: 1px 10px; margin-bottom: 8px;
+  }
+  .note-card h4 { font-weight: 700; color: var(--cyan-dark); font-size: 14px; margin-bottom: 6px; }
+  .note-card ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .note-card li { margin-bottom: 4px; }
+  .note-card p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+  /* ── STEP FLOW ── */
+  .step-flow { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+  .step-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--cyan-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px;
+  }
+  .step-num {
+    background: var(--cyan-mid); color: #fff; border-radius: 50%;
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; flex-shrink: 0; margin-top: 1px;
+  }
+  .step-body { font-size: 13.5px; color: var(--ink2); line-height: 1.7; }
+  .step-body strong { color: var(--cyan-dark); }
+
+  /* ── URL PARTS ── */
+  .url-demo {
+    font-family: monospace; background: #1e2a38; color: #e8f4fd;
+    border-radius: 10px; padding: 14px 18px; font-size: 14px; margin: 10px 0;
+    overflow-x: auto; white-space: nowrap;
+  }
+  .url-proto { color: #79c0ff; }
+  .url-domain { color: #56d364; }
+  .url-path { color: #ffa657; }
+  .url-file { color: #ff7b72; }
+
+  /* ── DOMAIN LEVELS ── */
+  .domain-wrap { display: flex; gap: 0; align-items: center; flex-wrap: wrap; margin: 10px 0; }
+  .domain-part {
+    border-radius: 8px; padding: 8px 14px; text-align: center; font-size: 13px;
+    font-family: monospace; font-weight: 700;
+  }
+  .domain-part.host { background: #fff8e8; border: 2px solid var(--gold-border); color: var(--gold); }
+  .domain-part.second { background: var(--cyan-bg2); border: 2px solid var(--cyan-mid); color: var(--cyan-dark); }
+  .domain-part.top { background: var(--purple-bg); border: 2px solid var(--purple-border); color: var(--purple); }
+  .domain-part.cctld { background: var(--green-bg); border: 2px solid var(--green-border); color: var(--green); }
+  .domain-sep { font-size: 20px; font-weight: 700; color: var(--ink2); padding: 0 2px; }
+  .domain-label { font-size: 11px; font-weight: 400; display: block; margin-top: 2px; }
+
+  /* ── IP TABLE ── */
+  .ip-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0; }
+  @media (max-width: 540px) { .ip-compare { grid-template-columns: 1fr; } }
+  .ip-box { border-radius: 10px; padding: 14px 16px; }
+  .ip-box.v4 { background: var(--gold-bg); border: 2px solid var(--gold-border); }
+  .ip-box.v6 { background: var(--cyan-bg); border: 2px solid var(--cyan-mid); }
+  .ip-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .ip-box.v4 h4 { color: var(--gold); }
+  .ip-box.v6 h4 { color: var(--cyan-dark); }
+  .ip-box ul { padding-left: 18px; font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .ip-box li { margin-bottom: 4px; }
+  .ip-box .ip-eg { font-family: monospace; font-size: 12.5px; background: rgba(0,0,0,0.06); border-radius: 5px; padding: 2px 8px; display: inline-block; margin-top: 6px; }
+
+  /* ── MALWARE GRID ── */
+  .malware-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 10px 0; }
+  .malware-box { border-radius: 10px; padding: 12px 14px; border: 2px solid; }
+  .malware-box.virus { background: #fff0f0; border-color: var(--red-border); }
+  .malware-box.worm { background: #fff8e8; border-color: var(--gold-border); }
+  .malware-box.trojan { background: var(--purple-bg); border-color: var(--purple-border); }
+  .malware-box.adware { background: var(--cyan-bg); border-color: var(--cyan-mid); }
+  .malware-box h4 { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .malware-box.virus h4 { color: var(--red); }
+  .malware-box.worm h4 { color: var(--gold); }
+  .malware-box.trojan h4 { color: var(--purple); }
+  .malware-box.adware h4 { color: var(--cyan-dark); }
+  .malware-box ul { padding-left: 18px; font-size: 12.5px; color: var(--ink2); line-height: 1.6; }
+  .malware-box li { margin-bottom: 3px; }
+
+  /* ── SECURITY GRID ── */
+  .security-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
+  .security-box { background: #fff; border: 2px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .security-box .s-icon { font-size: 22px; margin-bottom: 6px; }
+  .security-box h4 { color: var(--cyan-dark); font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .security-box p, .security-box ul { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+  .security-box ul { padding-left: 18px; }
+  .security-box li { margin-bottom: 3px; }
+
+  /* ── TAG ── */
+  .tag {
+    display: inline-block; border-radius: 20px; padding: 1px 10px;
+    font-size: 11.5px; font-weight: 700; margin: 1px 2px;
+  }
+  .tag.blue { background: var(--cyan-bg2); color: var(--cyan-dark); border: 1px solid var(--border); }
+  .tag.gold { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+  .tag.red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .tag.green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .tag.purple { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+  /* ── SW TYPE TABLE ── */
+  .sw-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; display: block; overflow-x: auto; }
+  .sw-table th { background: var(--cyan-dark); color: var(--cyan-pale); padding: 9px 14px; text-align: left; font-weight: 700; }
+  .sw-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .sw-table tr:nth-child(even) td { background: var(--cyan-bg); }
+  .sw-table tr:last-child td { border-bottom: none; }
+  .sw-table .sw-name { font-weight: 700; color: var(--cyan-dark); }
+
+  /* ── COPYRIGHT TABLE ── */
+  .cr-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 14px; display: block; overflow-x: auto; }
+  .cr-table th { background: var(--cyan-dark); color: var(--cyan-pale); padding: 9px 14px; text-align: left; font-weight: 700; white-space: nowrap; }
+  .cr-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cr-table tr:nth-child(even) td { background: var(--cyan-bg); }
+  .cr-table tr:last-child td { border-bottom: none; }
+  .cr-table .cr-name { font-weight: 700; color: var(--cyan-dark); }
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-top">
+    <div class="header-title">💻 中三 普通電腦科 互動溫習筆記</div>
+    <button class="btn-toggle-all" onclick="toggleAll()" id="toggleBtn">
+      🔒 隱藏關鍵詞 <span class="pill" id="togglePill">顯示中</span>
+    </button>
+  </div>
+  <div class="toc-row">
+    <a href="#s1">網絡硬件</a>
+    <a href="#s2">網絡種類</a>
+    <a href="#s3">TCP/IP 協定</a>
+    <a href="#s4">網域名稱與URL</a>
+    <a href="#s5">IP 位址</a>
+    <a href="#s6">網絡工具指令</a>
+    <a href="#s7">資訊保安</a>
+    <a href="#s8">軟件類型</a>
+    <a href="#s9">知識產權</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <h1>💻 普通電腦科 模擬考試溫習筆記</h1>
+    <p>嶺南中學 二零二六/二七年度 第一學期 ‧ 點擊藍色關鍵詞可隱藏／顯示答案</p>
+  </div>
+
+  <!-- ══════════════ S1 網絡硬件 ══════════════ -->
+  <div class="section" id="s1">
+    <div class="part-badge">第一部分</div>
+    <div class="section-title">網絡硬件設備</div>
+
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">網絡界面卡 NIC</div>
+        <h4>Network Interface Card</h4>
+        <ul>
+          <li>內置於<span class="kw" onclick="toggleKw(this)">主機板</span>或插入<span class="kw" onclick="toggleKw(this)">擴展槽</span></li>
+          <li>為電腦提供<span class="kw" onclick="toggleKw(this)">網絡連接</span>功能</li>
+          <li>有線 LAN 或無線 (Wi-Fi)</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">交換器 Switch</div>
+        <h4>Switch</h4>
+        <ul>
+          <li>在<span class="kw" onclick="toggleKw(this)">LAN</span> 內把多台電腦、打印機及伺服器<span class="kw" onclick="toggleKw(this)">連接</span>在一起</li>
+          <li>根據 MAC 位址傳送數據</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">路由器 Router</div>
+        <h4>Router</h4>
+        <ul>
+          <li>把兩個或以上的 <span class="kw" onclick="toggleKw(this)">LAN</span> 連接起來</li>
+          <li>使訊息可在<span class="kw" onclick="toggleKw(this)">不同 LAN</span> 之間傳送</li>
+          <li>根據 IP 位址傳送數據</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">寬頻數據機 Modem</div>
+        <h4>Broadband Modem</h4>
+        <ul>
+          <li>路由器 WAN 埠連接至<span class="kw" onclick="toggleKw(this)">寬頻數據機</span></li>
+          <li>連接至 <span class="kw" onclick="toggleKw(this)">ISP</span> 網絡上網</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">無線網絡接達點 WAP</div>
+        <h4>Wireless Access Point</h4>
+        <ul>
+          <li>讓無線裝置連接至有線<span class="kw" onclick="toggleKw(this)">LAN</span></li>
+          <li>提供 Wi-Fi 訊號</li>
+        </ul>
+      </div>
+      <div class="note-card">
+        <div class="nc-label">雙頻路由器</div>
+        <h4>2.4 GHz vs 5 GHz</h4>
+        <ul>
+          <li><span class="kw" onclick="toggleKw(this)">2.4 GHz</span>：覆蓋範圍<span class="kw" onclick="toggleKw(this)">較大</span>，穿牆能力較強，速度較慢</li>
+          <li><span class="kw" onclick="toggleKw(this)">5 GHz</span>：速度較快，覆蓋範圍<span class="kw" onclick="toggleKw(this)">較小</span></li>
+          <li>隔牆遠距離 → 選<span class="kw" onclick="toggleKw(this)">2.4 GHz</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection-title">傳輸媒介比較</div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th>傳輸媒介</th><th>英文簡稱</th><th>速度</th><th>電磁干擾</th><th>傳輸距離</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">無屏蔽雙扭線</td>
+          <td><span class="kw" onclick="toggleKw(this)">UTP</span></td>
+          <td>一般</td>
+          <td><span class="kw" onclick="toggleKw(this)">較易</span>受干擾</td>
+          <td>較短</td>
+        </tr>
+        <tr>
+          <td class="row-label">光纖</td>
+          <td>Optical Fibre</td>
+          <td><span class="kw" onclick="toggleKw(this)">更快</span></td>
+          <td><span class="kw" onclick="toggleKw(this)">較少</span>電磁干擾</td>
+          <td><span class="kw" onclick="toggleKw(this)">更長</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <p>光纖相對於 UTP 電纜的優點：數據傳輸速度<span class="kw" onclick="toggleKw(this)">更快</span>、較少受<span class="kw" onclick="toggleKw(this)">電磁干擾</span>及可作<span class="kw" onclick="toggleKw(this)">更長</span>距離傳輸。</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ S2 網絡種類 ══════════════ -->
+  <div class="section" id="s2">
+    <div class="part-badge">第二部分</div>
+    <div class="section-title">網絡種類</div>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th>縮寫</th><th>全名</th><th>覆蓋範圍</th><th>例子</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">PAN</td>
+          <td><span class="kw" onclick="toggleKw(this)">個人區域網絡</span></td>
+          <td>個人裝置之間（數米）</td>
+          <td>藍牙耳機、手機</td>
+        </tr>
+        <tr>
+          <td class="row-label">LAN</td>
+          <td><span class="kw" onclick="toggleKw(this)">局部區域網絡</span></td>
+          <td>同一建築物／校園</td>
+          <td>學校網絡、辦公室</td>
+        </tr>
+        <tr>
+          <td class="row-label">WLAN</td>
+          <td><span class="kw" onclick="toggleKw(this)">無線區域網絡</span></td>
+          <td>同 LAN，但以無線方式</td>
+          <td>Wi-Fi</td>
+        </tr>
+        <tr>
+          <td class="row-label">WAN</td>
+          <td><span class="kw" onclick="toggleKw(this)">寬廣區域網絡</span></td>
+          <td>跨城市／國家／洲際</td>
+          <td>跨國銀行網絡、互聯網</td>
+        </tr>
+        <tr>
+          <td class="row-label">VPN</td>
+          <td><span class="kw" onclick="toggleKw(this)">虛擬私有網絡</span></td>
+          <td>透過互聯網建立加密通道</td>
+          <td>屏蔽真實 IP、加密通訊</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <p>🔑 試題關鍵：跨國銀行用海底電纜及人造衛星連接多地 LAN → 屬於 <span class="kw" onclick="toggleKw(this)">WAN</span>（寬廣區域網絡）</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ S3 TCP/IP ══════════════ -->
+  <div class="section" id="s3">
+    <div class="part-badge">第三部分</div>
+    <div class="section-title">TCP/IP 通訊協定</div>
+
+    <div class="subsection-title">TCP 傳輸控制協定</div>
+    <div class="info-box">
+      <p><span class="def-term">TCP（傳輸控制協定）</span>：負責把數據分割成<span class="kw" onclick="toggleKw(this)">數據包</span>，傳送到目的地後再重新組合。</p>
+    </div>
+
+    <div class="sub2-title">TCP 重傳機制（確認回應）</div>
+    <div class="step-flow">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">發送者把<span class="kw" onclick="toggleKw(this)">數據包</span>傳送給接收者</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">接收者收到後，回傳「<span class="kw" onclick="toggleKw(this)">確認回應</span>」（Acknowledgement）給發送者</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">若發送者在<span class="kw" onclick="toggleKw(this)">預定時間</span>內沒有收到確認回應 → 自動<span class="kw" onclick="toggleKw(this)">重新傳送</span>該數據包</div>
+      </div>
+    </div>
+
+    <div class="subsection-title">應用層協定</div>
+    <table class="cmp-table">
+      <thead>
+        <tr><th>協定</th><th>全名</th><th>用途</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">HTTP</td>
+          <td>超文本傳輸協定</td>
+          <td><span class="kw" onclick="toggleKw(this)">瀏覽網頁</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">HTTPS</td>
+          <td>超文本傳輸安全協定</td>
+          <td>加密瀏覽；驗證伺服器身份（配合<span class="kw" onclick="toggleKw(this)">數碼證書</span>）</td>
+        </tr>
+        <tr>
+          <td class="row-label">FTP</td>
+          <td><span class="kw" onclick="toggleKw(this)">檔案傳輸協定</span></td>
+          <td>在互聯網上的電腦與伺服器之間<span class="kw" onclick="toggleKw(this)">上載及下載</span>檔案</td>
+        </tr>
+        <tr>
+          <td class="row-label">FTPS</td>
+          <td>安全檔案傳輸協定</td>
+          <td>加密版 FTP（比 FTP 安全）</td>
+        </tr>
+        <tr>
+          <td class="row-label">DNS</td>
+          <td><span class="kw" onclick="toggleKw(this)">網域名稱系統</span></td>
+          <td>把<span class="kw" onclick="toggleKw(this)">網域名稱</span>轉換為 <span class="kw" onclick="toggleKw(this)">IP 位址</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════ S4 網域名稱與URL ══════════════ -->
+  <div class="section" id="s4">
+    <div class="part-badge">第四部分</div>
+    <div class="section-title">網域名稱與 URL</div>
+
+    <div class="subsection-title">網域名稱的層級結構</div>
+    <div class="info-box">
+      <p>以 <strong>ftp.lingnan.edu.hk</strong> 為例：</p>
+    </div>
+    <div class="domain-wrap">
+      <div class="domain-part host">ftp<span class="domain-label">主機名稱</span></div>
+      <div class="domain-sep">.</div>
+      <div class="domain-part second">lingnan<span class="domain-label">二級域</span></div>
+      <div class="domain-sep">.</div>
+      <div class="domain-part top">edu<span class="domain-label">二級域<br>(通用)</span></div>
+      <div class="domain-sep">.</div>
+      <div class="domain-part cctld">hk<span class="domain-label">頂級域<br>(國家代碼)</span></div>
+    </div>
+    <div class="info-box" style="margin-top:10px;">
+      <ul>
+        <li>「<span class="kw" onclick="toggleKw(this)">.hk</span>」→ 頂級域（國家代碼頂級域 ccTLD）</li>
+        <li>「<span class="kw" onclick="toggleKw(this)">.edu</span>」→ 二級域（表示教育機構）</li>
+        <li>「<span class="kw" onclick="toggleKw(this)">lingnan</span>」→ 三級域（機構名稱）</li>
+        <li>「<span class="kw" onclick="toggleKw(this)">ftp</span>」→ 主機名稱（伺服器名稱）</li>
+        <li>「<span class="kw" onclick="toggleKw(this)">.com</span>」→ 通用頂級域（gTLD）</li>
+      </ul>
+    </div>
+
+    <div class="subsection-title">URL 組成結構</div>
+    <div class="url-demo">
+      <span class="url-proto">ftps</span>://<span class="url-domain">files.company.com</span>/<span class="url-path">download</span>/<span class="url-file">catalog.pdf</span>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <h4 style="color:#79c0ff">應用層協定</h4>
+        <p><span class="kw" onclick="toggleKw(this)">ftps</span>（安全檔案傳輸協定）</p>
+      </div>
+      <div class="card">
+        <h4 style="color:#56d364">伺服器 FQDN</h4>
+        <p><span class="kw" onclick="toggleKw(this)">files.company.com</span>（全域名稱）</p>
+      </div>
+      <div class="card">
+        <h4 style="color:#ffa657">資料夾路徑</h4>
+        <p><span class="kw" onclick="toggleKw(this)">download</span>（存放檔案的資料夾）</p>
+      </div>
+      <div class="card">
+        <h4 style="color:#ff7b72">檔案名稱</h4>
+        <p><span class="kw" onclick="toggleKw(this)">catalog.pdf</span>（檔案名稱）</p>
+      </div>
+    </div>
+
+    <div class="subsection-title">DNS 運作步驟</div>
+    <div class="step-flow">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">用戶電腦向 <span class="kw" onclick="toggleKw(this)">DNS 伺服器</span>發送查詢，詢問目標網站的 <span class="kw" onclick="toggleKw(this)">IP 位址</span></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">DNS 伺服器在<span class="kw" onclick="toggleKw(this)">數據庫</span>中查找紀錄，並把相應的 IP 位址傳回用戶電腦</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">用戶電腦根據取得的 IP 位址，向目標<span class="kw" onclick="toggleKw(this)">網頁伺服器</span>發送 HTTP/HTTPS 網頁請求</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">網頁伺服器處理請求後，把所需的<span class="kw" onclick="toggleKw(this)">網頁內容</span>傳回用戶電腦顯示</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ S5 IP 位址 ══════════════ -->
+  <div class="section" id="s5">
+    <div class="part-badge">第五部分</div>
+    <div class="section-title">IP 位址：IPv4 與 IPv6</div>
+
+    <div class="ip-compare">
+      <div class="ip-box v4">
+        <h4>IPv4</h4>
+        <ul>
+          <li>由 <span class="kw" onclick="toggleKw(this)">32</span> 位元組成</li>
+          <li>以<span class="kw" onclick="toggleKw(this)">十進制</span>表示，以「.」分隔</li>
+          <li>共約 <span class="kw" onclick="toggleKw(this)">43 億</span>個位址</li>
+          <li>例：<div class="ip-eg"><span class="kw" onclick="toggleKw(this)">172.16.254.1</span></div></li>
+          <li>無效例（第三組超過255）：<div class="ip-eg" style="color:#c00">192.168.<span style="text-decoration:underline wavy red">320</span>.1 ✗</div></li>
+        </ul>
+      </div>
+      <div class="ip-box v6">
+        <h4>IPv6</h4>
+        <ul>
+          <li>由 <span class="kw" onclick="toggleKw(this)">128</span> 位元組成</li>
+          <li>以<span class="kw" onclick="toggleKw(this)">十六進制</span>表示，以「:」分隔</li>
+          <li>位址數量遠多於 IPv4</li>
+          <li>例：<div class="ip-eg"><span class="kw" onclick="toggleKw(this)">fe80:0000:0000:0000:3db4:6713:5361:e334</span></div></li>
+          <li>無效例（含「g」非法字元）：<div class="ip-eg" style="color:#c00">2001:0db8:85<span style="text-decoration:underline wavy red">g</span>3:… ✗</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      <p>⚠️ 為甚麼需要 IPv6？隨着互聯網迅速發展，大部分 IPv4 位址都已被使用，因此需要制定 IPv6 以提供<span class="kw" onclick="toggleKw(this)">大量 IP 位址</span>滿足需求。</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ S6 網絡工具指令 ══════════════ -->
+  <div class="section" id="s6">
+    <div class="part-badge">第六部分</div>
+    <div class="section-title">網絡工具指令</div>
+
+    <div class="note-grid">
+      <div class="note-card">
+        <div class="nc-label">PING 指令</div>
+        <h4>功能</h4>
+        <ul>
+          <li>測試兩台電腦能否<span class="kw" onclick="toggleKw(this)">互相通訊</span></li>
+          <li>透過 <span class="kw" onclick="toggleKw(this)">DNS</span> 查出目標網站對應的 <span class="kw" onclick="toggleKw(this)">IP 位址</span></li>
+          <li>用法：在 Windows <span class="kw" onclick="toggleKw(this)">終端機</span>輸入 <code>PING [網域名稱]</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ S7 資訊保安 ══════════════ -->
+  <div class="section" id="s7">
+    <div class="part-badge">第七部分</div>
+    <div class="section-title">資訊保安</div>
+
+    <div class="subsection-title">A 惡意軟件類型</div>
+    <div class="malware-grid">
+      <div class="malware-box virus">
+        <h4>🦠 電腦病毒</h4>
+        <ul>
+          <li>附在正常程式或檔案中</li>
+          <li>會<span class="kw" onclick="toggleKw(this)">自我複製</span></li>
+          <li>需要宿主程式才能傳播</li>
+        </ul>
+      </div>
+      <div class="malware-box worm">
+        <h4>🪱 電腦蠕蟲</h4>
+        <ul>
+          <li>可在<span class="kw" onclick="toggleKw(this)">網絡</span>上獨立傳播</li>
+          <li>無需宿主程式</li>
+          <li>會自我複製</li>
+        </ul>
+      </div>
+      <div class="malware-box trojan">
+        <h4>🐴 木馬程式</h4>
+        <ul>
+          <li>偽裝成<span class="kw" onclick="toggleKw(this)">正常軟件</span></li>
+          <li><span class="kw" onclick="toggleKw(this)">不</span>自我複製</li>
+          <li>建立<span class="kw" onclick="toggleKw(this)">後門</span>讓黑客遠程控制</li>
+          <li>竊取資料</li>
+        </ul>
+      </div>
+      <div class="malware-box adware">
+        <h4>📢 廣告軟件</h4>
+        <ul>
+          <li>強制顯示廣告</li>
+          <li>可能收集瀏覽習慣</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      <p>🔑 試題關鍵：「<span class="kw" onclick="toggleKw(this)">不</span>自我複製」、「偽裝正常軟件」、「建立後門」→ 木馬程式（Trojan）</p>
+    </div>
+
+    <div class="subsection-title">B 網絡保安技術與設備</div>
+    <div class="security-grid">
+      <div class="security-box">
+        <div class="s-icon">🔀</div>
+        <h4>交換器 Switch</h4>
+        <p>在 <span class="kw" onclick="toggleKw(this)">LAN</span> 內連接多台電腦、打印機及伺服器（配對：<span class="tag blue">B</span>）</p>
+      </div>
+      <div class="security-box">
+        <div class="s-icon">🔀</div>
+        <h4>路由器 Router</h4>
+        <p>把兩個或以上的 <span class="kw" onclick="toggleKw(this)">LAN</span> 連接起來，使訊息可在不同 LAN 間傳送（配對：<span class="tag blue">A</span>）</p>
+      </div>
+      <div class="security-box">
+        <div class="s-icon">🛡️</div>
+        <h4>防火牆 Firewall</h4>
+        <p>根據預設<span class="kw" onclick="toggleKw(this)">保安規則</span>限制網絡流量，防止外部網絡未經授權存取內部電腦或封鎖惡意網站（配對：<span class="tag blue">D</span>）</p>
+      </div>
+      <div class="security-box">
+        <div class="s-icon">🔒</div>
+        <h4>VPN 虛擬私有網絡</h4>
+        <p>透過專用伺服器建立<span class="kw" onclick="toggleKw(this)">加密連線</span>，並屏蔽發送者的真實 <span class="kw" onclick="toggleKw(this)">IP 位址</span>（配對：<span class="tag blue">C</span>）</p>
+      </div>
+      <div class="security-box">
+        <div class="s-icon">📱</div>
+        <h4>雙重認證 2FA</h4>
+        <p>登入時要求同時提供「<span class="kw" onclick="toggleKw(this)">密碼</span>」及「<span class="kw" onclick="toggleKw(this)">手機短訊驗證碼／保安編碼器安全碼</span>」（配對：<span class="tag blue">E</span>）</p>
+      </div>
+      <div class="security-box">
+        <div class="s-icon">🔐</div>
+        <h4>HTTPS / 數碼證書</h4>
+        <p>驗證<span class="kw" onclick="toggleKw(this)">伺服器</span>身份及把數據<span class="kw" onclick="toggleKw(this)">加密</span>，防止黑客<span class="kw" onclick="toggleKw(this)">截聽</span>；瀏覽器顯示「<span class="kw" onclick="toggleKw(this)">🔒 鎖頭圖示</span>」</p>
+      </div>
+    </div>
+
+    <div class="subsection-title">C 網絡欺詐類型</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>仿冒詐騙 Phishing</h4>
+        <p>利用<span class="kw" onclick="toggleKw(this)">虛假網站</span>誘騙受害者透露敏感<span class="kw" onclick="toggleKw(this)">個人或財務</span>資訊（如信用卡號碼）</p>
+      </div>
+      <div class="card">
+        <h4>拒絕交付詐騙</h4>
+        <p>賣家在網絡拍賣收款後，<span class="kw" onclick="toggleKw(this)">永遠不發貨</span>的互聯網欺詐</p>
+      </div>
+      <div class="card">
+        <h4>DDoS 分布式拒絕服務攻擊</h4>
+        <p>利用大量電腦同時向目標伺服器發送<span class="kw" onclick="toggleKw(this)">大量請求</span>，使其無法正常運作</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ S8 軟件類型 ══════════════ -->
+  <div class="section" id="s8">
+    <div class="part-badge">第八部分</div>
+    <div class="section-title">軟件類型</div>
+
+    <table class="sw-table">
+      <thead>
+        <tr><th>軟件類型</th><th>原始碼</th><th>費用</th><th>特點</th><th>例子</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sw-name">開放源碼軟件<br>Open Source</td>
+          <td><span class="kw" onclick="toggleKw(this)">公開</span></td>
+          <td>免費</td>
+          <td>全球程式員可協作<span class="kw" onclick="toggleKw(this)">修改</span>及增強功能</td>
+          <td><span class="kw" onclick="toggleKw(this)">Linux</span> 作業系統</td>
+        </tr>
+        <tr>
+          <td class="sw-name">公有領域軟件<br>Public Domain</td>
+          <td>公開</td>
+          <td>免費</td>
+          <td>已放棄<span class="kw" onclick="toggleKw(this)">版權</span>，任何人可自由使用</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="sw-name">免費軟件<br>Freeware</td>
+          <td><span class="kw" onclick="toggleKw(this)">不公開</span></td>
+          <td>免費</td>
+          <td>免費使用，但不可修改</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="sw-name">商業軟件<br>Commercial</td>
+          <td>不公開</td>
+          <td><span class="kw" onclick="toggleKw(this)">收費</span></td>
+          <td>需付費購買授權</td>
+          <td>Windows、Microsoft Office</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <p>🔑 試題關鍵：「原始碼<span class="kw" onclick="toggleKw(this)">公開</span>」、「全球程式員協作修改」→ <span class="kw" onclick="toggleKw(this)">開放源碼軟件</span>（例如 Linux）</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ S9 知識產權 ══════════════ -->
+  <div class="section" id="s9">
+    <div class="part-badge">第九部分</div>
+    <div class="section-title">知識產權</div>
+
+    <table class="cr-table">
+      <thead>
+        <tr><th>知識產權類型</th><th>保護對象</th><th>例子</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cr-name">版權 Copyright</td>
+          <td><span class="kw" onclick="toggleKw(this)">創作作品</span>（書籍、音樂、軟件、圖像）</td>
+          <td>電影、音樂、程式碼</td>
+        </tr>
+        <tr>
+          <td class="cr-name">專利 Patent</td>
+          <td><span class="kw" onclick="toggleKw(this)">發明</span>（技術、產品或方法）</td>
+          <td>快速充電電池技術</td>
+        </tr>
+        <tr>
+          <td class="cr-name">商標 Trademark</td>
+          <td><span class="kw" onclick="toggleKw(this)">品牌</span>標誌、名稱、口號</td>
+          <td>Nike ✓ 標誌、Apple</td>
+        </tr>
+        <tr>
+          <td class="cr-name">外觀設計 Design</td>
+          <td>產品的<span class="kw" onclick="toggleKw(this)">外觀</span>造型、顏色、形狀</td>
+          <td>手機外殼設計</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <p>🔑 試題關鍵：「快速充電電池」→ 新<span class="kw" onclick="toggleKw(this)">發明技術</span> → 申請<span class="kw" onclick="toggleKw(this)">專利</span>（Patent）</p>
+    </div>
+
+    <div class="subsection-title">AI 生成作品的版權爭議</div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>爭議原因一</h4>
+        <p>AI 在生成作品時，可能未經版權擁有人同意下使用了<span class="kw" onclick="toggleKw(this)">受版權保護</span>的作品作訓練</p>
+      </div>
+      <div class="card">
+        <h4>爭議原因二</h4>
+        <p>AI 生成的作品<span class="kw" onclick="toggleKw(this)">並非由人類創作</span>，版權誰屬存在爭議（AI？使用者？開發者？）</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+let allRevealed = false;
+function toggleAll() {
+  allRevealed = !allRevealed;
+  document.querySelectorAll('.kw').forEach(el => el.classList.toggle('hidden', !allRevealed));
+  const btn = document.getElementById('toggleBtn');
+  if (allRevealed) {
+    btn.innerHTML = '🔓 顯示關鍵詞 <span class="pill">隱藏中</span>';
+  } else {
+    btn.innerHTML = '🔒 隱藏關鍵詞 <span class="pill">顯示中</span>';
+  }
+}
+function toggleKw(el) { el.classList.toggle('hidden'); }
+</script>
+</body>
+</html>
